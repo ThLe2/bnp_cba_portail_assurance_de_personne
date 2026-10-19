@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exercice — Les objections de l'assurance de personne</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Karla:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#16243B;--bleu:#1F4E79;--bleu-clair:#2E75B6;--or:#B08D57;--creme:#F5F2EB;--card:#FFFFFF;
+  --line:#e3ddd0;--muted:#6B6459;--ok:#2F7A4F;--ko:#B23B3B;--amber:#B5852A;--shadow:0 2px 10px rgba(22,36,59,.07);}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Karla',system-ui,sans-serif;background:var(--creme);color:var(--navy);line-height:1.55;-webkit-user-select:none;user-select:none}
+.wrap{max-width:1000px;margin:0 auto;padding:26px 18px 60px}
+.card-main{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);overflow:hidden}
+.header{padding:26px 34px 0}
+.chapter-tag{font-size:11.5px;font-weight:700;letter-spacing:1.6px;text-transform:uppercase;color:var(--or)}
+.chapter-tag span{opacity:.5}
+h1{font-family:'Fraunces',serif;font-weight:600;font-size:27px;line-height:1.2;margin:8px 0 5px}
+.header p{color:var(--muted);font-size:14.5px}
+.gold-rule{border:none;border-top:2px solid var(--or);width:64px;margin:18px 0 0}
+.body{padding:22px 34px 30px}
+.consigne{background:#FBF7EE;border:1px solid var(--line);border-left:3px solid var(--or);border-radius:8px;padding:14px 17px;font-size:14px;margin-bottom:22px}
+.consigne ol{margin:8px 0 0 20px}
+.meta{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:20px}
+.progress{flex:1;min-width:220px}
+.track{height:8px;background:#e6e0d3;border-radius:99px;overflow:hidden}
+.fill{height:100%;width:0;background:var(--bleu-clair);transition:width .3s}
+.plabel{font-size:12.5px;color:var(--muted);margin-top:6px}
+.scorepill{background:var(--navy);color:#fff;border-radius:99px;padding:6px 15px;font-size:13px;font-weight:600}
+.sit{border:1.5px solid var(--line);border-radius:12px;padding:18px 20px;margin-bottom:16px;background:#fff}
+.sit.done{border-color:#cfc6b4;background:#FDFCF9}
+.sit .num{font-size:10.5px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--or);margin-bottom:8px}
+.client{font-size:14.5px;font-style:italic;color:var(--muted);margin-bottom:10px}
+.client b{font-style:normal;color:var(--navy)}
+.etape{font-size:11px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--bleu);margin:14px 0 7px}
+.phrase{font-size:15.5px;line-height:2.05;background:#F7FAFD;border:1px solid #dbe6f2;border-radius:8px;padding:10px 14px}
+.tok{border-radius:4px;padding:1px 1px;cursor:pointer;transition:background .12s}
+.tok:hover{background:#e7eff8}
+.tok.sel{background:#FDE7C8;border-bottom-color:var(--amber)}
+.tok.trouve{background:#DDEFE3;border-bottom:2px solid var(--ok)}
+.tok.trouve2{background:#EEF7F1;border-bottom:2px solid var(--ok)}
+.tok.oublie{background:#fff;border-bottom:2px solid var(--ko);color:var(--ko)}
+.tok.trop{background:#F7E1E1;border-bottom:2px solid var(--ko);text-decoration:line-through}
+.done .tok{cursor:default}
+.opts{display:flex;flex-direction:column;gap:9px}
+.opts label{display:flex;align-items:flex-start;gap:9px;font-size:14px;border:1.5px solid var(--line);border-radius:8px;padding:10px 12px;cursor:pointer;background:#fff;transition:border-color .15s,background .15s}
+.opts label:hover{border-color:var(--bleu-clair)}
+.opts label.sel{border-color:var(--bleu);background:#F7FAFD}
+.opts label.good{border-color:var(--ok);background:#F2F8F4}
+.opts label.bad{border-color:var(--ko);background:#FBF3F3}
+.opts label.attendu{border-color:var(--ok);background:#F2F8F4}
+.done .opts label{cursor:default}
+.opts input{margin-top:3px;flex-shrink:0}
+textarea{width:100%;min-height:70px;font-family:inherit;font-size:14px;border:1.5px solid var(--line);border-radius:8px;padding:9px 11px;resize:vertical;-webkit-user-select:text;user-select:text;color:var(--navy)}
+textarea:disabled{background:#F5F2EB;color:var(--muted)}
+.hint{font-size:12px;color:var(--muted);margin-top:4px}
+.row-act{display:flex;align-items:center;gap:12px;margin-top:14px;flex-wrap:wrap}
+.btn{border:none;border-radius:9px;padding:11px 20px;font-family:inherit;font-size:14px;font-weight:700;cursor:pointer}
+.btn-primary{background:var(--bleu);color:#fff}.btn-primary:disabled{background:#c9c2b6;cursor:not-allowed}
+.btn-done{background:var(--ok);color:#fff;cursor:default}
+.btn-secondary{background:#fff;color:var(--bleu);border:1.5px solid var(--bleu)}
+.need{font-size:12.5px;color:var(--muted)}
+.corr{font-size:13px;margin-top:14px;display:none;padding-top:12px;border-top:1px solid var(--line)}
+.corr.show{display:block}
+.corr p{margin-bottom:6px}
+.corr .lg{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--muted);margin-bottom:8px}
+.corr .lg span{display:inline-flex;align-items:center;gap:5px}
+.sw{width:12px;height:12px;border-radius:3px;display:inline-block}
+.actions{margin-top:20px;display:flex;gap:12px;flex-wrap:wrap}
+.result{display:none;margin-top:24px;border-radius:12px;padding:20px 22px;border:1px solid var(--line);background:#FBF7EE}
+.result.show{display:block}
+.result h2{font-family:'Fraunces',serif;font-size:21px;font-weight:600;margin-bottom:6px}
+.result .big{font-size:30px;font-weight:700;font-family:'Fraunces',serif}
+.result p{font-size:14px;color:var(--muted);margin-top:4px}
+.recap{margin-top:14px;display:flex;flex-direction:column;gap:7px}
+.recap-row{display:flex;align-items:center;gap:10px;font-size:13.5px}
+.dot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+.recap-row .lab{flex:1}
+.recap-row .sc{font-weight:700}
+.footer{text-align:center;font-size:11.5px;color:var(--muted);padding:16px 34px 24px;border-top:1px solid var(--line)}
+.objection{font-size:16px;background:#F7FAFD;border:1px solid #dbe6f2;border-radius:8px;padding:10px 14px;font-weight:700}
+.ctx{font-size:13px;color:var(--muted);margin:2px 0 8px}
+.precise{background:#FBF7EE;border-left:3px solid var(--or);border-radius:6px;padding:9px 13px;font-size:14px;margin:12px 0 4px;display:none}
+.precise.show{display:block}
+.step2{display:none}.step2.show{display:block}
+.tag{display:inline-block;background:#eef3f9;color:var(--bleu);font-size:11px;font-weight:700;border-radius:5px;padding:2px 8px;margin-left:6px;vertical-align:middle}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card-main">
+    <div class="header">
+      <div class="chapter-tag">TMK Performances · Pratique pro 3/4 <span>/</span> Séquence 2</div>
+      <h1>Les objections de l'assurance de personne</h1>
+      <p>5 objections · 10 situations · faire préciser, puis répondre · exercice d'entraînement, rien n'est enregistré</p>
+      <hr class="gold-rule">
+    </div>
+    <div class="body">
+      <div class="consigne">
+        <b>🎯 Consigne :</b> chaque objection revient deux fois, chez deux clients différents. Pour chaque situation :
+        <ol>
+          <li>choisissez la question qui fait <b>préciser</b> l'objection, et validez ;</li>
+          <li>le client répond : choisissez alors votre <b>réponse</b>, et validez.</li>
+        </ol>
+        Une fois une étape validée, elle est figée. Le bouton « Recommencer » remet tout à zéro. Ce qui compte : la même objection ne cache pas toujours la même chose.
+      </div>
+      <div class="meta">
+        <div class="progress">
+          <div class="track"><div class="fill" id="fill"></div></div>
+          <div class="plabel" id="plabel">0 / 10 situation terminée</div>
+        </div>
+        <div class="scorepill">Choix justes&nbsp;: <b id="score">—</b> / 20</div>
+      </div>
+      <div id="situations"></div>
+      <div class="actions"><button class="btn btn-secondary" onclick="reinitialiser()">↻ Recommencer l'exercice</button></div>
+      <div class="result" id="result">
+        <h2 id="res-title">—</h2>
+        <p><span class="big" id="res-score">0 / 20</span> choix justes</p>
+        <p id="res-msg"></p>
+        <div class="recap" id="recap"></div>
+      </div>
+    </div>
+    <div class="footer">TMK Performances - N° Siret : 49841924100027 - Code NAF : 8559A</div>
+  </div>
+</div>
+<script>
+const D = {"obj": ["« Mon employeur me couvre »", "« Je suis jeune »", "« C'est trop cher »", "« J'en parle à mon conjoint »", "« Je préfère mon livret A »"], "items": [{"o": 0, "ctx": "Appel sortant · M. Robin, 35 ans, salarié, a accepté d'être rappelé pour faire le point sur sa protection.", "dit": "Pas la peine, mon employeur me couvre.", "q": ["Les contrats d'entreprise sont souvent insuffisants, vous savez.", "Je comprends. Et sur quoi exactement : les frais de santé, un arrêt de travail, un décès ?", "D'accord, alors je ne vous dérange pas plus. Bonne journée !"], "qb": 1, "qx": "Affirmer que son contrat est insuffisant, sans le connaître, c'est le contredire : il se fermera. Raccrocher, c'est prendre l'objection pour un refus alors qu'elle est souvent une information incomplète. La bonne question le fait préciser — et lui fait souvent découvrir qu'il ne sait pas.", "pr": "La mutuelle, oui. Pour le reste… je ne sais pas trop, je n'ai jamais lu.", "r": ["Votre mutuelle ne couvre pas l'arrêt de travail : il vous faut une prévoyance.", "Dans ce cas, je vous conseille notre prévoyance individuelle, qui complète tout.", "Alors regardons-le ensemble : avec votre notice, en vingt minutes, je vous dis ce qui est prévu en cas d'arrêt ou de décès, et s'il manque quelque chose. Mardi en fin de journée, ça vous irait ?"], "rb": 2, "rx": "Les deux autres réponses proposent un produit sans savoir ce qui est déjà couvert : c'est exactement la vente non motivée. La bonne réponse propose de lire sa couverture avec lui — c'est le motif du rendez-vous, et il ne coûte rien au client."}, {"o": 0, "ctx": "Appel sortant · Mme Hamel, 48 ans, cadre, a accepté d'être rappelée à propos de sa prévoyance.", "dit": "Mon employeur me couvre très bien, je n'ai besoin de rien.", "q": ["Très bien couverte, vraiment ? Vous avez vérifié les montants ?", "Vous savez que les contrats collectifs ne couvrent que pendant le contrat de travail ?", "Tant mieux. Et votre situation professionnelle doit-elle évoluer dans les mois qui viennent ?"], "qb": 2, "qx": "« Vous avez vérifié ? » met la cliente en défaut. Énoncer la règle avant de savoir si elle la concerne, c'est faire un cours. La bonne question accepte ce qu'elle dit, puis cherche ce qui pourrait le rendre faux demain.", "pr": "Justement, je quitte l'entreprise en mars pour m'installer à mon compte.", "r": ["Alors c'est le bon moment d'en parler : votre couverture d'entreprise s'arrêtera avec votre contrat de travail. Je vous propose qu'on prépare ce passage avant mars, pour que vous ne restiez pas sans protection.", "Pas d'inquiétude : vous garderez la couverture de votre employeur un an grâce à la portabilité.", "Les indépendants ont une très bonne protection sociale, vous verrez."], "rb": 0, "rx": "La portabilité suppose d'être indemnisé par l'assurance chômage : une installation à son compte ne la déclenche pas en principe. Et la protection obligatoire d'un indépendant est sans commune mesure avec celle d'un cadre salarié. La bonne réponse dit ce qui s'arrête et propose de préparer le passage."}, {"o": 1, "ctx": "Appel sortant · M. Fabre, 26 ans, a accepté d'être contacté sur ses besoins d'assurance de personne.", "dit": "Je suis jeune, je n'ai pas besoin de ça.", "q": ["Je comprends. Aujourd'hui, est-ce que quelqu'un dépend de vous — un conjoint, un enfant, un crédit ?", "Justement, c'est quand on est jeune que c'est le moins cher !", "Personne n'est à l'abri, vous savez."], "qb": 0, "qx": "« C'est le moins cher » et « personne n'est à l'abri » argumentent contre l'âge — le client se braque. La bonne question cherche si quelqu'un dépend de lui : c'est elle qui dit si une garantie décès a un sens.", "pr": "Non, je vis seul, pas d'enfant, pas de crédit.", "r": ["Ça ne coûte que quelques euros par mois, autant le faire maintenant.", "Alors sur le décès, vous avez raison : personne ne dépend de vous aujourd'hui. Ce qui vous concerne, c'est un arrêt de travail long. On peut en parler cinq minutes, ou attendre que votre situation change — vous me direz.", "Vous pourriez avoir un enfant un jour : mieux vaut anticiper."], "rb": 1, "rx": "Le devoir de conseil vaut aussi dans ce sens : sans personne à protéger, une garantie décès n'a pas d'objet. Donner raison au client sur ce point rend crédible la suite — l'arrêt de travail, lui, le concerne."}, {"o": 1, "ctx": "Appel sortant · Mme Leroux, 29 ans, a accepté d'être rappelée après l'ouverture de son compte joint.", "dit": "Oh, je suis jeune, on verra ça plus tard.", "q": ["Plus tard, c'est souvent trop tard.", "Vous ne pensez pas à votre famille ?", "Qu'est-ce qui a changé pour vous ces derniers mois ?"], "qb": 2, "qx": "« Trop tard » fait peur sans rien apprendre ; « votre famille » culpabilise. La bonne question est ouverte et neutre : elle fait parler des événements — c'est là que se trouvent les besoins.", "pr": "On a acheté l'appartement en juin… et on attend un bébé pour décembre.", "r": ["Félicitations ! Il vous faut absolument une assurance décès maintenant.", "Félicitations ! Deux choses ont changé : un prêt et un enfant. Savez-vous comment votre prêt est assuré sur chacun de vous ? Je vous propose qu'on regarde ça à deux, avec votre compagnon : samedi matin ou jeudi soir ?", "Votre assurance de prêt suffit, ne vous inquiétez pas."], "rb": 1, "rx": "« Absolument » vend avant de savoir ; « ne vous inquiétez pas » rassure sans savoir. La bonne réponse nomme les deux changements, pose la question de la quotité d'assurance du prêt, et propose un rendez-vous à deux — les deux sont concernés."}, {"o": 2, "ctx": "Appel sortant · M. Girard, 71 ans, retraité, complémentaire santé individuelle, a accepté qu'on revoie son contrat.", "dit": "De toute façon, c'est trop cher.", "q": ["C'est le prix de la tranquillité.", "Trop cher par rapport à quoi : à votre budget, ou à ce que vous utilisez vraiment ?", "Tous les contrats ont augmenté cette année, ce n'est pas propre à nous."], "qb": 1, "qx": "Justifier le prix ou l'augmentation, c'est défendre le contrat au lieu d'écouter le client. La bonne question distingue deux objections différentes : un budget trop serré, ou des garanties qui ne servent pas.", "pr": "Je paie 160 € par mois et je ne vais presque jamais chez le médecin. Sauf les lunettes et le dentiste.", "r": ["Alors regardons vos garanties poste par poste : renforcer l'optique et le dentaire que vous utilisez, et alléger ce qui ne vous sert pas. Avec votre dernier relevé de remboursements, c'est l'affaire d'un rendez-vous.", "Je peux vous faire un geste commercial sur la cotisation.", "À votre âge, il vaut mieux garder les meilleures garanties partout."], "rb": 0, "rx": "Le geste commercial traite le prix sans traiter le besoin. Garder « les meilleures garanties partout » contredit ce qu'il vient de dire. La bonne réponse ajuste la garantie à son usage réel — c'est aussi la meilleure réponse au prix."}, {"o": 2, "ctx": "Appel sortant · Mme Petit, 34 ans, deux enfants, à qui vous avez présenté une garantie décès la semaine dernière.", "dit": "J'y ai réfléchi : c'est trop cher pour nous.", "q": ["Je comprends. Trop cher par rapport à ce que vous pouvez mettre de côté chaque mois ?", "C'est moins d'un euro par jour !", "Vous préférez prendre le risque ?"], "qb": 0, "qx": "Ramener le prix à l'euro par jour, c'est nier la contrainte. « Prendre le risque » culpabilise. La bonne question vérifie si le problème est le budget — et, si oui, de combien.", "pr": "Oui. On est déjà juste chaque mois, 35 €, ce n'est pas possible.", "r": ["Je comprends, on en reparlera l'année prochaine.", "Je vous l'envoie par courrier, vous verrez à tête reposée.", "Alors partons de votre budget : quel montant serait supportable ? On garde l'essentiel — un capital pour les enfants — et on laisse le reste pour plus tard."], "rb": 2, "rx": "Reporter à l'année prochaine abandonne un besoin réel — deux enfants. Le courrier repousse la décision sans rien régler. La bonne réponse construit la garantie à partir du budget, en commençant par ce qui protège le plus."}, {"o": 3, "ctx": "Appel sortant · M. Lambert, 40 ans, marié, à qui vous proposez un bilan de protection.", "dit": "Il faut que j'en parle à ma femme.", "q": ["Vous ne pouvez pas décider seul ?", "Très bien, je vous rappelle la semaine prochaine.", "Bien sûr. Qu'est-ce qu'elle aura envie de savoir, à votre avis ?"], "qb": 2, "qx": "« Décider seul » blesse. « Je vous rappelle » accepte sans rien apprendre. La bonne question respecte la démarche et fait dire au client ce qui comptera pour son épouse — donc ce qu'il faut préparer.", "pr": "Combien ça coûte, et si ça fait doublon avec ce qu'on a déjà.", "r": ["Le mieux, c'est qu'elle ait les réponses directement : je vous propose un rendez-vous à deux, mardi 18 h ou samedi 10 h, avec vos contrats actuels pour vérifier les doublons.", "Je vous envoie la documentation, vous me redites.", "Il n'y a aucun doublon, je vous assure."], "rb": 0, "rx": "La documentation ne répondra pas à « doublon » : elle parle du produit, pas de leurs contrats. Affirmer qu'il n'y a pas de doublon sans avoir vu leurs contrats est une promesse sans fondement. Le rendez-vous à deux est la seule réponse aux deux questions."}, {"o": 3, "ctx": "Appel sortant · M. Simon, 55 ans, à qui vous proposez de faire travailler une épargne.", "dit": "Il faut que j'en parle à ma compagne…", "q": ["Bien sûr. Qu'est-ce qu'elle aura envie de savoir, à votre avis ?", "Quand pouvez-vous me rappeler ?", "Elle sera d'accord, j'en suis sûr."], "qb": 0, "qx": "Même objection, même bonne question — c'est la réponse du client qui change. Fixer un rappel ou présumer l'accord de sa compagne, c'est ne pas chercher ce que cache l'objection.", "pr": "Honnêtement… je ne suis pas sûr que ça m'intéresse.", "r": ["Je comprends, mais réfléchissez quand même, c'est une belle opportunité.", "Très bien, au revoir.", "Merci de me le dire franchement. Qu'est-ce qui vous fait hésiter ?"], "rb": 2, "rx": "Ici, « j'en parle à ma compagne » était un non poli. Insister le confirmera ; raccrocher fait perdre l'information. La bonne réponse remercie et cherche la raison : s'il n'y a pas de besoin, on s'arrête là — mais on le saura."}, {"o": 4, "ctx": "Appel sortant · Mme Garnier, 45 ans : livret A plein et 30 000 € sur son compte courant ; elle a accepté d'être contactée sur son épargne.", "dit": "Je préfère garder mon livret A.", "q": ["Le livret A ne rapporte presque rien, vous savez.", "Qu'est-ce qui vous plaît dans le livret A ?", "Vous ne voulez pas gagner plus ?"], "qb": 1, "qx": "Dénigrer le livret A, c'est critiquer le choix de la cliente. « Gagner plus » présume ce qu'elle cherche. La bonne question fait dire ce qu'elle valorise — c'est ce qu'il faudra retrouver dans la proposition.", "pr": "Je peux retirer quand je veux, et je ne perds jamais rien.", "r": ["Avec l'inflation, vous perdez de l'argent chaque année : il faut investir en unités de compte.", "Ce sont deux bonnes raisons : gardons le livret A pour ce qui doit rester disponible. Pour la partie de vos 30 000 € dont vous n'aurez pas besoin avant longtemps, il existe un support dont le capital est garanti aussi. On en parle ?", "Les unités de compte rapportent beaucoup plus sur la durée."], "rb": 1, "rx": "Ses deux critères sont la disponibilité et la garantie du capital. Proposer des unités de compte, c'est lui répondre l'inverse de ce qu'elle a dit. La bonne réponse garde le livret A pour son rôle et ne propose, pour l'argent qui dort, qu'un support qui respecte la garantie du capital."}, {"o": 4, "ctx": "Appel sortant · M. Morel, 60 ans, a accepté l'an dernier d'être contacté sur son épargne.", "l1": "1 · Votre réponse", "l2": "2 · Après l'appel", "dit": "Je préfère mon livret A. Et franchement, arrêtez de m'appeler pour ça.", "q": ["Je comprends, mais laissez-moi juste vous expliquer en deux minutes…", "C'est dommage, vous passez à côté de quelque chose.", "Entendu, je le note : vous ne serez plus appelé pour vous proposer des placements. Je reste votre conseiller pour tout ce dont vous aurez besoin."], "qb": 2, "qx": "Il retire son consentement : la sollicitation s'arrête là, sans argument de plus. La bonne réponse en prend acte clairement, sans reproche, et rappelle que la relation continue pour le reste.", "pr": "Merci. Bonne journée.", "r": ["Le rappeler dans deux mois, quand il sera mieux disposé.", "Le noter dans le dossier, avec la date, pour qu'aucun collègue ne le rappelle pour lui proposer un produit.", "Lui envoyer la proposition par courrier à la place."], "rb": 1, "rx": "Depuis le 11 août 2026, un consommateur qui s'oppose au démarchage ne peut plus être rappelé pour cela, sans limite de durée. L'opposition ne vaut que si elle est connue de tous : elle se trace. Le courrier n'est pas visé par cette règle, mais l'envoyer aussitôt, c'est ne pas entendre qu'il ne veut pas de cette proposition."}]};
+let etat = [];
+function el(id){ return document.getElementById(id); }
+function opts(i, s, list){
+  return list.map(function(o, j){
+    return '<label id="lab_' + s + '_' + i + '_' + j + '"><input type="radio" name="q' + s + '_' + i + '" id="r_' + s + '_' + i + '_' + j + '"><span>' + o + '</span></label>';
+  }).join("");
+}
+function render(){
+  el("situations").innerHTML = D.items.map(function(it, i){
+    return '<div class="sit" id="sit_' + i + '"><div class="num">Situation ' + (i + 1) + '<span class="tag">' + D.obj[it.o] + '</span></div>' +
+      '<div class="ctx">' + it.ctx + '</div>' +
+      '<div class="objection">« ' + it.dit + ' »</div>' +
+      '<div class="etape">' + (it.l1 || "1 · La question qui la fait préciser") + '</div><div class="opts">' + opts(i, 1, it.q) + '</div>' +
+      '<div class="row-act"><button class="btn btn-primary" id="bv1_' + i + '" disabled>Valider</button></div>' +
+      '<div class="corr" id="c1_' + i + '"></div>' +
+      '<div class="precise" id="pr_' + i + '"><b>Le client :</b> « ' + it.pr + ' »</div>' +
+      '<div class="step2" id="s2_' + i + '"><div class="etape">' + (it.l2 || "2 · Votre réponse") + '</div><div class="opts">' + opts(i, 2, it.r) + '</div>' +
+      '<div class="row-act"><button class="btn btn-primary" id="bv2_' + i + '" disabled>Valider</button></div>' +
+      '<div class="corr" id="c2_' + i + '"></div></div></div>';
+  }).join("");
+  D.items.forEach(function(it, i){
+    [[1, it.q], [2, it.r]].forEach(function(p){
+      const s = p[0];
+      p[1].forEach(function(_, j){
+        el("r_" + s + "_" + i + "_" + j).addEventListener("change", function(){
+          if(etat[i]["v" + s]) return;
+          etat[i]["c" + s] = j;
+          p[1].forEach(function(_, m){ el("lab_" + s + "_" + i + "_" + m).classList.toggle("sel", m === j); });
+          el("bv" + s + "_" + i).disabled = false;
+        });
+      });
+      el("bv" + s + "_" + i).addEventListener("click", function(){ valider(i, s); });
+    });
+  });
+  global();
+}
+function valider(i, s){
+  const it = D.items[i], e = etat[i], list = s === 1 ? it.q : it.r, bon = s === 1 ? it.qb : it.rb, x = s === 1 ? it.qx : it.rx;
+  e["v" + s] = true; e["ok" + s] = e["c" + s] === bon;
+  list.forEach(function(_, j){
+    const lab = el("lab_" + s + "_" + i + "_" + j); lab.classList.remove("sel"); el("r_" + s + "_" + i + "_" + j).disabled = true;
+    if(j === bon) lab.classList.add(e["ok" + s] ? "good" : "attendu"); else if(j === e["c" + s]) lab.classList.add("bad");
+  });
+  const bv = el("bv" + s + "_" + i); bv.textContent = "✓ Atelier validé"; bv.className = "btn btn-done"; bv.disabled = true;
+  const c = el("c" + s + "_" + i); c.className = "corr show";
+  c.innerHTML = '<p><b>' + (e["ok" + s] ? '✓ Juste.' : '✗ Ce n’est pas celle-là.') + '</b> ' + x + '</p>';
+  if(s === 1){ el("pr_" + i).classList.add("show"); el("s2_" + i).classList.add("show"); }
+  else el("sit_" + i).classList.add("done");
+  global();
+}
+function global(){
+  const N = D.items.length, fini = etat.filter(function(e){ return e.v2; }).length;
+  const sc = etat.reduce(function(a, e){ return a + (e.ok1 ? 1 : 0) + (e.ok2 ? 1 : 0); }, 0);
+  const n = etat.reduce(function(a, e){ return a + (e.v1 ? 1 : 0) + (e.v2 ? 1 : 0); }, 0);
+  el("fill").style.width = (fini / N * 100) + "%";
+  el("plabel").textContent = fini + " / " + N + " situation" + (fini > 1 ? "s terminées" : " terminée");
+  el("score").textContent = n ? sc : "—";
+  if(fini < N){ el("result").classList.remove("show"); return; }
+  el("res-score").textContent = sc + " / 20";
+  el("res-score").style.color = sc >= 16 ? "var(--ok)" : (sc >= 12 ? "var(--amber)" : "var(--ko)");
+  let t, m;
+  if(sc === 20){ t = "Sans faute."; m = "Vous faites préciser avant de répondre, et votre réponse part de ce que le client a dit. Reste à le faire en direct : c'est l'objet du tour 1."; }
+  else if(sc >= 16){ t = "Presque."; m = "Relisez les situations manquées : la mauvaise réponse est souvent celle qui argumente contre l'objection au lieu de l'explorer."; }
+  else if(sc >= 12){ t = "À consolider."; m = "Le piège le plus fréquent : répondre à ce que le client a dit, pas à ce qu'il voulait dire."; }
+  else { t = "À reprendre."; m = "Signalez-le au formateur : les appels du tour 1 reposent sur ces réflexes."; }
+  el("res-title").textContent = t; el("res-msg").textContent = m;
+  el("recap").innerHTML = D.obj.map(function(o, k){
+    let ok = 0, tot = 0;
+    D.items.forEach(function(it, i){ if(it.o === k){ tot += 2; ok += (etat[i].ok1 ? 1 : 0) + (etat[i].ok2 ? 1 : 0); } });
+    const c = ok === tot ? "var(--ok)" : (ok === 0 ? "var(--ko)" : "var(--amber)");
+    return '<div class="recap-row"><span class="dot" style="background:' + c + '"></span><span class="lab">' + o + '</span><span class="sc">' + ok + ' / ' + tot + '</span></div>';
+  }).join("");
+  el("result").classList.add("show");
+}
+function reinitialiser(){
+  etat = D.items.map(function(){ return {c1:null, c2:null, v1:false, v2:false, ok1:false, ok2:false}; });
+  render(); window.scrollTo({top:0, behavior:"smooth"});
+}
+reinitialiser();
+["copy","cut","paste","contextmenu","dragstart"].forEach(function(ev){ document.addEventListener(ev, function(e){ e.preventDefault(); }); });
+document.addEventListener("keydown", function(e){
+  if((e.ctrlKey || e.metaKey) && ["c","x","v","u","s","p"].indexOf(e.key.toLowerCase()) > -1){ e.preventDefault(); }
+});
+</script>
+</body>
+</html>

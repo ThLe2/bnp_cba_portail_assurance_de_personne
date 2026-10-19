@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exercice — De quoi parle le client ?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Karla:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#16243B;--bleu:#1F4E79;--bleu-clair:#2E75B6;--or:#B08D57;--creme:#F5F2EB;--card:#FFFFFF;
+  --line:#e3ddd0;--muted:#6B6459;--ok:#2F7A4F;--ko:#B23B3B;--amber:#B5852A;--shadow:0 2px 10px rgba(22,36,59,.07);}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Karla',system-ui,sans-serif;background:var(--creme);color:var(--navy);line-height:1.55;-webkit-user-select:none;user-select:none}
+.wrap{max-width:1120px;margin:0 auto;padding:26px 18px 60px}
+.card-main{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);overflow:hidden}
+.header{padding:26px 34px 0}
+.chapter-tag{font-size:11.5px;font-weight:700;letter-spacing:1.6px;text-transform:uppercase;color:var(--or)}
+.chapter-tag span{opacity:.5}
+h1{font-family:'Fraunces',serif;font-weight:600;font-size:27px;line-height:1.2;margin:8px 0 5px}
+.header p{color:var(--muted);font-size:14.5px}
+.gold-rule{border:none;border-top:2px solid var(--or);width:64px;margin:18px 0 0}
+.body{padding:22px 34px 30px}
+.consigne{background:#FBF7EE;border:1px solid var(--line);border-left:3px solid var(--or);border-radius:8px;padding:14px 17px;font-size:14px;margin-bottom:22px}
+.meta{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:18px}
+.progress{flex:1;min-width:220px}
+.track{height:8px;background:#e6e0d3;border-radius:99px;overflow:hidden}
+.fill{height:100%;width:0;background:var(--bleu-clair);transition:width .3s}
+.plabel{font-size:12.5px;color:var(--muted);margin-top:6px}
+.scorepill{background:var(--navy);color:#fff;border-radius:99px;padding:6px 15px;font-size:13px;font-weight:600}
+.part{margin-bottom:30px}
+.part-head{display:flex;align-items:baseline;gap:11px;margin-bottom:6px}
+.part-num{background:var(--navy);color:#fff;border-radius:99px;width:25px;height:25px;display:inline-flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0}
+.part-head h2{font-family:'Fraunces',serif;font-size:20px;font-weight:600}
+.part-sub{font-size:13.5px;color:var(--muted);margin:0 0 15px 36px}
+.pool{border:1px dashed var(--line);border-radius:12px;padding:14px;background:#FCFAF5;margin-bottom:20px;min-height:80px}
+.pool-title{font-size:11px;font-weight:700;letter-spacing:1.3px;text-transform:uppercase;color:var(--muted);margin-bottom:11px}
+.chips{display:flex;flex-wrap:wrap;gap:9px}
+.chip{background:#fff;border:1.5px solid var(--line);border-radius:9px;padding:9px 13px;font-size:13.5px;cursor:pointer;max-width:330px;text-align:left;transition:border-color .15s,box-shadow .15s,transform .12s}
+.chip:hover{border-color:var(--bleu-clair)}
+.chip.sel{border-color:var(--bleu);box-shadow:0 0 0 3px rgba(31,78,121,.14);transform:translateY(-1px)}
+.chip.done{cursor:default}
+.chip.good{border-color:var(--ok);background:#F2F8F4}
+.chip.bad{border-color:var(--ko);background:#FBF3F3}
+.chip .fix{display:block;font-size:12px;color:var(--muted);margin-top:6px;padding-top:6px;border-top:1px solid var(--line)}
+.chip .fix b{color:var(--navy)}
+.cols{display:grid;grid-template-columns:repeat(4,1fr);gap:13px}
+@media(max-width:980px){.cols{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.cols{grid-template-columns:1fr}.chip{max-width:100%}}
+.col{border:1.5px solid var(--line);border-radius:12px;background:#fff;padding:13px;min-height:200px;transition:border-color .15s,background .15s}
+.col.armed{border-color:var(--bleu-clair);background:#F7FAFD;cursor:pointer}
+.col h3{font-family:'Fraunces',serif;font-size:15px;font-weight:600;line-height:1.3;margin-bottom:4px}
+.col .sub{font-size:11.5px;color:var(--muted);margin-bottom:12px}
+.col .slots{display:flex;flex-direction:column;gap:8px}
+.col .empty{font-size:12px;color:#a89f92;font-style:italic;padding:8px 0}
+.params{background:#FCFAF5;border:1px dashed var(--line);border-radius:10px;padding:14px 16px;margin-bottom:18px}
+.params-title{font-size:11px;font-weight:700;letter-spacing:1.3px;text-transform:uppercase;color:var(--muted);margin-bottom:10px;display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.src{font-weight:600;letter-spacing:0;text-transform:none;font-size:11.5px;padding:2px 9px;border-radius:99px}
+.src.live{background:#E8F2EA;color:var(--ok)}.src.local{background:#FBF1DC;color:var(--amber)}
+.plist{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:8px 20px}
+.prow{display:flex;justify-content:space-between;gap:12px;font-size:13.5px;border-bottom:1px dotted var(--line);padding-bottom:4px}
+.prow span:last-child{font-weight:700;white-space:nowrap}
+.dossier{background:#EEF4F9;border:1px solid #cddced;border-radius:10px;padding:14px 17px;margin-bottom:18px}
+.dossier h3{font-family:'Fraunces',serif;font-size:16px;margin-bottom:9px}
+.dossier .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:6px 20px}
+.dossier .r{display:flex;justify-content:space-between;gap:12px;font-size:13.5px;border-bottom:1px dotted #cddced;padding-bottom:3px}
+.dossier .r b{white-space:nowrap}
+.cas{border:1.5px solid var(--line);border-radius:12px;padding:16px 18px;background:#fff}
+.champ{margin-bottom:14px}
+.champ label{display:block;font-size:12px;font-weight:600;color:var(--muted);margin-bottom:5px}
+.champ .inrow{display:flex;align-items:center;gap:8px}
+.champ input{width:140px;padding:9px 11px;border:1.5px solid var(--line);border-radius:7px;font-family:inherit;font-size:14.5px;font-variant-numeric:tabular-nums;text-align:right;background:#fff;color:var(--navy);-webkit-user-select:text;user-select:text}
+.champ input:focus{outline:none;border-color:var(--bleu);box-shadow:0 0 0 3px rgba(31,78,121,.12)}
+.champ input.good{border-color:var(--ok);background:#F2F8F4}
+.champ input.bad{border-color:var(--ko);background:#FBF3F3}
+.champ .unit{font-size:14px;color:var(--muted)}
+.champ .corr{font-size:12.5px;margin-top:7px;display:none}
+.champ .corr.show{display:block}
+.champ .corr b{color:var(--navy)}
+.actions{margin-top:8px;display:flex;gap:12px;flex-wrap:wrap}
+.btn{border:none;border-radius:9px;padding:13px 24px;font-family:inherit;font-size:14.5px;font-weight:700;cursor:pointer}
+.btn-primary{background:var(--bleu);color:#fff}.btn-primary:disabled{background:#c9c2b6;cursor:not-allowed}
+.btn-secondary{background:#fff;color:var(--bleu);border:1.5px solid var(--bleu)}
+.result{display:none;margin-top:24px;border-radius:12px;padding:20px 22px;border:1px solid var(--line);background:#FBF7EE}
+.result.show{display:block}
+.result h2{font-family:'Fraunces',serif;font-size:21px;font-weight:600;margin-bottom:6px}
+.result .big{font-size:34px;font-weight:700;font-family:'Fraunces',serif}
+.result p{font-size:14px;color:var(--muted)}
+.footer{text-align:center;font-size:11.5px;color:var(--muted);padding:16px 34px 24px;border-top:1px solid var(--line)}
+.dbl{border:1.5px solid var(--line);border-radius:12px;padding:15px 17px;margin-bottom:13px;background:#fff}
+.dbl .phrase{font-size:15px;font-style:italic;font-weight:700;color:var(--navy);margin-bottom:11px}
+.dbl .opts{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}
+@media(max-width:760px){.dbl .opts{grid-template-columns:repeat(2,1fr)}}
+.dbl label{display:flex;align-items:center;gap:8px;font-size:13.5px;border:1.5px solid var(--line);border-radius:8px;padding:9px 11px;cursor:pointer;background:#fff}
+.dbl label:hover{border-color:var(--bleu-clair)}
+.dbl label.sel{border-color:var(--bleu);background:#F7FAFD}
+.dbl label.good{border-color:var(--ok);background:#F2F8F4}
+.dbl label.bad{border-color:var(--ko);background:#FBF3F3}
+.dbl label.manque{border-color:var(--amber);background:#FFF8E8}
+.dbl .corr{font-size:12.5px;margin-top:10px;display:none}
+.dbl .corr.show{display:block}
+.dbl .corr b{color:var(--navy)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card-main">
+    <div class="header">
+      <div class="chapter-tag">TMK Performances · Conso des acquis 3/4 <span>/</span> Séquence 2</div>
+      <h1>De quoi parle le client ?</h1>
+      <p>12 demandes à ranger · 3 doubles entrées à identifier · aucun calcul</p>
+      <hr class="gold-rule">
+    </div>
+    <div class="body">
+      <div class="consigne">
+        <b>🎯 Consigne :</b> douze phrases de clients, telles qu'elles se disent au téléphone. Aucune ne nomme
+        un dispositif. Rangez-les d'abord selon leur <b>entrée principale</b> — de quoi le client parle-t-il vraiment ?
+        Puis, sur trois d'entre elles, dites quels domaines sont mobilisés : il y en a <b>deux à chaque fois</b>.
+        Aucun calcul dans cet exercice. Ce qui compte, c'est ce qui vous fait hésiter.
+      </div>
+
+      <div class="meta">
+        <div class="progress">
+          <div class="track"><div class="fill" id="fill"></div></div>
+          <div class="plabel" id="plabel">0 / 15 réponse donnée</div>
+        </div>
+        <div class="scorepill">Score&nbsp;: <b id="score">—</b> / 15</div>
+      </div>
+
+      <div class="part">
+        <div class="part-head"><span class="part-num">1</span><h2>Ranger les douze demandes</h2></div>
+        <p class="part-sub">Cliquez une phrase, puis la colonne où elle doit aller. Pour la retirer, cliquez-la de nouveau.</p>
+        <div class="pool"><div class="pool-title">Demandes à placer</div><div class="chips" id="pool"></div></div>
+        <div class="cols" id="cols"></div>
+      </div>
+
+      <div class="part">
+        <div class="part-head"><span class="part-num">2</span><h2>Les doubles entrées</h2></div>
+        <p class="part-sub">Pour chacune de ces trois demandes, cochez les <b>deux</b> domaines mobilisés.</p>
+        <div id="cas"></div>
+      </div>
+
+      <div class="actions">
+        <button class="btn btn-primary" id="btn-validate" disabled onclick="valider()">Valider mes réponses</button>
+        <button class="btn btn-secondary" id="btn-reset" onclick="reinitialiser()">↻ Recommencer</button>
+      </div>
+
+      <div class="result" id="result">
+        <h2 id="res-title">—</h2>
+        <p><span class="big" id="res-score">0 / 15</span></p>
+        <p id="res-msg"></p>
+      </div>
+    </div>
+    <div class="footer">TMK Performances - N° Siret : 49841924100027 - Code NAF : 8559A</div>
+  </div>
+</div>
+
+<script>
+/* ─────────── Partie 1 : ranger les demandes par entrée principale ─────────── */
+const COLONNES = [
+  {id:"A", nom:"Un revenu qui s'arrête",        sub:"Prévoyance"},
+  {id:"B", nom:"Une dépense de santé qui tombe", sub:"Santé"},
+  {id:"C", nom:"Un revenu à préparer",           sub:"Retraite"},
+  {id:"D", nom:"Un capital à placer ou à retirer", sub:"Épargne"},
+];
+
+const DEMANDES = [
+  {id:1,  c:"A", txt:"« Je suis arrêté depuis un mois et ma paie a fondu. »",
+   expl:"Un revenu qui s'interrompt : indemnités journalières, puis éventuel maintien de salaire. Deux étages, deux carences."},
+  {id:2,  c:"A", txt:"« Mon médecin parle de me mettre en invalidité, qu'est-ce que ça change ? »",
+   expl:"Toujours un revenu, mais qui ne reprendra pas : on passe des indemnités journalières à une pension. Attention à la deuxième entrée — ces périodes construisent aussi des droits à la retraite."},
+  {id:3,  c:"A", txt:"« Mon père est décédé, est-ce qu'il y a quelque chose à demander ? »",
+   expl:"Le mot « demander » est le signal : le capital décès du régime général ne se verse jamais tout seul. Et le mot « décès » ouvre potentiellement trois domaines à la fois."},
+  {id:4,  c:"B", txt:"« Le dentiste me propose un devis à 900 €, je vais payer combien ? »",
+   expl:"Une dépense de soins qui tombe. La question porte sur le reste à charge, donc sur la base de remboursement et le panier retenu — jamais sur le prix affiché."},
+  {id:5,  c:"B", txt:"« On me parle de contrat responsable dans ma nouvelle mutuelle. »",
+   expl:"Vocabulaire de la complémentaire santé : ce qu'elle doit couvrir, et ce qu'elle ne couvrira jamais quel que soit son niveau."},
+  {id:6,  c:"B", txt:"« J'ai vu un spécialiste sans passer par mon médecin traitant. »",
+   expl:"Le parcours de soins, donc le remboursement d'un acte. Le mot-signal est « sans passer par » : il annonce une minoration."},
+  {id:7,  c:"C", txt:"« J'ai reçu mon relevé de carrière, je n'y comprends rien. »",
+   expl:"Un revenu à préparer. Le relevé porte les trimestres du régime de base ; les points de la complémentaire figurent ailleurs."},
+  {id:8,  c:"C", txt:"« À quel âge est-ce que je pourrai partir ? »",
+   expl:"Deux conditions cumulatives à vérifier : la durée d'assurance et l'âge légal de sa génération. Elles ne tombent pas à la même date."},
+  {id:9,  c:"C", txt:"« J'ai travaillé dix ans en Allemagne, est-ce que ça compte ? »",
+   expl:"Question de carrière, donc de retraite. Le mot « compte » renvoie aux trimestres et à la coordination entre régimes."},
+  {id:10, c:"D", txt:"« J'ai touché un héritage, où est-ce que je le mets ? »",
+   expl:"Un capital à placer. Avant tout produit : quel horizon, quelle disponibilité, quelle fiscalité, quel risque."},
+  {id:11, c:"D", txt:"« Je veux récupérer 20 000 € sur mon assurance vie. »",
+   expl:"Un capital à retirer. Seule la part de gains contenue dans le retrait est imposable, et l'ancienneté du contrat commande le régime."},
+  {id:12, c:"D", txt:"« On m'a parlé d'un PER pour payer moins d'impôts. »",
+   expl:"Un capital à placer, avec une contrepartie fiscale à l'entrée. Le mot « impôts » ne fait pas de cette demande une question fiscale : c'est un arbitrage d'épargne."},
+];
+
+let place = {}, selection = null, valide = false;
+
+function chip(e){
+  const b = document.createElement("button");
+  b.type = "button";
+  b.className = "chip" + (selection === e.id ? " sel" : "");
+  let html = e.txt;
+  if(valide){
+    const bon = place[e.id] === e.c;
+    b.className = "chip done " + (bon ? "good" : "bad");
+    const attendu = COLONNES.find(function(c){ return c.id === e.c; });
+    html += '<span class="fix">' + (bon ? "✓ " : '✗ entrée principale : « ' + attendu.nom + ' » — ') + e.expl + '</span>';
+  } else {
+    b.onclick = function(ev){ ev.stopPropagation(); cliquer(e.id); };
+  }
+  b.innerHTML = html;
+  return b;
+}
+function renderCols(){
+  const pool = el("pool"); pool.innerHTML = "";
+  const libres = DEMANDES.filter(function(e){ return !place[e.id]; });
+  if(!libres.length && !valide) pool.innerHTML = '<div style="font-size:12.5px;color:#a89f92;font-style:italic">Toutes les demandes sont placées.</div>';
+  libres.forEach(function(e){ pool.appendChild(chip(e)); });
+  const cols = el("cols"); cols.innerHTML = "";
+  COLONNES.forEach(function(r){
+    const d = document.createElement("div");
+    d.className = "col" + (selection && !valide ? " armed" : "");
+    d.innerHTML = '<h3>' + r.nom + '</h3><div class="sub">' + r.sub + '</div>';
+    const slots = document.createElement("div"); slots.className = "slots";
+    const dedans = DEMANDES.filter(function(e){ return place[e.id] === r.id; });
+    if(!dedans.length) slots.innerHTML = '<div class="empty">Aucune demande</div>';
+    dedans.forEach(function(e){ slots.appendChild(chip(e)); });
+    d.appendChild(slots);
+    if(!valide) d.onclick = function(ev){ if(ev.target.closest(".chip")) return; deposer(r.id); };
+    cols.appendChild(d);
+  });
+  majProgression();
+}
+function cliquer(id){
+  if(valide) return;
+  if(place[id]){ delete place[id]; selection = null; renderCols(); return; }
+  selection = (selection === id) ? null : id;
+  renderCols();
+}
+function deposer(cid){ if(valide || !selection) return; place[selection] = cid; selection = null; renderCols(); }
+
+/* ─────────── Partie 2 : les doubles entrées ─────────── */
+const DOMAINES = [
+  {id:"PREV", lab:"Prévoyance"},
+  {id:"SANTE", lab:"Santé"},
+  {id:"RETR", lab:"Retraite"},
+  {id:"EPAR", lab:"Épargne"},
+];
+const DOUBLES = [
+  {id:"x", phrase:"« Je suis en invalidité depuis deux ans ; est-ce que je continue à me constituer une retraite ? »",
+   bons:["PREV","RETR"],
+   expl:"Les périodes d'invalidité <b>valident des trimestres</b> : sa carrière continue de se construire, même sans activité. " +
+        "C'est le lien le plus utile de la journée, et celui qu'un conseiller oublie le plus souvent de mentionner — laissant le client croire que tout s'est arrêté."},
+  {id:"y", phrase:"« Je suis en affection de longue durée ; dois-je continuer à mettre de l'argent de côté pour mes frais de santé ? »",
+   bons:["SANTE","EPAR"],
+   expl:"L'affection de longue durée exonère du ticket modérateur, mais laisse subsister participations, franchises et dépassements. " +
+        "Ces restes à charge deviennent <b>réguliers et prévisibles</b> : la question de l'épargne de précaution se pose alors autrement, avec un montant qu'on peut estimer."},
+  {id:"z", phrase:"« Je pars à la retraite dans six mois ; qu'est-ce que je fais de mon assurance vie ? »",
+   bons:["RETR","EPAR"],
+   expl:"Deux décisions qui se commandent l'une l'autre. Le niveau de revenus à la retraite détermine la tranche marginale, " +
+        "qui détermine à son tour l'arbitrage sur le contrat — et sur une éventuelle sortie de PER. Traiter l'un sans l'autre conduit à un mauvais conseil."},
+];
+let coches = {x:[], y:[], z:[]};
+
+function renderCas(){
+  el("cas").innerHTML = DOUBLES.map(function(d){
+    const opts = DOMAINES.map(function(dom){
+      return '<label id="lab_' + d.id + '_' + dom.id + '" data-d="' + d.id + '" data-dom="' + dom.id + '">' +
+             '<input type="checkbox" id="cb_' + d.id + '_' + dom.id + '"><span>' + dom.lab + '</span></label>';
+    }).join("");
+    return '<div class="dbl"><div class="phrase">' + d.phrase + '</div><div class="opts">' + opts + '</div>' +
+           '<div class="corr" id="corrd_' + d.id + '"></div></div>';
+  }).join("");
+  DOUBLES.forEach(function(d){
+    DOMAINES.forEach(function(dom){
+      const cb = el("cb_" + d.id + "_" + dom.id), lab = el("lab_" + d.id + "_" + dom.id);
+      cb.addEventListener("change", function(){
+        if(valide){ cb.checked = !cb.checked; return; }
+        const i = coches[d.id].indexOf(dom.id);
+        if(cb.checked && i < 0) coches[d.id].push(dom.id);
+        if(!cb.checked && i > -1) coches[d.id].splice(i, 1);
+        lab.classList.toggle("sel", cb.checked);
+        majProgression();
+      });
+    });
+  });
+  majProgression();
+}
+
+const TOTAL = 12 + 3;
+function nbRepondu(){
+  let n = Object.keys(place).length;
+  DOUBLES.forEach(function(d){ if(coches[d.id].length === 2) n++; });
+  return n;
+}
+function majProgression(){
+  const n = nbRepondu();
+  el("fill").style.width = (n / TOTAL * 100) + "%";
+  el("plabel").textContent = n + " / " + TOTAL + " réponse" + (n > 1 ? "s données" : " donnée");
+  el("btn-validate").disabled = valide || n !== TOTAL;
+}
+
+function valider(){
+  valide = true;
+  let score = 0;
+  DEMANDES.forEach(function(e){ if(place[e.id] === e.c) score++; });
+  renderCols();
+  DOUBLES.forEach(function(d){
+    const choisis = coches[d.id].slice().sort().join(",");
+    const attendus = d.bons.slice().sort().join(",");
+    const bon = choisis === attendus;
+    if(bon) score++;
+    DOMAINES.forEach(function(dom){
+      const lab = el("lab_" + d.id + "_" + dom.id);
+      const coche = coches[d.id].indexOf(dom.id) > -1;
+      const attendu = d.bons.indexOf(dom.id) > -1;
+      lab.classList.remove("sel");
+      if(coche && attendu) lab.classList.add("good");
+      else if(coche && !attendu) lab.classList.add("bad");
+      else if(!coche && attendu) lab.classList.add("manque");
+    });
+    const corr = el("corrd_" + d.id);
+    corr.className = "corr show";
+    const noms = d.bons.map(function(b){ return DOMAINES.find(function(x){ return x.id === b; }).lab; }).join(" + ");
+    corr.innerHTML = (bon ? "✓ " : "✗ ") + "<b>" + noms + "</b> — " + d.expl;
+  });
+  el("score").textContent = score;
+  el("res-score").textContent = score + " / " + TOTAL;
+  let t, m;
+  if(score === TOTAL){ t = "Sans faute."; m = "Vous savez de quoi parle un client avant qu'il ne le dise. C'est exactement ce qu'il fallait."; }
+  else if(score >= 12){ t = "Presque."; m = "Le tri est acquis. Regardez les doubles entrées : c'est là que se joue la journée."; }
+  else if(score >= 8){ t = "À consolider."; m = "Certaines demandes vous égarent encore. Reprenez les corrections avant le premier cas."; }
+  else { t = "À reprendre."; m = "Signalez-le au formateur : les cas de la journée supposent ce tri acquis."; }
+  el("res-title").textContent = t;
+  el("res-score").style.color = score >= 12 ? "var(--ok)" : (score >= 8 ? "var(--amber)" : "var(--ko)");
+  el("res-msg").textContent = m;
+  el("result").classList.add("show");
+  el("btn-validate").disabled = true;
+  el("result").scrollIntoView({behavior:"smooth", block:"nearest"});
+}
+function reinitialiser(){
+  valide = false; place = {}; selection = null; coches = {x:[], y:[], z:[]};
+  el("score").textContent = "—";
+  el("result").classList.remove("show");
+  renderCols(); renderCas();
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+function el(id){ return document.getElementById(id); }
+
+for(let i = DEMANDES.length - 1; i > 0; i--){
+  const j = Math.floor(Math.random() * (i + 1));
+  const tmp = DEMANDES[i]; DEMANDES[i] = DEMANDES[j]; DEMANDES[j] = tmp;
+}
+renderCols(); renderCas();
+
+["copy","cut","contextmenu","dragstart"].forEach(function(ev){ document.addEventListener(ev, function(e){ e.preventDefault(); }); });
+document.addEventListener("keydown", function(e){
+  if((e.ctrlKey || e.metaKey) && ["c","x","u","s","p"].indexOf(e.key.toLowerCase()) > -1){ e.preventDefault(); }
+});
+
+</script>
+</body>
+</html>

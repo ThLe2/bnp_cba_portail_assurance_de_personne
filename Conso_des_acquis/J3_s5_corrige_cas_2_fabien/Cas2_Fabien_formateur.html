@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cas 2 — Fabien, 44 ans · Corrigé formateur</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Karla:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#16243B; --bleu:#1F4E79; --bleu-clair:#2E75B6; --or:#B08D57;
+  --creme:#F5F2EB; --card:#FFFFFF; --line:#e3ddd0; --muted:#6B6459;
+  --ok:#2F7A4F; --ko:#B23B3B; --amber:#B5852A;
+  --shadow:0 2px 10px rgba(22,36,59,.07);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Karla',system-ui,sans-serif;background:var(--creme);color:var(--navy);line-height:1.55}
+.wrap{max-width:1000px;margin:0 auto;padding:26px 18px 70px}
+.card-main{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);overflow:hidden}
+.header{padding:26px 34px 0}
+.chapter-tag{font-size:11.5px;font-weight:700;letter-spacing:1.6px;text-transform:uppercase;color:var(--or)}
+.chapter-tag span{opacity:.5}
+h1{font-family:'Fraunces',serif;font-weight:600;font-size:27px;line-height:1.2;margin:8px 0 5px}
+.header p{color:var(--muted);font-size:14.5px}
+.gold-rule{border:none;border-top:2px solid var(--or);width:64px;margin:18px 0 0}
+.body{padding:22px 34px 30px}
+
+.warn{background:#FBF1DC;border:1px solid #E6D3A8;border-left:3px solid var(--amber);border-radius:8px;padding:13px 16px;font-size:13.5px;margin-bottom:20px}
+.warn b{color:var(--navy)}
+
+.situation{background:#FBF7EE;border:1px solid var(--line);border-radius:10px;padding:15px 18px;margin-bottom:18px;font-size:14px}
+.situation h2{font-family:'Fraunces',serif;font-size:17px;margin-bottom:7px}
+.situation .don{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:6px 22px;margin-top:11px}
+.don .r{display:flex;justify-content:space-between;gap:12px;border-bottom:1px dotted var(--line);padding-bottom:3px;font-size:13px}
+.don .r b{white-space:nowrap}
+
+.params{background:#FCFAF5;border:1px dashed var(--line);border-radius:10px;padding:14px 16px;margin-bottom:22px}
+.params-title{font-size:11px;font-weight:700;letter-spacing:1.3px;text-transform:uppercase;color:var(--muted);margin-bottom:10px;display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.src{font-weight:600;letter-spacing:0;text-transform:none;font-size:11.5px;padding:2px 9px;border-radius:99px}
+.src.live{background:#E8F2EA;color:var(--ok)}
+.src.local{background:#FBF1DC;color:var(--amber)}
+.plist{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:7px 22px}
+.prow{display:flex;justify-content:space-between;gap:12px;font-size:13px;border-bottom:1px dotted var(--line);padding-bottom:3px}
+.prow span:last-child{font-weight:700;white-space:nowrap}
+
+.tools{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px}
+.btn{border:none;border-radius:9px;padding:11px 20px;font-family:inherit;font-size:14px;font-weight:700;cursor:pointer}
+.btn-primary{background:var(--bleu);color:#fff}
+.btn-secondary{background:#fff;color:var(--bleu);border:1.5px solid var(--bleu)}
+
+.q{border:1.5px solid var(--line);border-radius:12px;margin-bottom:16px;overflow:hidden;background:#fff}
+.q-head{padding:16px 20px}
+.q-num{font-size:10.5px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--or);margin-bottom:5px}
+.q-txt{font-size:15.5px;font-weight:700;line-height:1.45}
+.q-btn{margin:0 20px 16px;background:var(--navy);color:#fff;border:none;border-radius:8px;padding:10px 18px;
+  font-family:inherit;font-size:13.5px;font-weight:700;cursor:pointer}
+.q-btn.open{background:#fff;color:var(--navy);border:1.5px solid var(--line)}
+.corr{max-height:0;overflow:hidden;transition:max-height .35s ease;background:#FBF7EE;border-top:1px solid var(--line)}
+.corr.show{max-height:2600px}
+.corr-in{padding:18px 20px 20px}
+.corr h4{font-size:11px;font-weight:700;letter-spacing:1.3px;text-transform:uppercase;color:var(--bleu);margin:16px 0 7px}
+.corr h4:first-child{margin-top:0}
+.corr p{font-size:14px;margin-bottom:8px}
+.corr ul{margin:0 0 8px 18px;font-size:14px}
+.corr li{margin-bottom:5px}
+.calc{width:100%;border-collapse:collapse;font-size:13.5px;margin:4px 0 10px;background:#fff;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.calc td{padding:7px 11px;border-bottom:1px solid var(--line)}
+.calc tr:last-child td{border-bottom:none}
+.calc td:last-child{text-align:right;font-weight:700;white-space:nowrap;font-variant-numeric:tabular-nums}
+.calc tr.tot td{background:#EEF4F9;color:var(--navy);font-weight:700}
+.calc tr.tot td:first-child{font-weight:700}
+.relance{background:#EEF4F9;border-left:3px solid var(--bleu-clair);border-radius:6px;padding:11px 14px;font-size:13.5px;margin-bottom:9px}
+.erreur{background:#FBF3F3;border-left:3px solid var(--ko);border-radius:6px;padding:11px 14px;font-size:13.5px}
+.erreur b,.relance b{color:var(--navy)}
+.footer{text-align:center;font-size:11.5px;color:var(--muted);padding:16px 34px 24px;border-top:1px solid var(--line)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card-main">
+    <div class="header">
+      <div class="chapter-tag">TMK Performances · Conso des acquis 3/4 <span>/</span> Séquence 5</div>
+      <h1>Cas 2 — Fabien, 44 ans</h1>
+      <p>Corrigé formateur · corrections révélables · 75 minutes</p>
+      <hr class="gold-rule">
+    </div>
+
+    <div class="body">
+      <div class="warn">
+        <b>⚠ Document formateur.</b> Ne pas projeter avant la restitution. Brief 10 min · recherche individuelle 30 min ·
+        correction collective 25 min · synthèse 10 min. Interrogez nominativement plutôt que d'attendre les volontaires,
+        et faites expliciter le raisonnement <b>avant</b> de révéler le résultat. <br><br><b>Trois domaines, et le client n'en nomme aucun.</b> Le cas se joue sur la question 3 — celle que Fabien pose presque par hasard, et qui est la plus importante des quatre.
+      </div>
+
+      <div class="situation">
+        <h2>La situation remise aux stagiaires</h2>
+        <p>Fabien Lemoine, 44 ans, mari de Karine, vient d'être classé en <b>invalidité de catégorie 1</b> avec une
+        <b>affection de longue durée</b> reconnue. Il a repris son poste <b>à 60 %</b> et pose trois questions en une :
+        ce qu'il va toucher, ce que ses soins vont lui coûter, et s'il doit continuer à verser sur son PER.</p>
+        <div class="don">
+          <div class="r"><span>Âge</span><b>44 ans</b></div>
+          <div class="r"><span>Salaire mensuel avant l'arrêt</span><b>3 200,00 €</b></div>
+          <div class="r"><span>Salaire de référence, dernière année</span><b>38 400,00 €</b></div>
+          <div class="r"><span>Salaire annuel moyen (10 ans)</span><b>33 600,00 €</b></div>
+          <div class="r"><span>Catégorie d'invalidité</span><b>Catégorie 1</b></div>
+          <div class="r"><span>Reprise d'activité</span><b>60 %</b></div>
+          <div class="r"><span>Versement PER</span><b>150,00 € / mois</b></div>
+          <div class="r"><span>Tranche marginale avant</span><b>30 %</b></div>
+          <div class="r"><span>Tranche marginale aujourd'hui</span><b>11 %</b></div>
+          <div class="r"><span>Dépenses du mois</span><b>2 consultations, 6 boîtes, 1 biologie, 1 ophtalmo</b></div>
+        </div>
+      </div>
+
+      <div class="params">
+        <div class="params-title">Paramètres utilisés pour le corrigé <span class="src local" id="src-badge">valeurs de secours</span></div>
+        <div class="plist" id="plist"></div>
+      </div>
+
+      <div class="tools">
+        <button class="btn btn-primary" onclick="tout(true)">Tout révéler</button>
+        <button class="btn btn-secondary" onclick="tout(false)">Tout masquer</button>
+      </div>
+
+      <div id="questions"></div>
+    </div>
+
+    <div class="footer">TMK Performances - N° Siret : 49841924100027 - Code NAF : 8559A</div>
+  </div>
+</div>
+
+<script>
+/* ─────────── Paramètres live (prévoyance + santé + épargne), repli local ─────────── */
+const SB_URL = "https://ibkvyjlglwufxvzxnysa.supabase.co";
+const SB_KEY = "sb_publishable_xUfZHSOHf4TnBRRyzU_qJA_TcXIMSKX";
+
+const DEF_PREV = {
+  inv_taux_cat1: 0.30, inv_sam_annees: 10,
+  inv_pension_min: 328.07, inv_pension_max_cat1: 1201.50,
+};
+const DEF_SANTE = {
+  sante_br_specialiste_s1: 31.50,
+  sante_taux_consultation_parcours: 0.70,
+  sante_participation_forfaitaire: 2,
+  sante_franchise_medicament: 1,
+  sante_pf_plafond_annuel: 70,
+  sante_franchise_plafond_annuel: 70,
+};
+const DEF_EP = { per_taux_deduction: 0.10 };
+let P = Object.assign({}, DEF_PREV, DEF_SANTE, DEF_EP);
+
+const AFFICHE = [
+  ["inv_taux_cat1", "Taux de la pension, catégorie 1", "%"],
+  ["inv_sam_annees", "Années retenues pour le salaire moyen", "a"],
+  ["inv_pension_max_cat1", "Pension mensuelle maximale, catégorie 1", "€"],
+  ["sante_br_specialiste_s1", "Base — spécialiste secteur 1", "€"],
+  ["sante_taux_consultation_parcours", "Taux de remboursement", "%"],
+  ["sante_participation_forfaitaire", "Participation forfaitaire", "€"],
+  ["sante_franchise_medicament", "Franchise — boîte de médicament", "€"],
+  ["sante_pf_plafond_annuel", "Plafond annuel des participations", "€"],
+  ["sante_franchise_plafond_annuel", "Plafond annuel des franchises", "€"],
+];
+
+function el(id){ return document.getElementById(id); }
+function eur(n){ return n.toLocaleString("fr-FR",{minimumFractionDigits:2,maximumFractionDigits:2}) + " €"; }
+function eur0(n){ return n.toLocaleString("fr-FR",{minimumFractionDigits:0,maximumFractionDigits:0}) + " €"; }
+function pct(n, d){ return (Math.round(n*10000)/100).toLocaleString("fr-FR", d ? {minimumFractionDigits:d,maximumFractionDigits:d} : {}) + " %"; }
+function r2(n){ return Math.round(n*100)/100; }
+
+function renderParams(){
+  el("plist").innerHTML = AFFICHE.map(function(a){
+    const v = P[a[0]];
+    const aff = a[2] === "%" ? pct(v) : (a[2] === "a" ? v + " ans" : eur(v));
+    return '<div class="prow"><span>' + a[1] + '</span><span>' + aff + '</span></div>';
+  }).join("");
+}
+async function lire(table, cles){
+  const r = await fetch(SB_URL + "/rest/v1/" + table + "?select=cle,valeur&cle=in.(" + cles.join(",") + ")&apikey=" + SB_KEY);
+  if(!r.ok) throw new Error(r.status);
+  const rows = await r.json();
+  if(!rows.length) throw new Error("vide");
+  rows.forEach(function(row){ if(row.valeur !== null) P[row.cle] = Number(row.valeur); });
+}
+async function chargerParametres(){
+  let ok = 0;
+  try{ await lire("parametres_prevoyance", Object.keys(DEF_PREV)); ok++; }catch(e){}
+  try{ await lire("parametres_sante", Object.keys(DEF_SANTE)); ok++; }catch(e){}
+  try{ await lire("parametres_epargne", Object.keys(DEF_EP)); ok++; }catch(e){}
+  const b = el("src-badge");
+  if(ok === 3){ b.className = "src live"; b.textContent = "valeurs à jour"; }
+  else if(ok > 0){ b.className = "src local"; b.textContent = "valeurs partiellement à jour"; }
+  else { b.className = "src local"; b.textContent = "valeurs de secours"; }
+  renderParams(); renderQuestions();
+}
+
+/* ─────────── Le corrigé ─────────── */
+const SAL_AVANT = 3200, SAL_REF_AN = 38400, SAM = 33600, QUOTITE = 0.60;
+const NB_CONSULT_ALD = 2, NB_MEDIC = 6, BIOLOGIE = 45;
+const PER_MOIS = 150, TMI_AVANT = 0.30, TMI_MAINT = 0.11;
+
+function calculs(){
+  // ── revenus
+  const pensionAn   = r2(SAM * P.inv_taux_cat1);
+  let   pensionMois = r2(pensionAn / 12);
+  const plafonnee   = pensionMois > P.inv_pension_max_cat1;
+  if(plafonnee) pensionMois = P.inv_pension_max_cat1;
+  const salPartiel  = r2(SAL_AVANT * QUOTITE);
+  const totalMois   = r2(salPartiel + pensionMois);
+  const perteMois   = r2(SAL_AVANT - totalMois);
+  const tauxPerte   = perteMois / SAL_AVANT;
+  const cumulAn     = r2(salPartiel * 12 + pensionMois * 12);
+  const cumulOk     = cumulAn <= SAL_REF_AN;
+  const margeCumul  = r2(SAL_REF_AN - cumulAn);
+
+  // ── santé
+  const pf = P.sante_participation_forfaitaire;
+  const brSpe = P.sante_br_specialiste_s1;
+  const amConsultAld = r2((brSpe - pf) * NB_CONSULT_ALD);
+  const pfConsultAld = r2(pf * NB_CONSULT_ALD);
+  const franchMed    = r2(P.sante_franchise_medicament * NB_MEDIC);
+  const amBio        = r2(BIOLOGIE - pf);
+  const pfBio        = pf;
+  const brutOphta    = r2(brSpe * P.sante_taux_consultation_parcours);
+  const amOphta      = r2(brutOphta - pf);
+  const tmOphta      = r2(brSpe - brutOphta);
+  const pfOphta      = pf;
+  const pfTotal      = r2(pfConsultAld + pfBio + pfOphta);
+  const irreductible = r2(pfTotal + franchMed);
+  const resteAvant   = r2(irreductible + tmOphta);
+  const moisPfPlafond    = Math.ceil(P.sante_pf_plafond_annuel / pfTotal);
+  const moisFranchPlafond= Math.ceil(P.sante_franchise_plafond_annuel / franchMed);
+
+  // ── PER
+  const versementAn = r2(PER_MOIS * 12);
+  const ecoAvant    = r2(versementAn * TMI_AVANT);
+  const ecoMaint    = r2(versementAn * TMI_MAINT);
+  const perteEco    = r2(ecoAvant - ecoMaint);
+
+  return {pensionAn, pensionMois, plafonnee, salPartiel, totalMois, perteMois, tauxPerte,
+          cumulAn, cumulOk, margeCumul,
+          amConsultAld, pfConsultAld, franchMed, amBio, pfBio, brutOphta, amOphta, tmOphta, pfOphta,
+          pfTotal, irreductible, resteAvant, moisPfPlafond, moisFranchPlafond,
+          versementAn, ecoAvant, ecoMaint, perteEco};
+}
+
+function tableau(rows){
+  return '<table class="calc">' + rows.map(function(r){
+    return '<tr' + (r[2] ? ' class="tot"' : '') + '><td>' + r[0] + '</td><td>' + r[1] + '</td></tr>';
+  }).join("") + '</table>';
+}
+
+function questions(){
+  const c = calculs();
+  return [
+  {
+    txt: "Que signifie le classement en catégorie 1 ? Chiffrez ce que Fabien percevra chaque mois, et l'écart avec son ancien revenu.",
+    corr:
+      '<h4>Ce que dit la catégorie 1</h4>' +
+      '<p>L\'assuré <b>reste capable d\'exercer une activité rémunérée</b>. C\'est la seule des trois catégories qui le permette, et c\'est pour cela que Fabien a pu reprendre à ' + pct(QUOTITE) + '. ' +
+      'La catégorie 2 exclurait toute activité, la catégorie 3 y ajouterait le besoin d\'assistance d\'une tierce personne.</p>' +
+      '<h4>Deux revenus qui se cumulent</h4>' +
+      tableau([
+        ["Salaire annuel moyen des " + P.inv_sam_annees + " meilleures années", eur0(SAM)],
+        ["Pension annuelle : × " + pct(P.inv_taux_cat1), eur(c.pensionAn)],
+        ["Pension mensuelle", eur(c.pensionMois), true],
+        ["Salaire à " + pct(QUOTITE) + " : " + eur0(SAL_AVANT) + " × " + pct(QUOTITE), eur(c.salPartiel)],
+        ["Revenu mensuel total", eur(c.totalMois), true],
+        ["Ancien salaire mensuel", eur0(SAL_AVANT)],
+        ["Écart mensuel", eur(c.perteMois) + "  (" + pct(c.tauxPerte, 1) + ")", true],
+      ]) +
+      '<h4>La vérification qu\'il ne faut pas oublier</h4>' +
+      '<p>Le cumul d\'une pension d\'invalidité et d\'un salaire est <b>plafonné</b> : le total ne peut excéder le salaire de la dernière année civile précédant l\'arrêt. ' +
+      'Au-delà, la pension est réduite d\'autant.</p>' +
+      tableau([
+        ["Cumul annuel : salaire + pension", eur(c.cumulAn)],
+        ["Salaire de référence de la dernière année civile", eur0(SAL_REF_AN)],
+        [c.cumulOk ? "Marge disponible avant réduction" : "Dépassement — la pension serait réduite", eur(Math.abs(c.margeCumul)), true],
+      ]) +
+      '<p>' + (c.cumulOk
+        ? "Le cumul reste sous le plafond : aucune réduction. Mais la marge est de " + eur(c.margeCumul) + " seulement — s'il augmentait sa quotité de travail, la pension baisserait."
+        : "Le cumul dépasse le plafond : la pension sera réduite du montant du dépassement.") + '</p>' +
+      '<div class="relance"><b>À faire dire au groupe :</b> Fabien envisage de repasser à 80 % dans quelques mois. Que se passerait-il ? ' +
+      'Et combien de conseillers pensent à vérifier ce plafond avant de féliciter un client qui reprend le travail ?</div>' +
+      '<div class="erreur"><b>Erreur fréquente :</b> annoncer la pension sans regarder le cumul, ou pire, dire à un client en catégorie 1 qu\'il « ne peut plus travailler ». ' +
+      'La catégorie 1 dit exactement l\'inverse.</div>'
+  },
+  {
+    txt: "Chiffrez ce qui restera à la charge de Fabien sur le mois écoulé, poste par poste.",
+    corr:
+      '<h4>Ce que l\'affection de longue durée fait, et ne fait pas</h4>' +
+      '<p>Elle exonère du <b>ticket modérateur</b>, et uniquement pour les soins <b>en rapport</b> avec l\'affection. ' +
+      'Elle ne supprime ni la participation forfaitaire, ni les franchises.</p>' +
+      '<h4>Poste 1 — ' + NB_CONSULT_ALD + ' consultations chez le spécialiste (en rapport)</h4>' +
+      tableau([
+        ["Base de remboursement, spécialiste secteur 1", eur(P.sante_br_specialiste_s1)],
+        ["ALD : ticket modérateur exonéré, la base est prise en totalité", eur(P.sante_br_specialiste_s1)],
+        ["Participation forfaitaire par consultation", "− " + eur(P.sante_participation_forfaitaire)],
+        ["Remboursé sur " + NB_CONSULT_ALD + " consultations", eur(c.amConsultAld), true],
+        ["Reste à charge : participations forfaitaires", eur(c.pfConsultAld)],
+      ]) +
+      '<h4>Poste 2 — ' + NB_MEDIC + ' boîtes de médicaments (en rapport)</h4>' +
+      tableau([
+        ["Ticket modérateur exonéré", "pris en charge"],
+        ["Franchise médicale : " + eur(P.sante_franchise_medicament) + " × " + NB_MEDIC, eur(c.franchMed), true],
+      ]) +
+      '<h4>Poste 3 — analyse de biologie de ' + eur0(BIOLOGIE) + ' (en rapport)</h4>' +
+      tableau([
+        ["ALD : prise en charge intégrale de la base", eur0(BIOLOGIE)],
+        ["Participation forfaitaire — elle s\'applique aussi à la biologie", "− " + eur(P.sante_participation_forfaitaire)],
+        ["Remboursé", eur(c.amBio), true],
+      ]) +
+      '<h4>Poste 4 — consultation d\'ophtalmologue (sans rapport)</h4>' +
+      '<p>L\'ophtalmologue est en accès direct autorisé : Fabien reste dans le parcours de soins. Mais le motif étant sans rapport avec son affection, <b>aucune exonération</b>.</p>' +
+      tableau([
+        [eur(P.sante_br_specialiste_s1) + " × " + pct(P.sante_taux_consultation_parcours), eur(c.brutOphta)],
+        ["Participation forfaitaire", "− " + eur(P.sante_participation_forfaitaire)],
+        ["Remboursé par l\'Assurance Maladie", eur(c.amOphta), true],
+        ["Ticket modérateur — pris par une complémentaire responsable", eur(c.tmOphta)],
+      ]) +
+      '<h4>La synthèse du mois</h4>' +
+      tableau([
+        ["Participations forfaitaires (3 actes concernés)", eur(c.pfTotal)],
+        ["Franchises médicales", eur(c.franchMed)],
+        ["Reste à charge irréductible", eur(c.irreductible), true],
+        ["Ticket modérateur, pris par la complémentaire", eur(c.tmOphta)],
+        ["Total à sa charge avant complémentaire", eur(c.resteAvant)],
+      ]) +
+      '<p>À ce rythme, Fabien atteindra le plafond annuel des participations en <b>' + c.moisPfPlafond + ' mois</b> et celui des franchises en <b>' + c.moisFranchPlafond + ' mois</b>. ' +
+      'Au-delà, plus rien ne sera retenu jusqu\'à la fin de l\'année — c\'est précisément à cela que servent ces plafonds.</p>' +
+      '<div class="relance"><b>À faire dire au groupe :</b> l\'affection de longue durée fonctionne bien ici — l\'Assurance Maladie prend presque tout. ' +
+      'Alors pourquoi reste-t-il quelque chose, et pourquoi est-ce précisément ce qu\'aucune mutuelle ne remboursera ?</div>' +
+      '<div class="erreur"><b>Erreur fréquente :</b> exonérer la consultation d\'ophtalmologue parce que Fabien « est en ALD ». ' +
+      'L\'exonération suit le soin, jamais la personne.</div>'
+  },
+  {
+    txt: "« Et ma retraite, elle est fichue ? » — que lui répondez-vous, et sur quoi devez-vous nuancer ?",
+    corr:
+      '<h4>La bonne nouvelle : ses trimestres sont préservés</h4>' +
+      '<p>Les périodes d\'invalidité sont des <b>périodes assimilées</b> : elles valident des trimestres sans cotisation. ' +
+      'Fabien continue donc à constituer sa durée d\'assurance, même s\'il ne travaille plus qu\'à ' + pct(QUOTITE) + '. ' +
+      'Sa carrière ne s\'est pas arrêtée, et c\'est la première chose à lui dire.</p>' +
+      '<p>À l\'âge légal, sa pension d\'invalidité sera par ailleurs remplacée par une retraite, attribuée sans décote au titre de l\'inaptitude.</p>' +
+      '<h4>La mauvaise : le niveau de sa future pension, lui, va baisser</h4>' +
+      '<ul>' +
+      '<li><b>Régime de base</b> — sa durée est sauve, mais son salaire annuel moyen ne l\'est pas. Les années à ' + pct(QUOTITE) + ' entreront dans le calcul si elles figurent parmi ses vingt-cinq meilleures. À 44 ans, il lui reste vingt ans de carrière : elles y entreront.</li>' +
+      '<li><b>Complémentaire</b> — c\'est là que ça fait le plus mal. Les points s\'achètent avec les cotisations : à ' + pct(QUOTITE) + ' de salaire, il acquiert ' + pct(QUOTITE) + ' des points. Et aucune période assimilée ne vient compenser cela.</li>' +
+      '</ul>' +
+      '<p><b>Les deux effets ne se compensent pas.</b> Avoir ses trimestres garantit de partir au taux plein ; cela ne garantit pas le montant. Un stagiaire qui répond seulement « rassurez-vous, ça compte » a donné une demi-réponse.</p>' +
+      '<div class="relance"><b>À faire dire au groupe :</b> quel est le seul levier qui reste à Fabien pour compenser cette baisse ? ' +
+      'Et pourquoi cette question renvoie-t-elle directement à la suivante, celle du PER ?</div>' +
+      '<div class="erreur"><b>Erreur fréquente :</b> ignorer complètement la dimension retraite parce que le client n\'en a pas parlé. ' +
+      'C\'est le lien de toute la journée : un dossier de prévoyance a presque toujours une conséquence sur les droits à venir.</div>'
+  },
+  {
+    txt: "Doit-il continuer à verser sur son PER ? Chiffrez, puis répondez-lui en trois phrases.",
+    corr:
+      '<h4>Ce qui a changé n\'est pas le produit</h4>' +
+      tableau([
+        ["Versement annuel : " + eur0(PER_MOIS) + " × 12", eur0(c.versementAn)],
+        ["Économie d\'impôt à " + pct(TMI_AVANT) + " — avant l\'arrêt", eur(c.ecoAvant)],
+        ["Économie d\'impôt à " + pct(TMI_MAINT) + " — aujourd\'hui", eur(c.ecoMaint), true],
+        ["Ce que la déduction a perdu en valeur", eur(c.perteEco)],
+      ]) +
+      '<p>Le PER n\'a pas changé. C\'est la <b>tranche marginale de Fabien</b> qui a chuté, et avec elle tout l\'intérêt de la déduction à l\'entrée. ' +
+      'Or cette déduction se paie à la sortie, au barème : à ' + pct(TMI_MAINT) + ' aujourd\'hui pour ' + pct(TMI_MAINT) + ' demain, l\'opération devient <b>quasiment neutre</b> — ' +
+      'il ne reste qu\'un avantage de trésorerie.</p>' +
+      '<h4>La troisième option</h4>' +
+      '<p>Entre continuer et arrêter, il existe une voie que peu de conseillers proposent : <b>continuer à verser en renonçant à la déduction</b>. ' +
+      'Les versements non déduits sortent alors <b>exonérés d\'impôt sur le revenu</b> sur la part du capital — seules les plus-values sont taxées. ' +
+      'Pour un client faiblement imposé, c\'est presque toujours le bon choix.</p>' +
+      '<p>Et surtout : ne pas arrêter les versements. La question 3 a montré que sa future pension va baisser ; le PER reste l\'outil qui compense. ' +
+      'Seule la case à cocher change.</p>' +
+      '<h4>Une réponse possible</h4>' +
+      '<p>« Continuez à verser, mais changez une chose : demandez à ne plus déduire vos versements de vos impôts. ' +
+      'Avec vos revenus actuels, la déduction ne vous rapporte plus que ' + eur(c.ecoMaint) + ' par an au lieu de ' + eur(c.ecoAvant) + ', ' +
+      'et vous la rembourseriez à la sortie — alors qu\'en y renonçant, vous récupérerez votre capital sans impôt. ' +
+      'Et il faut continuer, parce que votre temps partiel va réduire votre retraite complémentaire, et que c\'est exactement ce que ce plan sert à compenser. »</p>' +
+      '<div class="relance"><b>Ce qu\'on évalue :</b> avoir vu que la question ne portait pas sur le produit mais sur la situation fiscale, ' +
+      'avoir trouvé la troisième option, et avoir relié la réponse à la question précédente.</div>' +
+      '<div class="erreur"><b>Erreur fréquente :</b> répondre « arrêtez, ça ne sert plus à rien ». C\'est vrai pour la déduction, faux pour le besoin — ' +
+      'et cela prive Fabien du seul levier qui lui reste sur sa retraite.</div>'
+  },
+  ];
+}
+
+function renderQuestions(){
+  const qs = questions();
+  el("questions").innerHTML = qs.map(function(q, i){
+    return '<div class="q">' +
+      '<div class="q-head"><div class="q-num">Question ' + (i + 1) + '</div><div class="q-txt">' + q.txt + '</div></div>' +
+      '<button class="q-btn" id="btn' + i + '" onclick="bascule(' + i + ')">Révéler la correction</button>' +
+      '<div class="corr" id="corr' + i + '"><div class="corr-in">' + q.corr + '</div></div>' +
+    '</div>';
+  }).join("");
+}
+function bascule(i){
+  const c = el("corr" + i), b = el("btn" + i);
+  const ouvert = c.classList.toggle("show");
+  b.classList.toggle("open", ouvert);
+  b.textContent = ouvert ? "Masquer la correction" : "Révéler la correction";
+}
+function tout(ouvrir){
+  questions().forEach(function(_, i){
+    const c = el("corr" + i), b = el("btn" + i);
+    c.classList.toggle("show", ouvrir);
+    b.classList.toggle("open", ouvrir);
+    b.textContent = ouvrir ? "Masquer la correction" : "Révéler la correction";
+  });
+}
+
+renderParams();
+renderQuestions();
+chargerParametres();
+
+</script>
+</body>
+</html>

@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cas 2 — L'invalidité et le reste à charge · Corrigé formateur</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Karla:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#16243B; --bleu:#1F4E79; --bleu-clair:#2E75B6; --or:#B08D57;
+  --creme:#F5F2EB; --card:#FFFFFF; --line:#e3ddd0; --muted:#6B6459;
+  --ok:#2F7A4F; --ko:#B23B3B; --amber:#B5852A;
+  --shadow:0 2px 10px rgba(22,36,59,.07);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Karla',system-ui,sans-serif;background:var(--creme);color:var(--navy);line-height:1.55}
+.wrap{max-width:1000px;margin:0 auto;padding:26px 18px 70px}
+.card-main{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);overflow:hidden}
+.header{padding:26px 34px 0}
+.chapter-tag{font-size:11.5px;font-weight:700;letter-spacing:1.6px;text-transform:uppercase;color:var(--or)}
+.chapter-tag span{opacity:.5}
+h1{font-family:'Fraunces',serif;font-weight:600;font-size:27px;line-height:1.2;margin:8px 0 5px}
+.header p{color:var(--muted);font-size:14.5px}
+.gold-rule{border:none;border-top:2px solid var(--or);width:64px;margin:18px 0 0}
+.body{padding:22px 34px 30px}
+
+.warn{background:#FBF1DC;border:1px solid #E6D3A8;border-left:3px solid var(--amber);border-radius:8px;padding:13px 16px;font-size:13.5px;margin-bottom:20px}
+.warn b{color:var(--navy)}
+
+.situation{background:#FBF7EE;border:1px solid var(--line);border-radius:10px;padding:15px 18px;margin-bottom:18px;font-size:14px}
+.situation h2{font-family:'Fraunces',serif;font-size:17px;margin-bottom:7px}
+.situation .don{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:6px 22px;margin-top:11px}
+.don .r{display:flex;justify-content:space-between;gap:12px;border-bottom:1px dotted var(--line);padding-bottom:3px;font-size:13px}
+.don .r b{white-space:nowrap}
+
+.params{background:#FCFAF5;border:1px dashed var(--line);border-radius:10px;padding:14px 16px;margin-bottom:22px}
+.params-title{font-size:11px;font-weight:700;letter-spacing:1.3px;text-transform:uppercase;color:var(--muted);margin-bottom:10px;display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.src{font-weight:600;letter-spacing:0;text-transform:none;font-size:11.5px;padding:2px 9px;border-radius:99px}
+.src.live{background:#E8F2EA;color:var(--ok)}
+.src.local{background:#FBF1DC;color:var(--amber)}
+.plist{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:7px 22px}
+.prow{display:flex;justify-content:space-between;gap:12px;font-size:13px;border-bottom:1px dotted var(--line);padding-bottom:3px}
+.prow span:last-child{font-weight:700;white-space:nowrap}
+
+.tools{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px}
+.btn{border:none;border-radius:9px;padding:11px 20px;font-family:inherit;font-size:14px;font-weight:700;cursor:pointer}
+.btn-primary{background:var(--bleu);color:#fff}
+.btn-secondary{background:#fff;color:var(--bleu);border:1.5px solid var(--bleu)}
+
+.q{border:1.5px solid var(--line);border-radius:12px;margin-bottom:16px;overflow:hidden;background:#fff}
+.q-head{padding:16px 20px}
+.q-num{font-size:10.5px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--or);margin-bottom:5px}
+.q-txt{font-size:15.5px;font-weight:700;line-height:1.45}
+.q-btn{margin:0 20px 16px;background:var(--navy);color:#fff;border:none;border-radius:8px;padding:10px 18px;
+  font-family:inherit;font-size:13.5px;font-weight:700;cursor:pointer}
+.q-btn.open{background:#fff;color:var(--navy);border:1.5px solid var(--line)}
+.corr{max-height:0;overflow:hidden;transition:max-height .35s ease;background:#FBF7EE;border-top:1px solid var(--line)}
+.corr.show{max-height:2600px}
+.corr-in{padding:18px 20px 20px}
+.corr h4{font-size:11px;font-weight:700;letter-spacing:1.3px;text-transform:uppercase;color:var(--bleu);margin:16px 0 7px}
+.corr h4:first-child{margin-top:0}
+.corr p{font-size:14px;margin-bottom:8px}
+.corr ul{margin:0 0 8px 18px;font-size:14px}
+.corr li{margin-bottom:5px}
+.calc{width:100%;border-collapse:collapse;font-size:13.5px;margin:4px 0 10px;background:#fff;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.calc td{padding:7px 11px;border-bottom:1px solid var(--line)}
+.calc tr:last-child td{border-bottom:none}
+.calc td:last-child{text-align:right;font-weight:700;white-space:nowrap;font-variant-numeric:tabular-nums}
+.calc tr.tot td{background:#EEF4F9;color:var(--navy);font-weight:700}
+.calc tr.tot td:first-child{font-weight:700}
+.relance{background:#EEF4F9;border-left:3px solid var(--bleu-clair);border-radius:6px;padding:11px 14px;font-size:13.5px;margin-bottom:9px}
+.erreur{background:#FBF3F3;border-left:3px solid var(--ko);border-radius:6px;padding:11px 14px;font-size:13.5px}
+.erreur b,.relance b{color:var(--navy)}
+.footer{text-align:center;font-size:11.5px;color:var(--muted);padding:16px 34px 24px;border-top:1px solid var(--line)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card-main">
+    <div class="header">
+      <div class="chapter-tag">TMK Performances · Conso des acquis 1/4 <span>/</span> Séquence 5</div>
+      <h1>Cas 2 — L'invalidité et le reste à charge</h1>
+      <p>Corrigé formateur · corrections révélables · 75 minutes</p>
+      <hr class="gold-rule">
+    </div>
+
+    <div class="body">
+      <div class="warn">
+        <b>⚠ Document formateur.</b> Ne pas projeter avant la restitution. Brief 10 min · recherche individuelle 30 min ·
+        correction collective 25 min · synthèse 10 min. Interrogez nominativement plutôt que d'attendre les volontaires,
+        et faites expliciter le raisonnement <b>avant</b> de révéler le résultat.
+      </div>
+
+      <div class="situation">
+        <h2>La situation remise aux stagiaires</h2>
+        <p>Dix-huit mois après son arrêt, Nadia Berthier est classée en <b>invalidité de catégorie 2</b> ; une
+        <b>affection de longue dur&eacute;e</b> est reconnue pour sa pathologie articulaire. Elle vous appelle,
+        convaincue qu'être en ALD signifie « tout pris en charge à 100 % », et vous transmet ses dépenses du mois.</p>
+        <div class="don">
+          <div class="r"><span>Salaire annuel moyen, 10 meilleures années</span><b>27 600,00 €</b></div>
+          <div class="r"><span>Catégorie d'invalidité</span><b>Catégorie 2</b></div>
+          <div class="r"><span>Ancien salaire mensuel brut</span><b>2 300,00 €</b></div>
+          <div class="r"><span>Affection de longue durée</span><b>Reconnue</b></div>
+          <div class="r"><span>2 consultations rhumatologue, OPTAM</span><b>55,00 € chacune</b></div>
+          <div class="r"><span>Boîtes de médicaments (en rapport)</span><b>8</b></div>
+          <div class="r"><span>Séances de kinésithérapie (en rapport)</span><b>12</b></div>
+          <div class="r"><span>1 consultation dermatologue, secteur 1</span><b>Sans rapport avec l'ALD</b></div>
+        </div>
+      </div>
+
+      <div class="params">
+        <div class="params-title">Paramètres utilisés pour le corrigé <span class="src local" id="src-badge">valeurs de secours</span></div>
+        <div class="plist" id="plist"></div>
+      </div>
+
+      <div class="tools">
+        <button class="btn btn-primary" onclick="tout(true)">Tout révéler</button>
+        <button class="btn btn-secondary" onclick="tout(false)">Tout masquer</button>
+      </div>
+
+      <div id="questions"></div>
+    </div>
+
+    <div class="footer">TMK Performances - N° Siret : 49841924100027 - Code NAF : 8559A</div>
+  </div>
+</div>
+
+<script>
+/* ─────────── Paramètres live (prévoyance + santé), repli local ─────────── */
+const SB_URL = "https://ibkvyjlglwufxvzxnysa.supabase.co";
+const SB_KEY = "sb_publishable_xUfZHSOHf4TnBRRyzU_qJA_TcXIMSKX";
+
+const DEF_PREV = {
+  inv_taux_cat1: 0.30, inv_taux_cat2: 0.50, inv_sam_annees: 10,
+  inv_pension_min: 328.07, inv_pension_max_cat2: 2002.50,
+};
+const DEF_SANTE = {
+  sante_br_specialiste_optam: 31.50,
+  sante_br_specialiste_s1: 31.50,
+  sante_taux_consultation_parcours: 0.70,
+  sante_participation_forfaitaire: 2,
+  sante_pf_plafond_annuel: 70,
+  sante_franchise_medicament: 1,
+  sante_franchise_acte_paramedical: 1,
+  sante_franchise_plafond_annuel: 70,
+  sante_franchise_plafond_jour_paramedical: 4,
+};
+let P = Object.assign({}, DEF_PREV, DEF_SANTE);
+
+const AFFICHE = [
+  ["inv_taux_cat2", "Taux de la pension, catégorie 2", "%"],
+  ["inv_sam_annees", "Années retenues pour le salaire moyen", "a"],
+  ["inv_pension_min", "Pension mensuelle minimale", "€"],
+  ["inv_pension_max_cat2", "Pension mensuelle maximale, catégorie 2", "€"],
+  ["sante_br_specialiste_optam", "Base — spécialiste OPTAM", "€"],
+  ["sante_taux_consultation_parcours", "Taux de remboursement", "%"],
+  ["sante_participation_forfaitaire", "Participation forfaitaire", "€"],
+  ["sante_franchise_medicament", "Franchise — boîte de médicament", "€"],
+  ["sante_franchise_acte_paramedical", "Franchise — acte paramédical", "€"],
+  ["sante_franchise_plafond_annuel", "Plafond annuel des franchises", "€"],
+  ["sante_pf_plafond_annuel", "Plafond annuel des participations", "€"],
+];
+
+function el(id){ return document.getElementById(id); }
+function eur(n){ return n.toLocaleString("fr-FR",{minimumFractionDigits:2,maximumFractionDigits:2}) + " €"; }
+function r2(n){ return Math.round(n * 100) / 100; }
+
+function renderParams(){
+  el("plist").innerHTML = AFFICHE.map(function(a){
+    const v = P[a[0]];
+    let aff;
+    if(a[2] === "%") aff = Math.round(v * 100) + " %";
+    else if(a[2] === "€") aff = eur(v);
+    else if(a[2] === "a") aff = v + " ans";
+    else aff = String(v).replace(".", ",");
+    return '<div class="prow"><span>' + a[1] + '</span><span>' + aff + '</span></div>';
+  }).join("");
+}
+
+async function lire(table, cles){
+  const url = SB_URL + "/rest/v1/" + table + "?select=cle,valeur&cle=in.(" + cles.join(",") + ")&apikey=" + SB_KEY;
+  const r = await fetch(url);
+  if(!r.ok) throw new Error(r.status);
+  const rows = await r.json();
+  if(!rows.length) throw new Error("vide");
+  rows.forEach(function(row){ if(row.valeur !== null) P[row.cle] = Number(row.valeur); });
+}
+
+async function chargerParametres(){
+  let ok = 0;
+  try{ await lire("parametres_prevoyance", Object.keys(DEF_PREV)); ok++; }catch(e){}
+  try{ await lire("parametres_sante", Object.keys(DEF_SANTE)); ok++; }catch(e){}
+  const b = el("src-badge");
+  if(ok === 2){ b.className = "src live"; b.textContent = "valeurs à jour"; }
+  else if(ok === 1){ b.className = "src local"; b.textContent = "valeurs partiellement à jour"; }
+  else { b.className = "src local"; b.textContent = "valeurs de secours"; }
+  renderParams(); renderQuestions();
+}
+
+/* ─────────── Le corrigé, recalculé à partir des paramètres ─────────── */
+const SAM = 27600, SAL_AVANT = 2300;
+const HONO_RHUMATO = 55, NB_RHUMATO = 2, NB_MEDIC = 8, NB_KINE = 12;
+
+function calculs(){
+  // --- pension d'invalidité
+  const pensionAn  = r2(SAM * P.inv_taux_cat2);
+  let   pensionMois = r2(pensionAn / 12);
+  const plafonnee  = pensionMois > P.inv_pension_max_cat2;
+  const plancher   = pensionMois < P.inv_pension_min;
+  if(plafonnee) pensionMois = P.inv_pension_max_cat2;
+  if(plancher)  pensionMois = P.inv_pension_min;
+  const taux = Math.round(pensionMois / SAL_AVANT * 1000) / 10;
+  const ecart = r2(SAL_AVANT - pensionMois);
+
+  // --- poste 1 : rhumatologue, ALD, OPTAM
+  const brSpe   = P.sante_br_specialiste_optam;
+  const amRhum  = r2((brSpe - P.sante_participation_forfaitaire) * NB_RHUMATO); // TM exonéré en ALD
+  const depass  = r2((HONO_RHUMATO - brSpe) * NB_RHUMATO);
+  const pfRhum  = r2(P.sante_participation_forfaitaire * NB_RHUMATO);
+  const factRhum= r2(HONO_RHUMATO * NB_RHUMATO);
+
+  // --- poste 2 : médicaments, ALD
+  const franchMed = r2(P.sante_franchise_medicament * NB_MEDIC);
+
+  // --- poste 3 : kinésithérapie, ALD
+  const franchKine = r2(P.sante_franchise_acte_paramedical * NB_KINE);
+
+  // --- poste 4 : dermatologue, hors ALD, dans le parcours
+  const brDerm  = P.sante_br_specialiste_s1;
+  const brutDerm= r2(brDerm * P.sante_taux_consultation_parcours);
+  const amDerm  = r2(brutDerm - P.sante_participation_forfaitaire);
+  const tmDerm  = r2(brDerm - brutDerm);
+  const pfDerm  = P.sante_participation_forfaitaire;
+
+  // --- synthèse
+  const pfTotal    = r2(pfRhum + pfDerm);
+  const franchTot  = r2(franchMed + franchKine);
+  const irreductible = r2(pfTotal + franchTot);
+  const mutuelle   = r2(tmDerm); // + une part du dépassement selon garantie
+  const resteAvant = r2(depass + pfTotal + franchTot + tmDerm);
+  const moisPlafond = Math.ceil(P.sante_franchise_plafond_annuel / franchTot);
+
+  return {pensionAn, pensionMois, plafonnee, plancher, taux, ecart,
+          brSpe, amRhum, depass, pfRhum, factRhum, franchMed, franchKine,
+          brDerm, brutDerm, amDerm, tmDerm, pfDerm,
+          pfTotal, franchTot, irreductible, mutuelle, resteAvant, moisPlafond};
+}
+
+function tableau(rows){
+  return '<table class="calc">' + rows.map(function(r){
+    return '<tr' + (r[2] ? ' class="tot"' : '') + '><td>' + r[0] + '</td><td>' + r[1] + '</td></tr>';
+  }).join("") + '</table>';
+}
+
+function questions(){
+  const c = calculs();
+  const tauxPct = Math.round(P.sante_taux_consultation_parcours * 100);
+  return [
+  {
+    txt: "Que signifie exactement le classement en catégorie 2, et sur quelle base la pension sera-t-elle calculée ?",
+    corr:
+      '<h4>Ce qu\'on attend</h4>' +
+      '<ul>' +
+      '<li><b>Catégorie 1</b> : l\'assuré reste capable d\'exercer une activité rémunérée.</li>' +
+      '<li><b>Catégorie 2</b> : il est incapable d\'exercer une profession quelconque. C\'est le cas de Nadia.</li>' +
+      '<li><b>Catégorie 3</b> : même incapacité, plus le besoin de l\'assistance d\'une tierce personne — ' +
+      'le taux de la pension ne change pas, c\'est une majoration qui s\'ajoute.</li>' +
+      '</ul>' +
+      '<p>La pension se calcule sur le <b>salaire annuel moyen des ' + P.inv_sam_annees + ' meilleures années</b>, ' +
+      'chacune retenue dans la limite du plafond de la Sécurité sociale, auquel on applique ' +
+      Math.round(P.inv_taux_cat2 * 100) + ' % en catégorie 2.</p>' +
+      '<div class="relance"><b>À faire dire au groupe :</b> quelle assiette servait au cas 1, et pourquoi ce n\'est pas la même ici ? ' +
+      'Et le médecin du travail, dans tout ça — que produit-il, une invalidité ou autre chose ?</div>' +
+      '<div class="erreur"><b>Erreur fréquente :</b> reprendre la moyenne des trois derniers mois du cas 1. ' +
+      'C\'est l\'assiette des indemnités journalières, pas celle de la pension.</div>'
+  },
+  {
+    txt: "Chiffrez la pension mensuelle de Nadia, puis exprimez ce qu'elle représente par rapport à son ancien salaire.",
+    corr:
+      tableau([
+        ["Salaire annuel moyen des " + P.inv_sam_annees + " meilleures années", eur(SAM)],
+        ["Pension annuelle : " + eur(SAM) + " × " + Math.round(P.inv_taux_cat2 * 100) + " %", eur(c.pensionAn)],
+        ["Pension mensuelle : " + eur(c.pensionAn) + " ÷ 12", eur(c.pensionMois), true],
+      ]) +
+      '<p>' + (c.plafonnee ? '<b>Attention :</b> le résultat dépasse le plafond mensuel — la pension est ramenée au plafond.'
+             : (c.plancher ? '<b>Attention :</b> le résultat est inférieur au plancher — la pension est portée au minimum.'
+             : 'Le résultat se situe bien entre le plancher de ' + eur(P.inv_pension_min) + ' et le plafond de ' + eur(P.inv_pension_max_cat2) + ' : aucun ajustement.')) + '</p>' +
+      tableau([
+        ["Ancien salaire mensuel brut", eur(SAL_AVANT)],
+        ["Pension mensuelle", eur(c.pensionMois)],
+        ["Écart mensuel", eur(c.ecart) + "  (" + String(100 - c.taux).replace(".", ",") + " % de perte)", true],
+      ]) +
+      '<div class="relance"><b>À faire dire au groupe :</b> le taux de ' + Math.round(P.inv_taux_cat2 * 100) + ' % s\'applique au salaire moyen, ' +
+      'pas au dernier salaire. Dans quel cas l\'écart serait-il encore plus large ? Et pour un salarié dont les dernières années ont été les meilleures ?</div>' +
+      '<div class="erreur"><b>Erreur fréquente :</b> annoncer que la pension « fait la moitié du salaire ». ' +
+      'Elle fait la moitié d\'un salaire moyen historique, ce qui est presque toujours moins que la moitié du dernier salaire. ' +
+      'À noter aussi : la pension supporte la CSG et la CRDS, mais pas les cotisations salariales — l\'écart en net est donc un peu moins brutal qu\'en brut.</div>'
+  },
+  {
+    txt: "Poste par poste, chiffrez ce qui reste à la charge de Nadia sur le mois écoulé, puis distinguez ce qu'une complémentaire responsable pourra prendre de ce qu'elle ne prendra jamais.",
+    corr:
+      '<h4>Ce que l\'ALD fait — et ne fait pas</h4>' +
+      '<p>L\'affection de longue durée exonère du <b>ticket modérateur</b>, et uniquement pour les soins <b>en rapport</b> avec l\'affection. ' +
+      'Elle ne supprime ni la participation forfaitaire, ni les franchises, ni les dépassements d\'honoraires.</p>' +
+
+      '<h4>Poste 1 — Rhumatologue, ' + NB_RHUMATO + ' consultations à ' + eur(HONO_RHUMATO) + ' (en rapport)</h4>' +
+      tableau([
+        ["Base de remboursement, spécialiste OPTAM", eur(c.brSpe)],
+        ["ALD : ticket modérateur exonéré, l'Assurance Maladie prend la base entière", eur(c.brSpe)],
+        ["Participation forfaitaire retenue, par consultation", "− " + eur(P.sante_participation_forfaitaire)],
+        ["Remboursé sur " + NB_RHUMATO + " consultations", eur(c.amRhum), true],
+        ["Dépassement d'honoraires : (" + eur(HONO_RHUMATO) + " − " + eur(c.brSpe) + ") × " + NB_RHUMATO, eur(c.depass)],
+        ["Participations forfaitaires : " + eur(P.sante_participation_forfaitaire) + " × " + NB_RHUMATO, eur(c.pfRhum)],
+      ]) +
+
+      '<h4>Poste 2 — ' + NB_MEDIC + ' boîtes de médicaments (en rapport)</h4>' +
+      tableau([
+        ["Ticket modérateur exonéré au titre de l'ALD", "pris en charge"],
+        ["Franchise médicale : " + eur(P.sante_franchise_medicament) + " × " + NB_MEDIC + " boîtes", eur(c.franchMed), true],
+      ]) +
+
+      '<h4>Poste 3 — ' + NB_KINE + ' séances de kinésithérapie (en rapport)</h4>' +
+      tableau([
+        ["Ticket modérateur exonéré au titre de l'ALD", "pris en charge"],
+        ["Franchise sur actes paramédicaux : " + eur(P.sante_franchise_acte_paramedical) + " × " + NB_KINE, eur(c.franchKine), true],
+        ["Plafond journalier de " + eur(P.sante_franchise_plafond_jour_paramedical) + " : une séance par jour, il ne joue pas", "—"],
+      ]) +
+
+      '<h4>Poste 4 — Dermatologue, secteur 1, sans rapport avec l\'ALD</h4>' +
+      tableau([
+        ["Aucune exonération : " + eur(c.brDerm) + " × " + tauxPct + " %", eur(c.brutDerm)],
+        ["Participation forfaitaire", "− " + eur(P.sante_participation_forfaitaire)],
+        ["Remboursement de l'Assurance Maladie", eur(c.amDerm), true],
+        ["Ticket modérateur restant", eur(c.tmDerm)],
+      ]) +
+
+      '<h4>La synthèse du mois</h4>' +
+      tableau([
+        ["Dépassements d'honoraires", eur(c.depass)],
+        ["Ticket modérateur (dermatologue)", eur(c.tmDerm)],
+        ["Participations forfaitaires (3 consultations)", eur(c.pfTotal)],
+        ["Franchises médicales (" + NB_MEDIC + " boîtes + " + NB_KINE + " séances)", eur(c.franchTot)],
+        ["Reste à charge avant complémentaire", eur(c.resteAvant), true],
+      ]) +
+      '<p><b>Ce qu\'une complémentaire responsable peut prendre :</b> le ticket modérateur de ' + eur(c.tmDerm) + ' intégralement, ' +
+      'et une partie du dépassement de ' + eur(c.depass) + ' — le rhumatologue adhérant à l\'OPTAM, la prise en charge est ' +
+      'moins bridée que chez un praticien non adhérent.</p>' +
+      '<p><b>Ce qu\'elle ne prendra jamais :</b> les participations forfaitaires et les franchises, soit ' +
+      '<b>' + eur(c.irreductible) + '</b> sur ce seul mois.</p>' +
+      '<div class="relance"><b>À faire dire au groupe :</b> à ' + eur(c.franchTot) + ' de franchises par mois, ' +
+      'au bout de combien de mois Nadia atteint-elle le plafond annuel de ' + eur(P.sante_franchise_plafond_annuel) + ' ? ' +
+      '(Réponse : ' + c.moisPlafond + ' mois — ensuite, plus aucune franchise jusqu\'à la fin de l\'année. C\'est précisément à cela que sert le plafond.)</div>' +
+      '<div class="erreur"><b>Erreur fréquente :</b> exonérer la consultation du dermatologue parce que Nadia « est en ALD ». ' +
+      'L\'exonération ne suit pas la personne, elle suit le soin.</div>'
+  },
+  {
+    txt: "« Je suis en ALD, tout est pris en charge à 100 %, non ? » — reprenez-la en trois phrases, puis dites-lui ce qu'elle doit vérifier.",
+    corr:
+      '<h4>Une réponse possible</h4>' +
+      '<p>« L\'affection de longue durée supprime la part qui vous restait habituellement sur les soins liés à votre pathologie — ' +
+      'c\'est déjà beaucoup, mais ce n\'est pas tout. Ce mois-ci, il vous reste ' + eur(c.resteAvant) + ', dont ' + eur(c.irreductible) + ' ' +
+      'que ni la Sécurité sociale ni votre mutuelle ne rembourseront, jamais. Le reste, ce sont surtout les dépassements de votre rhumatologue, ' +
+      'et là tout dépend du niveau de votre contrat. »</p>' +
+      '<h4>Le conseil à donner</h4>' +
+      '<ul>' +
+      '<li>Vérifier le niveau de garantie en <b>dépassements d\'honoraires</b> du contrat : c\'est le seul poste sur lequel elle peut agir.</li>' +
+      '<li>Lui signaler que son rhumatologue <b>adhère à l\'OPTAM</b> — c\'est une bonne nouvelle, un praticien non adhérent lui coûterait ' +
+      'nettement plus cher pour une prise en charge plus faible.</li>' +
+      '<li>Lui rappeler que ses revenus ont changé : le contrat souscrit du temps où elle gagnait ' + eur(SAL_AVANT) + ' n\'est peut-être plus calibré.</li>' +
+      '</ul>' +
+      '<div class="relance"><b>Ce qu\'on évalue :</b> corriger une croyance fausse sans donner tort au client, chiffrer, puis proposer une action. ' +
+      'Dire simplement « non, c\'est faux » ne vaut aucun point.</div>' +
+      '<div class="erreur"><b>Erreur fréquente :</b> confondre le conseil et la vente. On oriente vers une vérification de garanties, ' +
+      'on ne place pas un contrat au téléphone.</div>'
+  },
+  ];
+}
+
+function renderQuestions(){
+  const qs = questions();
+  el("questions").innerHTML = qs.map(function(q, i){
+    return '<div class="q">' +
+      '<div class="q-head"><div class="q-num">Question ' + (i + 1) + '</div><div class="q-txt">' + q.txt + '</div></div>' +
+      '<button class="q-btn" id="btn' + i + '" onclick="bascule(' + i + ')">Révéler la correction</button>' +
+      '<div class="corr" id="corr' + i + '"><div class="corr-in">' + q.corr + '</div></div>' +
+    '</div>';
+  }).join("");
+}
+
+function bascule(i){
+  const c = el("corr" + i), b = el("btn" + i);
+  const ouvert = c.classList.toggle("show");
+  b.classList.toggle("open", ouvert);
+  b.textContent = ouvert ? "Masquer la correction" : "Révéler la correction";
+}
+function tout(ouvrir){
+  questions().forEach(function(_, i){
+    const c = el("corr" + i), b = el("btn" + i);
+    c.classList.toggle("show", ouvrir);
+    b.classList.toggle("open", ouvrir);
+    b.textContent = ouvrir ? "Masquer la correction" : "Révéler la correction";
+  });
+}
+
+renderParams();
+renderQuestions();
+chargerParametres();
+
+</script>
+</body>
+</html>

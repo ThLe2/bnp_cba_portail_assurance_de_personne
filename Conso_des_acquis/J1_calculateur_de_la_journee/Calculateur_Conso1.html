@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculateur — Conso des acquis 1/4</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Karla:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#16243B; --bleu:#1F4E79; --bleu-clair:#2E75B6; --or:#B08D57;
+  --creme:#F5F2EB; --card:#FFFFFF; --line:#e3ddd0; --muted:#6B6459;
+  --ok:#2F7A4F; --ko:#B23B3B; --amber:#B5852A;
+  --shadow:0 2px 10px rgba(22,36,59,.07);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Karla',system-ui,sans-serif;background:var(--creme);color:var(--navy);line-height:1.55}
+.wrap{max-width:1060px;margin:0 auto;padding:26px 18px 60px}
+.card-main{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);overflow:hidden}
+.header{padding:26px 32px 0}
+.chapter-tag{font-size:11.5px;font-weight:700;letter-spacing:1.6px;text-transform:uppercase;color:var(--or)}
+.chapter-tag span{opacity:.5}
+h1{font-family:'Fraunces',serif;font-weight:600;font-size:26px;line-height:1.2;margin:8px 0 5px}
+.header p{color:var(--muted);font-size:14px}
+.gold-rule{border:none;border-top:2px solid var(--or);width:64px;margin:16px 0 0}
+.body{padding:20px 32px 28px}
+
+.srcline{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:12.5px;color:var(--muted);margin-bottom:18px}
+.src{font-weight:700;font-size:11.5px;padding:3px 10px;border-radius:99px}
+.src.live{background:#E8F2EA;color:var(--ok)}
+.src.local{background:#FBF1DC;color:var(--amber)}
+
+.tabs{display:flex;gap:6px;background:#F0EADF;padding:5px;border-radius:11px;margin-bottom:20px;flex-wrap:wrap}
+.tab{flex:1;min-width:150px;padding:11px 14px;border:none;background:transparent;font-family:inherit;font-size:14px;
+  font-weight:700;color:var(--muted);border-radius:8px;cursor:pointer}
+.tab:hover{color:var(--bleu)}
+.tab.active{background:#fff;color:var(--navy);box-shadow:var(--shadow)}
+.panel{display:none}
+.panel.active{display:block}
+
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:760px){.grid{grid-template-columns:1fr}}
+.field{display:flex;flex-direction:column;gap:5px;margin-bottom:13px}
+.field label{font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.4px}
+.field .hint{font-size:11.5px;color:var(--muted);text-transform:none;letter-spacing:0;font-weight:400;font-style:italic}
+.field input,.field select{padding:10px 12px;border:1.5px solid var(--line);border-radius:8px;font-family:inherit;
+  font-size:14.5px;font-variant-numeric:tabular-nums;background:#fff;color:var(--navy)}
+.field input:focus,.field select:focus{outline:none;border-color:var(--bleu);box-shadow:0 0 0 3px rgba(31,78,121,.12)}
+
+.res{background:#FBF7EE;border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin-top:4px}
+.res h3{font-family:'Fraunces',serif;font-size:16px;font-weight:600;margin-bottom:10px}
+table.calc{width:100%;border-collapse:collapse;font-size:13.5px;background:#fff;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+table.calc td{padding:7px 11px;border-bottom:1px solid var(--line)}
+table.calc tr:last-child td{border-bottom:none}
+table.calc td:last-child{text-align:right;font-weight:700;white-space:nowrap;font-variant-numeric:tabular-nums}
+table.calc tr.tot td{background:#EEF4F9;font-weight:700}
+table.calc tr.sep td{background:#FBF7EE;font-size:11px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--or)}
+.flag{margin-top:11px;padding:10px 13px;border-radius:7px;font-size:13px;border-left:3px solid var(--amber);background:#FFF8E8}
+.flag.ko{border-left-color:var(--ko);background:#FBF3F3}
+.flag b{color:var(--navy)}
+.footer{text-align:center;font-size:11.5px;color:var(--muted);padding:16px 32px 22px;border-top:1px solid var(--line)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card-main">
+    <div class="header">
+      <div class="chapter-tag">TMK Performances · Conso des acquis 1/4 <span>/</span> Outil de la journée</div>
+      <h1>Calculateur</h1>
+      <p>Arrêt de travail · Invalidité · Reste à charge santé</p>
+      <hr class="gold-rule">
+    </div>
+
+    <div class="body">
+      <div class="srcline">
+        <span class="src local" id="src-badge">valeurs de secours</span>
+        <span>Les paramètres sont lus en direct. Aucune donnée saisie ici n'est enregistrée.</span>
+      </div>
+
+      <div class="tabs">
+        <button class="tab active" data-p="at" onclick="onglet('at')">Arrêt de travail</button>
+        <button class="tab" data-p="inv" onclick="onglet('inv')">Invalidité</button>
+        <button class="tab" data-p="sante" onclick="onglet('sante')">Reste à charge santé</button>
+      </div>
+
+      <!-- ─────────── Arrêt de travail ─────────── -->
+      <div class="panel active" id="panel-at">
+        <div class="grid">
+          <div>
+            <div class="field"><label>Salaire mensuel brut <span class="hint">identique sur les 3 derniers mois</span></label>
+              <input type="number" step="0.01" id="at_sal" value="2300"></div>
+            <div class="field"><label>Durée de l'arrêt (jours)</label>
+              <input type="number" step="1" id="at_jours" value="21"></div>
+          </div>
+          <div>
+            <div class="field"><label>Ancienneté dans l'entreprise (années)</label>
+              <input type="number" step="0.5" id="at_anc" value="3"></div>
+            <div class="field"><label>Nature de l'arrêt</label>
+              <select id="at_nature">
+                <option value="mal">Maladie — vie privée</option>
+                <option value="atmp">Accident du travail ou maladie professionnelle</option>
+              </select></div>
+          </div>
+        </div>
+        <div class="res"><h3>Résultat</h3><div id="at_out"></div></div>
+      </div>
+
+      <!-- ─────────── Invalidité ─────────── -->
+      <div class="panel" id="panel-inv">
+        <div class="grid">
+          <div>
+            <div class="field"><label>Salaire annuel moyen <span class="hint">les 10 meilleures années, plafonnées</span></label>
+              <input type="number" step="0.01" id="inv_sam" value="27600"></div>
+          </div>
+          <div>
+            <div class="field"><label>Catégorie reconnue</label>
+              <select id="inv_cat">
+                <option value="1">Catégorie 1 — une activité reste possible</option>
+                <option value="2" selected>Catégorie 2 — aucune activité possible</option>
+                <option value="3">Catégorie 3 — avec assistance d'une tierce personne</option>
+              </select></div>
+            <div class="field"><label>Ancien salaire mensuel brut <span class="hint">pour mesurer l'écart</span></label>
+              <input type="number" step="0.01" id="inv_avant" value="2300"></div>
+          </div>
+        </div>
+        <div class="res"><h3>Résultat</h3><div id="inv_out"></div></div>
+      </div>
+
+      <!-- ─────────── Santé ─────────── -->
+      <div class="panel" id="panel-sante">
+        <div class="grid">
+          <div>
+            <div class="field"><label>Type de consultation</label>
+              <select id="s_type">
+                <option value="gen">Médecin généraliste</option>
+                <option value="spe" selected>Médecin spécialiste</option>
+              </select></div>
+            <div class="field"><label>Situation du médecin</label>
+              <select id="s_secteur">
+                <option value="s1">Secteur 1</option>
+                <option value="optam">Secteur 2 — adhérent OPTAM</option>
+                <option value="nonoptam">Secteur 2 — non adhérent OPTAM</option>
+              </select></div>
+            <div class="field"><label>Honoraire pratiqué</label>
+              <input type="number" step="0.01" id="s_hono" value="55"></div>
+          </div>
+          <div>
+            <div class="field"><label>Parcours de soins</label>
+              <select id="s_parcours">
+                <option value="oui" selected>Respecté</option>
+                <option value="non">Non respecté</option>
+              </select></div>
+            <div class="field"><label>Soin en rapport avec une affection de longue durée</label>
+              <select id="s_ald">
+                <option value="non" selected>Non</option>
+                <option value="oui">Oui</option>
+              </select></div>
+          </div>
+        </div>
+        <div class="res"><h3>Résultat</h3><div id="s_out"></div></div>
+      </div>
+    </div>
+
+    <div class="footer">TMK Performances - N° Siret : 49841924100027 - Code NAF : 8559A</div>
+  </div>
+</div>
+
+<script>
+const SB_URL = "https://ibkvyjlglwufxvzxnysa.supabase.co";
+const SB_KEY = "sb_publishable_xUfZHSOHf4TnBRRyzU_qJA_TcXIMSKX";
+
+const DEF_PREV = {
+  ij_mal_taux: 0.50, ij_mal_diviseur: 91.25, ij_mal_carence: 3, ij_mal_montant_max: 42.97,
+  at_taux1: 0.60, at_taux2: 0.80, at_diviseur_sjr: 30.42, at_carence: 0,
+  mens_taux1: 0.90, mens_carence_maladie: 7, mens_carence_atmp: 0,
+  mens_anciennete_min: 1, mens_duree_periode1: 30,
+  inv_taux_cat1: 0.30, inv_taux_cat2: 0.50,
+  inv_pension_min: 328.07, inv_pension_max_cat1: 1201.50, inv_pension_max_cat2: 2002.50,
+  inv_mtp: 1265.14,
+};
+const DEF_SANTE = {
+  sante_br_generaliste_s1: 30, sante_br_generaliste_optam: 30, sante_br_generaliste_non_optam: 23,
+  sante_br_specialiste_s1: 31.50, sante_br_specialiste_optam: 31.50, sante_br_specialiste_non_optam: 23,
+  sante_taux_consultation_parcours: 0.70,
+  sante_taux_consultation_hors_parcours_non_optam: 0.30,
+  sante_majoration_tm_hors_parcours: 10.60,
+  sante_participation_forfaitaire: 2,
+};
+let P = Object.assign({}, DEF_PREV, DEF_SANTE);
+
+function el(id){ return document.getElementById(id); }
+function num(id){ const v = parseFloat(String(el(id).value).replace(",", ".")); return isNaN(v) ? 0 : v; }
+function eur(n){ return n.toLocaleString("fr-FR",{minimumFractionDigits:2,maximumFractionDigits:2}) + " €"; }
+function r2(n){ return Math.round(n * 100) / 100; }
+function pct(n){ return Math.round(n * 100) + " %"; }
+
+function tableau(rows){
+  return '<table class="calc">' + rows.map(function(r){
+    if(r[0] === "--") return '<tr class="sep"><td colspan="2">' + r[1] + '</td></tr>';
+    return '<tr' + (r[2] ? ' class="tot"' : '') + '><td>' + r[0] + '</td><td>' + r[1] + '</td></tr>';
+  }).join("") + '</table>';
+}
+
+async function lire(table, cles){
+  const url = SB_URL + "/rest/v1/" + table + "?select=cle,valeur&cle=in.(" + cles.join(",") + ")&apikey=" + SB_KEY;
+  const r = await fetch(url);
+  if(!r.ok) throw new Error(r.status);
+  const rows = await r.json();
+  if(!rows.length) throw new Error("vide");
+  rows.forEach(function(row){ if(row.valeur !== null) P[row.cle] = Number(row.valeur); });
+}
+async function chargerParametres(){
+  let ok = 0;
+  try{ await lire("parametres_prevoyance", Object.keys(DEF_PREV)); ok++; }catch(e){}
+  try{ await lire("parametres_sante", Object.keys(DEF_SANTE)); ok++; }catch(e){}
+  const b = el("src-badge");
+  if(ok === 2){ b.className = "src live"; b.textContent = "valeurs à jour"; }
+  else if(ok === 1){ b.className = "src local"; b.textContent = "valeurs partiellement à jour"; }
+  else { b.className = "src local"; b.textContent = "valeurs de secours"; }
+  tout();
+}
+
+function onglet(n){
+  document.querySelectorAll(".tab").forEach(function(t){ t.classList.toggle("active", t.dataset.p === n); });
+  document.querySelectorAll(".panel").forEach(function(p){ p.classList.toggle("active", p.id === "panel-" + n); });
+}
+
+/* ─────────── Arrêt de travail ─────────── */
+function calcAT(){
+  const sal = num("at_sal"), jours = num("at_jours"), anc = num("at_anc");
+  const atmp = el("at_nature").value === "atmp";
+
+  const carenceSecu = atmp ? P.at_carence : P.ij_mal_carence;
+  const carenceEmp  = atmp ? P.mens_carence_atmp : P.mens_carence_maladie;
+
+  let sjb, ij, libelleBase;
+  if(atmp){
+    sjb = r2(sal / P.at_diviseur_sjr);
+    ij  = r2(sjb * P.at_taux1);
+    libelleBase = "Salaire journalier de référence : " + eur(sal) + " ÷ " + String(P.at_diviseur_sjr).replace(".", ",");
+  } else {
+    sjb = r2(sal * 3 / P.ij_mal_diviseur);
+    ij  = r2(sjb * P.ij_mal_taux);
+    libelleBase = "Salaire journalier de base : " + eur(sal) + " × 3 ÷ " + String(P.ij_mal_diviseur).replace(".", ",");
+  }
+  let plafonnee = false;
+  if(!atmp && P.ij_mal_montant_max > 0 && ij > P.ij_mal_montant_max){ ij = P.ij_mal_montant_max; plafonnee = true; }
+
+  const jSecu = Math.max(0, jours - carenceSecu);
+  const ijss  = r2(ij * jSecu);
+
+  const eligible = anc >= P.mens_anciennete_min;
+  const salJour  = r2(sal / 30);
+  const garanti  = r2(salJour * P.mens_taux1);
+  const jEmpBrut = Math.max(0, jours - carenceEmp);
+  const jEmp     = eligible ? Math.min(jEmpBrut, P.mens_duree_periode1) : 0;
+  const compJ    = Math.max(0, r2(garanti - ij));
+  const comp     = r2(compJ * jEmp);
+  const depasse  = eligible && jEmpBrut > P.mens_duree_periode1;
+
+  const total    = r2(ijss + comp);
+  const habituel = r2(sal * jours / 30);
+  const perte    = r2(habituel - total);
+  const tauxPerte = habituel > 0 ? Math.round(perte / habituel * 1000) / 10 : 0;
+
+  const rows = [
+    ["--", "Ce que verse la Sécurité sociale"],
+    [libelleBase, eur(sjb)],
+    ["Indemnité journalière : " + eur(sjb) + " × " + pct(atmp ? P.at_taux1 : P.ij_mal_taux), eur(ij)],
+    ["Jours indemnisés : " + jours + " − " + carenceSecu + " de carence", jSecu + " jours"],
+    ["Total Sécurité sociale", eur(ijss), true],
+    ["--", "Ce que verse l'employeur"],
+  ];
+  if(!eligible){
+    rows.push(["Ancienneté de " + anc + " an(s) — minimum requis : " + P.mens_anciennete_min, "aucun complément"]);
+    rows.push(["Total employeur", eur(0), true]);
+  } else {
+    rows.push(["Salaire journalier de référence : " + eur(sal) + " ÷ 30", eur(salJour)]);
+    rows.push(["Niveau garanti : " + eur(salJour) + " × " + pct(P.mens_taux1), eur(garanti)]);
+    rows.push(["Complément par jour : " + eur(garanti) + " − " + eur(ij), eur(compJ)]);
+    rows.push(["Jours à la charge de l'employeur : " + jours + " − " + carenceEmp + " de carence", jEmp + " jours"]);
+    rows.push(["Total employeur", eur(comp), true]);
+  }
+  rows.push(["--", "Le résultat"]);
+  rows.push(["Total perçu sur " + jours + " jours", eur(total), true]);
+  rows.push(["Salaire habituel sur la même période", eur(habituel)]);
+  rows.push(["Perte de revenu", eur(perte) + "  (" + String(tauxPerte).replace(".", ",") + " %)", true]);
+
+  let html = tableau(rows);
+  if(plafonnee) html += '<div class="flag"><b>Indemnité plafonnée.</b> Le calcul brut dépassait le maximum journalier ; c\'est ce plafond qui est retenu.</div>';
+  if(depasse) html += '<div class="flag"><b>Arrêt long.</b> Le complément employeur est ici limité à la première période. Au-delà, le taux garanti diminue — reprendre le calcul par période.</div>';
+  if(!eligible) html += '<div class="flag ko"><b>Pas de maintien de salaire.</b> L\'ancienneté est insuffisante. Vérifier la convention collective : elle peut être plus favorable que la loi.</div>';
+  el("at_out").innerHTML = html;
+}
+
+/* ─────────── Invalidité ─────────── */
+function calcINV(){
+  const sam = num("inv_sam"), avant = num("inv_avant");
+  const cat = el("inv_cat").value;
+  const taux = (cat === "1") ? P.inv_taux_cat1 : P.inv_taux_cat2;
+  const plafond = (cat === "1") ? P.inv_pension_max_cat1 : P.inv_pension_max_cat2;
+
+  const an = r2(sam * taux);
+  let mois = r2(an / 12);
+  const plaf = mois > plafond, planch = mois < P.inv_pension_min;
+  if(plaf) mois = plafond;
+  if(planch) mois = P.inv_pension_min;
+
+  const mtp = (cat === "3") ? P.inv_mtp : 0;
+  const totalMois = r2(mois + mtp);
+  const ecart = r2(avant - mois);
+  const tauxRempl = avant > 0 ? Math.round(mois / avant * 1000) / 10 : 0;
+
+  const rows = [
+    ["--", "La pension"],
+    ["Salaire annuel moyen", eur(sam)],
+    ["Taux applicable — catégorie " + cat, pct(taux)],
+    ["Pension annuelle", eur(an)],
+    ["Pension mensuelle", eur(mois), true],
+  ];
+  if(cat === "3"){
+    rows.push(["Majoration pour tierce personne", eur(mtp)]);
+    rows.push(["Total mensuel perçu", eur(totalMois), true]);
+  }
+  rows.push(["--", "L'écart avec l'ancien revenu"]);
+  rows.push(["Ancien salaire mensuel brut", eur(avant)]);
+  rows.push(["Taux de remplacement", String(tauxRempl).replace(".", ",") + " %"]);
+  rows.push(["Écart mensuel", eur(ecart), true]);
+
+  let html = tableau(rows);
+  if(plaf) html += '<div class="flag"><b>Pension plafonnée.</b> Le calcul dépassait le plafond mensuel de la catégorie : c\'est le plafond qui est versé.</div>';
+  if(planch) html += '<div class="flag"><b>Pension portée au minimum.</b> Le calcul tombait sous le plancher mensuel.</div>';
+  html += '<div class="flag"><b>À dire au client :</b> le taux porte sur un salaire moyen historique, pas sur le dernier salaire. ' +
+          'L\'écart réel est presque toujours plus large que ce que le pourcentage laisse croire.</div>';
+  el("inv_out").innerHTML = html;
+}
+
+/* ─────────── Reste à charge santé ─────────── */
+function calcSANTE(){
+  const spe = el("s_type").value === "spe";
+  const sect = el("s_secteur").value;
+  const hono = num("s_hono");
+  const horsParcours = el("s_parcours").value === "non";
+  const ald = el("s_ald").value === "oui";
+
+  let br;
+  if(spe) br = (sect === "s1") ? P.sante_br_specialiste_s1 : (sect === "optam" ? P.sante_br_specialiste_optam : P.sante_br_specialiste_non_optam);
+  else    br = (sect === "s1") ? P.sante_br_generaliste_s1 : (sect === "optam" ? P.sante_br_generaliste_optam : P.sante_br_generaliste_non_optam);
+
+  const nonOptam = (sect === "nonoptam");
+  let taux = P.sante_taux_consultation_parcours, majo = 0, regle;
+
+  if(ald){
+    taux = 1; regle = "Affection de longue durée : ticket modérateur exonéré, la base est prise en totalité.";
+    if(horsParcours){
+      if(nonOptam){ taux = P.sante_taux_consultation_hors_parcours_non_optam; regle = "Hors parcours chez un secteur 2 non OPTAM : l'exonération ALD ne protège pas de la minoration du taux."; }
+      else { majo = P.sante_majoration_tm_hors_parcours; regle = "Hors parcours chez un secteur 1 ou OPTAM : la base reste prise en totalité au titre de l'ALD, mais la majoration s'applique."; }
+    }
+  } else if(horsParcours){
+    if(nonOptam){ taux = P.sante_taux_consultation_hors_parcours_non_optam; regle = "Hors parcours chez un secteur 2 non OPTAM : le taux tombe réellement."; }
+    else { majo = P.sante_majoration_tm_hors_parcours; regle = "Hors parcours chez un secteur 1 ou OPTAM : le taux ne bouge pas, une majoration forfaitaire est retenue."; }
+  } else {
+    regle = "Parcours de soins respecté : taux de droit commun sur la base de remboursement.";
+  }
+
+  const brute = r2(br * taux);
+  const pf = P.sante_participation_forfaitaire;
+  const am = r2(Math.max(0, brute - majo - pf));
+  const tm = r2(br - brute);
+  const depass = r2(Math.max(0, hono - br));
+  const irred = r2(majo + pf);
+  const resteAvant = r2(hono - am);
+
+  const rows = [
+    ["--", "Le calcul de l'Assurance Maladie"],
+    ["Base de remboursement retenue", eur(br)],
+    ["Taux appliqué", pct(taux)],
+    [eur(br) + " × " + pct(taux), eur(brute)],
+  ];
+  if(majo > 0) rows.push(["Majoration hors parcours", "− " + eur(majo)]);
+  rows.push(["Participation forfaitaire", "− " + eur(pf)]);
+  rows.push(["Remboursement de l'Assurance Maladie", eur(am), true]);
+  rows.push(["--", "Qui paie quoi"]);
+  rows.push(["Honoraire facturé", eur(hono)]);
+  rows.push(["Assurance Maladie", eur(am)]);
+  rows.push(["Ticket modérateur — pris par une complémentaire responsable", eur(tm)]);
+  rows.push(["Dépassement d'honoraires — selon le niveau du contrat", eur(depass)]);
+  rows.push(["Reste à charge irréductible du client", eur(irred), true]);
+  rows.push(["Total à sa charge avant intervention de la complémentaire", eur(resteAvant)]);
+
+  let html = tableau(rows);
+  html += '<div class="flag"><b>La règle appliquée :</b> ' + regle + '</div>';
+  if(irred > 0) html += '<div class="flag ko"><b>' + eur(irred) + ' ne seront jamais remboursés</b>, ni par la Sécurité sociale ni par la complémentaire, même responsable.</div>';
+  if(depass > 0 && nonOptam) html += '<div class="flag"><b>Praticien non adhérent à l\'OPTAM :</b> la prise en charge du dépassement par un contrat responsable est plus fortement bridée que chez un adhérent.</div>';
+  el("s_out").innerHTML = html;
+}
+
+function tout(){ calcAT(); calcINV(); calcSANTE(); }
+
+document.querySelectorAll("input, select").forEach(function(e){
+  e.addEventListener("input", tout);
+  e.addEventListener("change", tout);
+});
+tout();
+chargerParametres();
+</script>
+</body>
+</html>

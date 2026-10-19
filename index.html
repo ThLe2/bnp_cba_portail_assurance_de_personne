@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Assurance de personne &mdash; Espace formateur &mdash; TMK Performances</title>
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="copyright" content="TMK Performances">
+<style>
+:root{--prune:#8C1E70;--prune-dark:#5E1349;--prune-light:#F4E6EE;
+      --gris:#8A7A85;--trame:#E8DCE5;--fond:#FAF6F8}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+  background:var(--fond);color:#3C3C3C;min-height:100vh;display:flex;flex-direction:column;
+  -webkit-user-select:none;user-select:none}
+
+header{background:var(--prune-dark);color:#fff;border-bottom:3px solid var(--prune)}
+header .barre{max-width:1120px;margin:0 auto;padding:12px 24px;display:flex;align-items:center;gap:16px}
+header .wordmark{font-weight:700;letter-spacing:.5px;font-size:15px}
+header .licence{margin-left:auto;font-size:11px;background:rgba(255,255,255,.12);
+  border:1px solid rgba(255,255,255,.25);padding:4px 10px;border-radius:3px}
+.hero{max-width:1120px;margin:0 auto;padding:30px 24px 6px}
+.hero .sur{font-size:11px;letter-spacing:2.4px;text-transform:uppercase;color:var(--prune);font-weight:700}
+.hero h1{font-size:28px;color:var(--prune-dark);margin:8px 0 10px;font-weight:700;letter-spacing:-.3px}
+.hero p{color:var(--gris);font-size:14px;line-height:1.65;max-width:62ch}
+
+main{flex:1;max-width:1120px;margin:0 auto;padding:22px 24px 40px;width:100%}
+.grille{display:grid;grid-template-columns:repeat(auto-fill,minmax(372px,1fr));gap:16px}
+.carte{background:#fff;border:1px solid var(--trame);border-radius:6px;padding:18px 20px 16px;
+  display:flex;flex-direction:column;transition:border-color .15s,box-shadow .15s}
+.carte:hover{border-color:var(--prune);box-shadow:0 4px 18px rgba(94,19,73,.10)}
+.carte .tete{display:flex;gap:14px;align-items:flex-start;margin-bottom:10px}
+.carte .ic{color:var(--prune);flex:0 0 auto;background:var(--prune-light);
+  width:46px;height:46px;border-radius:6px;display:flex;align-items:center;justify-content:center}
+.carte .num{font-size:10.5px;letter-spacing:1.6px;text-transform:uppercase;color:var(--gris);font-weight:700}
+.carte h2{font-size:17px;color:var(--prune-dark);margin-top:2px;line-height:1.3}
+.carte .chapo{font-size:13px;color:var(--gris);line-height:1.6;margin-bottom:2px}
+.bloc{margin-top:12px;display:flex;flex-direction:column;gap:7px}
+.etiq{font-size:9.5px;letter-spacing:1.5px;text-transform:uppercase;color:var(--gris);
+  font-weight:700;border-bottom:1px solid var(--trame);padding-bottom:5px;margin-bottom:2px}
+.lien{display:flex;align-items:center;gap:9px;text-decoration:none;font-size:13.5px;
+  padding:9px 12px;border-radius:4px;border:1px solid var(--trame);color:var(--prune-dark)}
+.lien:hover{background:var(--prune-light);border-color:var(--prune)}
+.lien.principal{background:var(--prune);color:#fff;border-color:var(--prune);font-weight:600}
+.lien.principal:hover{background:var(--prune-dark)}
+.lien .det{margin-left:auto;font-size:11px;opacity:.75;font-weight:400}
+.lien.absent{color:var(--gris);border-style:dashed;cursor:default;background:transparent}
+.lien.absent:hover{background:transparent;border-color:var(--trame)}
+.exos{display:flex;flex-direction:column;gap:5px;margin-top:2px}
+.exo{display:flex;align-items:center;gap:8px;background:var(--fond);border:1px solid var(--trame);
+  border-radius:4px;padding:6px 8px 6px 11px}
+.ex-txt{flex:1;min-width:0;display:flex;flex-direction:column}
+.ex-nom{font-size:12.5px;color:var(--prune-dark);font-weight:600}
+.ex-url{font-size:10px;color:var(--gris);font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;-webkit-user-select:all;user-select:all}
+.cp{flex:0 0 auto;border:1px solid var(--trame);background:#fff;color:var(--prune);cursor:pointer;
+  border-radius:3px;padding:5px 7px;display:flex;align-items:center}
+.cp:hover,.cp-rel:hover{background:var(--prune-light);border-color:var(--prune)}
+.cp-rel{flex:0 0 auto;border:1px solid var(--trame);background:#fff;color:var(--prune);cursor:pointer;
+  border-radius:3px;padding:5px 7px;display:flex;align-items:center;margin-left:6px}
+.cp-rel.ok{background:var(--prune);color:#fff;border-color:var(--prune)}
+.lien-int{display:flex;align-items:center;gap:0}
+.lien-int .lien{flex:1}
+.cp.ok{background:var(--prune);color:#fff;border-color:var(--prune)}
+.cp-tout{margin-top:3px;border:1px solid var(--trame);background:#fff;color:var(--prune-dark);
+  cursor:pointer;border-radius:4px;padding:8px 12px;font-size:12.5px;font-family:inherit}
+.cp-tout:hover{background:var(--prune-light);border-color:var(--prune)}
+.cp-tout.ok{background:var(--prune);color:#fff;border-color:var(--prune);font-weight:600}
+
+.module{margin-top:26px;background:#fff;border:1px solid var(--trame);border-radius:6px;
+  padding:18px 20px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.module .ic{color:var(--prune);background:var(--prune-light);width:46px;height:46px;
+  border-radius:6px;display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+.module .txt{flex:1;min-width:240px}
+.module h2{font-size:16px;color:var(--prune-dark)}
+.module p{font-size:12.5px;color:var(--gris);margin-top:3px;line-height:1.55}
+.module .lien{max-width:300px}
+
+.avis{margin-top:22px;font-size:12px;color:var(--gris);background:#fff;
+  border-left:3px solid var(--prune);padding:12px 16px;line-height:1.65;border-radius:0 4px 4px 0}
+#filtre{margin-bottom:18px;font-size:12.5px;color:var(--prune-dark);background:var(--prune-light);
+  border:1px solid var(--trame);padding:10px 14px;border-radius:4px;display:none}
+
+footer{background:#fff;border-top:1px solid var(--trame);padding:16px 24px;
+  text-align:center;font-size:11px;color:var(--gris);line-height:1.6}
+footer strong{color:var(--prune-dark)}
+@media print{body *{display:none !important}
+  body::after{content:"Espace prot\00E9g\00E9 \2014 TMK Performances.";display:block !important;
+  padding:60pt;text-align:center;font-family:Helvetica,Arial,sans-serif;color:#5E1349}}
+.jours{list-style:none;margin:10px 0 2px;display:flex;flex-direction:column;gap:5px}
+.jours li{font-size:13px;color:var(--prune-dark);padding:6px 10px;background:var(--fond);border:1px solid var(--trame);border-radius:4px}
+.carte.mod{padding:22px 24px 20px}
+</style>
+</head>
+<body oncontextmenu="return false">
+
+<header><div class="barre">
+  <span class="wordmark">TMK Performances</span>
+  <span class="licence" id="licence"></span>
+</div></header>
+
+<div class="hero">
+  <div class="sur">Espace formateur</div>
+  <h1>Assurance de personne</h1>
+  <p>Choisissez un module pour afficher ses quatre journées et leurs ressources : supports d'animation, documents à remettre et liens des exercices à copier dans Teams.</p>
+</div>
+
+<main>
+  <div id="filtre"></div>
+  <div class="grille" id="grille">
+    <article class="carte mod">
+      <div class="tete"><span class="ic"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M15.5 8.5 13.5 14 8 16l2-5.5z"/></svg></span><div><span class="num">Module 1 · 4 journées</span><h2>Consolidation des acquis</h2></div></div>
+      <p class="chapo">Travail individuel sur cas écrits, sans mise en situation d'appel : reprendre les fondamentaux et les mener jusqu'au dossier client.</p>
+      <ul class="jours"><li>Journée 1 · Prévoyance et santé</li><li>Journée 2 · Retraite et épargne</li><li>Journée 3 · La demande client dans son entier</li><li>Journée 4 · Le dossier client, de la vente au suivi</li></ul>
+      <div class="bloc"><a class="lien principal" data-lien href="Conso_des_acquis/"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4.5h6a3 3 0 0 1 2 1 3 3 0 0 1 2-1h6v14h-6a3 3 0 0 0-2 1 3 3 0 0 0-2-1H4z"/><path d="M12 5.5v14"/></svg> Ouvrir les journées 1 à 4</a></div>
+    </article>
+    <article class="carte mod">
+      <div class="tete"><span class="ic"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6.5A2.5 2.5 0 0 1 5.5 4h8A2.5 2.5 0 0 1 16 6.5v4A2.5 2.5 0 0 1 13.5 13H9l-4 3v-3a2 2 0 0 1-2-2z"/><path d="M18 9h.5A2.5 2.5 0 0 1 21 11.5v4a2 2 0 0 1-2 2v3l-4-3h-3"/></svg></span><div><span class="num">Module 2 · 4 journées</span><h2>Pratique professionnelle RC en assurance de personne</h2></div></div>
+      <p class="chapo">Au téléphone, en binôme conseiller / client : chaque journée met en voix la Conso des acquis qui la précède.</p>
+      <ul class="jours"><li>Journée 1 · Accueillir et répondre</li><li>Journée 2 · Conseiller sans précipiter</li><li>Journée 3 · Vendre et rebondir</li><li>Journée 4 · Le dossier au téléphone, de bout en bout</li></ul>
+      <div class="bloc"><a class="lien principal" data-lien href="Pratique_pro/"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4.5h6a3 3 0 0 1 2 1 3 3 0 0 1 2-1h6v14h-6a3 3 0 0 0-2 1 3 3 0 0 0-2-1H4z"/><path d="M12 5.5v14"/></svg> Ouvrir les journées 1 à 4</a></div>
+    </article></div>
+  
+  <div class="avis">
+    Ces supports sont mis &agrave; disposition &agrave; titre personnel et nominatif, pour les seules
+    sessions anim&eacute;es pour le compte de TMK Performances. Le lien ne doit pas &ecirc;tre
+    transf&eacute;r&eacute;. Toute reproduction, adaptation ou r&eacute;utilisation, m&ecirc;me partielle
+    et dans un autre cadre, est interdite.
+  </div>
+</main>
+
+<footer>
+  <strong>&copy; TMK Performances &mdash; tous droits r&eacute;serv&eacute;s.</strong><br>
+  TMK Performances - N&deg; Siret : 49841924100027 - Code NAF : 8559A
+</footer>
+
+<script>
+const params = new URLSearchParams(location.search);
+const nettoie = v => (v || "").replace(/[<>&"']/g, "").slice(0, 60).trim();
+const formateur = nettoie(params.get("f")) || "Exemplaire non nominatif";
+const session   = nettoie(params.get("s"));
+document.getElementById("licence").textContent =
+  "Acc\u00e8s remis \u00e0 " + formateur + (session ? " \u2014 session " + session : "");
+
+/* le nom et la session suivent le formateur dans tous les documents */
+document.querySelectorAll("[data-lien]").forEach(a => {
+  a.setAttribute("href", a.getAttribute("href") + location.search);
+});
+
+/* ?j=2 ou ?j=2,3 : n'afficher que les journees concernees (affichage, pas un verrou) */
+const j = nettoie(params.get("j"));
+if (j) {
+  const garde = j.split(/[,;. ]+/).filter(Boolean);
+  let masquees = 0;
+  [].forEach(c => {
+    if (!garde.includes(c.dataset.jour)) { c.style.display = "none"; masquees++; }
+  });
+  if (masquees) {
+    const f = document.getElementById("filtre");
+    f.style.display = "block";
+    f.textContent = garde.length > 1
+      ? "Votre acc\u00e8s porte sur les journ\u00e9es " + garde.join(", ") + " du module."
+      : "Votre acc\u00e8s porte sur la journ\u00e9e " + garde[0] + " du module.";
+  }
+}
+
+function copier(texte, bouton, motOk) {
+  const fini = () => {
+    const avant = bouton.innerHTML;
+    bouton.classList.add("ok");
+    if (motOk) bouton.textContent = motOk;
+    setTimeout(() => { bouton.classList.remove("ok"); bouton.innerHTML = avant; }, 1600);
+  };
+  if (navigator.clipboard && window.isSecureContext) {
+    navigator.clipboard.writeText(texte).then(fini).catch(() => secours(texte, fini));
+  } else { secours(texte, fini); }
+}
+function secours(texte, fini) {
+  const z = document.createElement("textarea");
+  z.value = texte; z.style.position = "fixed"; z.style.opacity = "0";
+  document.body.appendChild(z); z.select();
+  try { document.execCommand("copy"); fini(); } catch (e) { prompt("Copiez ce lien :", texte); }
+  document.body.removeChild(z);
+}
+document.querySelectorAll(".cp").forEach(b =>
+  b.addEventListener("click", () => copier(b.dataset.url, b, null)));
+/* documents interactifs heberges ici : on copie l'URL absolue calculee a l'execution */
+document.querySelectorAll(".cp-rel").forEach(b =>
+  b.addEventListener("click", () => copier(new URL(b.dataset.href, location.href).href, b, null)));
+document.querySelectorAll(".cp-tout").forEach(b =>
+  b.addEventListener("click", () => copier(
+    "Exercices \u2014 " + b.dataset.jour_label + "\n" + b.dataset.liens, b, "Copi\u00e9 \u2713")));
+
+document.addEventListener("dragstart", e => e.preventDefault());
+</script>
+</body>
+</html>

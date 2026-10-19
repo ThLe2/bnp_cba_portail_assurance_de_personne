@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cas 3 — Gérard, 68 ans · Corrigé formateur</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Karla:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#16243B; --bleu:#1F4E79; --bleu-clair:#2E75B6; --or:#B08D57;
+  --creme:#F5F2EB; --card:#FFFFFF; --line:#e3ddd0; --muted:#6B6459;
+  --ok:#2F7A4F; --ko:#B23B3B; --amber:#B5852A;
+  --shadow:0 2px 10px rgba(22,36,59,.07);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Karla',system-ui,sans-serif;background:var(--creme);color:var(--navy);line-height:1.55}
+.wrap{max-width:1000px;margin:0 auto;padding:26px 18px 70px}
+.card-main{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);overflow:hidden}
+.header{padding:26px 34px 0}
+.chapter-tag{font-size:11.5px;font-weight:700;letter-spacing:1.6px;text-transform:uppercase;color:var(--or)}
+.chapter-tag span{opacity:.5}
+h1{font-family:'Fraunces',serif;font-weight:600;font-size:27px;line-height:1.2;margin:8px 0 5px}
+.header p{color:var(--muted);font-size:14.5px}
+.gold-rule{border:none;border-top:2px solid var(--or);width:64px;margin:18px 0 0}
+.body{padding:22px 34px 30px}
+
+.warn{background:#FBF1DC;border:1px solid #E6D3A8;border-left:3px solid var(--amber);border-radius:8px;padding:13px 16px;font-size:13.5px;margin-bottom:20px}
+.warn b{color:var(--navy)}
+
+.situation{background:#FBF7EE;border:1px solid var(--line);border-radius:10px;padding:15px 18px;margin-bottom:18px;font-size:14px}
+.situation h2{font-family:'Fraunces',serif;font-size:17px;margin-bottom:7px}
+.situation .don{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:6px 22px;margin-top:11px}
+.don .r{display:flex;justify-content:space-between;gap:12px;border-bottom:1px dotted var(--line);padding-bottom:3px;font-size:13px}
+.don .r b{white-space:nowrap}
+
+.params{background:#FCFAF5;border:1px dashed var(--line);border-radius:10px;padding:14px 16px;margin-bottom:22px}
+.params-title{font-size:11px;font-weight:700;letter-spacing:1.3px;text-transform:uppercase;color:var(--muted);margin-bottom:10px;display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.src{font-weight:600;letter-spacing:0;text-transform:none;font-size:11.5px;padding:2px 9px;border-radius:99px}
+.src.live{background:#E8F2EA;color:var(--ok)}
+.src.local{background:#FBF1DC;color:var(--amber)}
+.plist{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:7px 22px}
+.prow{display:flex;justify-content:space-between;gap:12px;font-size:13px;border-bottom:1px dotted var(--line);padding-bottom:3px}
+.prow span:last-child{font-weight:700;white-space:nowrap}
+
+.tools{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px}
+.btn{border:none;border-radius:9px;padding:11px 20px;font-family:inherit;font-size:14px;font-weight:700;cursor:pointer}
+.btn-primary{background:var(--bleu);color:#fff}
+.btn-secondary{background:#fff;color:var(--bleu);border:1.5px solid var(--bleu)}
+
+.q{border:1.5px solid var(--line);border-radius:12px;margin-bottom:16px;overflow:hidden;background:#fff}
+.q-head{padding:16px 20px}
+.q-num{font-size:10.5px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--or);margin-bottom:5px}
+.q-txt{font-size:15.5px;font-weight:700;line-height:1.45}
+.q-btn{margin:0 20px 16px;background:var(--navy);color:#fff;border:none;border-radius:8px;padding:10px 18px;
+  font-family:inherit;font-size:13.5px;font-weight:700;cursor:pointer}
+.q-btn.open{background:#fff;color:var(--navy);border:1.5px solid var(--line)}
+.corr{max-height:0;overflow:hidden;transition:max-height .35s ease;background:#FBF7EE;border-top:1px solid var(--line)}
+.corr.show{max-height:2600px}
+.corr-in{padding:18px 20px 20px}
+.corr h4{font-size:11px;font-weight:700;letter-spacing:1.3px;text-transform:uppercase;color:var(--bleu);margin:16px 0 7px}
+.corr h4:first-child{margin-top:0}
+.corr p{font-size:14px;margin-bottom:8px}
+.corr ul{margin:0 0 8px 18px;font-size:14px}
+.corr li{margin-bottom:5px}
+.calc{width:100%;border-collapse:collapse;font-size:13.5px;margin:4px 0 10px;background:#fff;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.calc td{padding:7px 11px;border-bottom:1px solid var(--line)}
+.calc tr:last-child td{border-bottom:none}
+.calc td:last-child{text-align:right;font-weight:700;white-space:nowrap;font-variant-numeric:tabular-nums}
+.calc tr.tot td{background:#EEF4F9;color:var(--navy);font-weight:700}
+.calc tr.tot td:first-child{font-weight:700}
+.relance{background:#EEF4F9;border-left:3px solid var(--bleu-clair);border-radius:6px;padding:11px 14px;font-size:13.5px;margin-bottom:9px}
+.erreur{background:#FBF3F3;border-left:3px solid var(--ko);border-radius:6px;padding:11px 14px;font-size:13.5px}
+.erreur b,.relance b{color:var(--navy)}
+.footer{text-align:center;font-size:11.5px;color:var(--muted);padding:16px 34px 24px;border-top:1px solid var(--line)}
+.card-rev{background:#FBF7EE;border:1.5px solid var(--or);border-radius:12px;padding:18px 20px;margin-bottom:20px}
+.card-rev h2{font-family:'Fraunces',serif;font-size:19px;font-weight:600;margin-bottom:6px}
+.rev-intro{font-size:13.5px;color:var(--muted);margin-bottom:14px}
+.rev-tools{display:flex;gap:9px;margin-bottom:14px;flex-wrap:wrap}
+.btn-rev-all{background:var(--navy);color:#fff;border:none;border-radius:7px;padding:8px 15px;font-family:inherit;font-size:12.5px;font-weight:700;cursor:pointer}
+.btn-rev-all.sec{background:#fff;color:var(--navy);border:1.5px solid var(--line)}
+.rev{background:#fff;border:1px solid var(--line);border-radius:10px;margin-bottom:10px;overflow:hidden}
+.rev-head{padding:12px 15px 0}
+.rev-dom{display:inline-block;font-size:9.5px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--or);margin-bottom:5px}
+.rev-q{display:block;font-size:14px;font-weight:700;font-style:italic;line-height:1.4}
+.rev-btn{margin:11px 15px 13px;background:var(--navy);color:#fff;border:none;border-radius:7px;padding:8px 15px;font-family:inherit;font-size:12.5px;font-weight:700;cursor:pointer}
+.rev-btn.open{background:#fff;color:var(--navy);border:1.5px solid var(--line)}
+.rev-body{max-height:0;overflow:hidden;transition:max-height .3s ease;background:#F7FAFD;border-top:1px solid var(--line)}
+.rev-body.show{max-height:600px}
+.rev-in{padding:14px 15px}
+.rev-in p{font-size:14px;margin-bottom:8px}
+.rev-why{font-size:12.5px;color:var(--muted);border-top:1px solid var(--line);padding-top:9px}
+.rev-why b{color:var(--navy)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card-main">
+    <div class="header">
+      <div class="chapter-tag">TMK Performances · Conso des acquis 3/4 <span>/</span> Séquence 6</div>
+      <h1>Cas 3 — Gérard, 68 ans</h1>
+      <p>Corrigé formateur · révélations pilotées · 105 minutes</p>
+      <hr class="gold-rule">
+    </div>
+
+    <div class="body">
+      <div class="warn">
+        <b>⚠ Document formateur.</b> Ne pas projeter avant la restitution. Brief 10 min · recherche individuelle 40 min ·
+        correction collective 40 min · synthèse 15 min. Interrogez nominativement plutôt que d'attendre les volontaires,
+        et faites expliciter le raisonnement <b>avant</b> de révéler le résultat. <br><br><b>VOUS JOUEZ GÉRARD.</b> Vous détenez huit informations qu'il ne donnera que si on les lui demande, et vous ne dites rien de vous-même. Un stagiaire qui ne pose pas la question n'obtient pas la réponse — c'est toute la séquence. Si le groupe piétine, laissez-le piétiner : c'est exactement ce qui se passe devant un vrai client.
+      </div>
+
+      <div class="situation">
+        <h2>Ce que les stagiaires ont sous les yeux</h2>
+        <p>« Bonjour, j'ai reçu un courrier de la caisse de retraite complémentaire de ma femme. Je n'y comprends rien.
+        Est-ce que je dois faire quelque chose ? »</p>
+        <div class="don">
+          <div class="r"><span>Gérard Lemoine</span><b>68 ans</b></div>
+          <div class="r"><span>Situation</span><b>retraité depuis 4 ans</b></div>
+          <div class="r"><span>Épouse Monique</span><b>décédée il y a 4 mois, à 66 ans</b></div>
+          <div class="r"><span>Logement</span><b>sa maison, il y vit seul</b></div>
+        </div>
+        <p style="margin-top:11px;font-size:13.5px"><b>C'est tout.</b> Le reste du dossier est ci-dessous, et n'existe que si on le demande.</p>
+      </div>
+
+      <div class="card-rev">
+        <h2>Ce que Gérard n'a pas dit</h2>
+        <p class="rev-intro">Huit informations, chacune derrière sa question. <b>Ne révélez que ce qui a été demandé</b>,
+        et à la question formulée — pas à une approximation. La dernière est une réponse négative : elle compte autant que les autres.</p>
+        <div class="rev-tools">
+          <button class="btn-rev-all" onclick="toutReveler(true)">Tout révéler</button>
+          <button class="btn-rev-all sec" onclick="toutReveler(false)">Tout masquer</button>
+        </div>
+        <div id="reveals"></div>
+      </div>
+
+      <div class="params">
+        <div class="params-title">Paramètres utilisés pour le corrigé <span class="src local" id="src-badge">valeurs de secours</span></div>
+        <div class="plist" id="plist"></div>
+      </div>
+
+      <div class="tools">
+        <button class="btn btn-primary" onclick="tout(true)">Tout révéler</button>
+        <button class="btn btn-secondary" onclick="tout(false)">Tout masquer</button>
+      </div>
+
+      <div id="questions"></div>
+    </div>
+
+    <div class="footer">TMK Performances - N° Siret : 49841924100027 - Code NAF : 8559A</div>
+  </div>
+</div>
+
+<script>
+/* ─────────── Paramètres live, repli local ─────────── */
+const SB_URL = "https://ibkvyjlglwufxvzxnysa.supabase.co";
+const SB_KEY = "sb_publishable_xUfZHSOHf4TnBRRyzU_qJA_TcXIMSKX";
+
+const DEF_PREV = {
+  reversion_taux: 0.54, reversion_age_min: 55, reversion_plafond_seul: 25605,
+  apa_plafond_gir4: 811.52, apa_age_min: 60,
+};
+const DEF_PARC = { reversion_comp_taux: 0.60, reversion_comp_age_min: 55 };
+const DEF_SANTE = {
+  sante_audio_plv_classe1_20ans_plus: 950,
+  sante_audio_br_classe1_2_20ans_plus: 400,
+  sante_taux_aide_auditive: 0.60,
+};
+const DEF_EP = {
+  av_990i_abattement_beneficiaire: 152500,
+  per_age_limite_deduction: 70,
+  epargne_ps_taux_general: 0.186,
+  epargne_pfu_taux_ir: 0.128,
+};
+let P = Object.assign({}, DEF_PREV, DEF_PARC, DEF_SANTE, DEF_EP);
+
+const AFFICHE = [
+  ["reversion_taux", "Réversion du régime de base", "%"],
+  ["reversion_plafond_seul", "Plafond de ressources, personne seule", "€"],
+  ["reversion_comp_taux", "Réversion complémentaire", "%"],
+  ["sante_audio_plv_classe1_20ans_plus", "Prix limite — aide auditive classe I", "€"],
+  ["sante_audio_br_classe1_2_20ans_plus", "Base — aide auditive", "€"],
+  ["av_990i_abattement_beneficiaire", "Abattement par bénéficiaire, art. 990 I", "€"],
+  ["per_age_limite_deduction", "Âge limite de déduction des versements PER", "a"],
+];
+
+function el(id){ return document.getElementById(id); }
+function eur(n){ return n.toLocaleString("fr-FR",{minimumFractionDigits:2,maximumFractionDigits:2}) + " €"; }
+function eur0(n){ return n.toLocaleString("fr-FR",{minimumFractionDigits:0,maximumFractionDigits:0}) + " €"; }
+function pct(n, d){ return (Math.round(n*10000)/100).toLocaleString("fr-FR", d ? {minimumFractionDigits:d,maximumFractionDigits:d} : {}) + " %"; }
+function r2(n){ return Math.round(n*100)/100; }
+
+function renderParams(){
+  el("plist").innerHTML = AFFICHE.map(function(a){
+    const v = P[a[0]];
+    const aff = a[2] === "%" ? pct(v) : (a[2] === "a" ? v + " ans" : eur0(v));
+    return '<div class="prow"><span>' + a[1] + '</span><span>' + aff + '</span></div>';
+  }).join("");
+}
+async function lire(table, cles){
+  const r = await fetch(SB_URL + "/rest/v1/" + table + "?select=cle,valeur&cle=in.(" + cles.join(",") + ")&apikey=" + SB_KEY);
+  if(!r.ok) throw new Error(r.status);
+  const rows = await r.json();
+  if(!rows.length) throw new Error("vide");
+  rows.forEach(function(row){ if(row.valeur !== null) P[row.cle] = Number(row.valeur); });
+}
+async function chargerParametres(){
+  let ok = 0;
+  try{ await lire("parametres_prevoyance", Object.keys(DEF_PREV)); ok++; }catch(e){}
+  try{ await lire("parametres_parcours", Object.keys(DEF_PARC)); ok++; }catch(e){}
+  try{ await lire("parametres_sante", Object.keys(DEF_SANTE)); ok++; }catch(e){}
+  try{ await lire("parametres_epargne", Object.keys(DEF_EP)); ok++; }catch(e){}
+  const b = el("src-badge");
+  if(ok === 4){ b.className = "src live"; b.textContent = "valeurs à jour"; }
+  else if(ok > 0){ b.className = "src local"; b.textContent = "valeurs partiellement à jour"; }
+  else { b.className = "src local"; b.textContent = "valeurs de secours"; }
+  renderParams(); renderReveals(); renderQuestions();
+}
+
+/* ─────────── Les données que Gérard ne donne pas ─────────── */
+const REV_BASE_MONIQUE = 780, REV_COMP_MONIQUE = 420, REVENUS_GERARD = 1850;
+const AV_MONIQUE = 95000, AV_ANC = 12, PER_GERARD = 45000, AGE = 68;
+
+const REVELATIONS = [
+  {d:"RETRAITE", q:"« Votre épouse était-elle retraitée, et percevait-elle une pension ? »",
+   r:"Oui. Monique percevait <b>" + REV_BASE_MONIQUE + " € de pension de base</b> et <b>" + REV_COMP_MONIQUE + " € de complémentaire</b> par mois.",
+   why:"Sans cette réponse, aucun chiffrage de réversion n'est possible. C'est la question qui débloque l'objet même de son appel."},
+  {d:"RETRAITE", q:"« Avez-vous déposé une demande de réversion depuis son décès ? »",
+   r:"Non. Il n'a rien demandé du tout, sauf la déclaration en mairie. Il pensait que « ça se faisait tout seul ».",
+   why:"La réversion ne se déclenche jamais automatiquement. Passé douze mois, elle n'est plus versée qu'à compter de la demande : chaque mois qui passe est perdu."},
+  {d:"RETRAITE / ÉPARGNE", q:"« Quels sont vos revenus aujourd'hui ? »",
+   r:"Environ <b>" + REVENUS_GERARD + " € par mois</b>, pensions de base et complémentaire cumulées.",
+   why:"Nécessaire deux fois : pour l'écrêtement de la réversion du régime de base, et pour situer sa tranche marginale sur le PER."},
+  {d:"ÉPARGNE", q:"« Votre épouse avait-elle un contrat d'assurance vie ? »",
+   r:"Oui, un contrat de <b>" + AV_ANC + " ans</b> d'environ <b>" + eur0(AV_MONIQUE) + "</b>. Gérard en est le bénéficiaire désigné. Il n'a prévenu personne.",
+   why:"L'assureur n'est pas informé du décès. Le capital dort. Et le conjoint bénéficiaire est totalement exonéré — encore faut-il le réclamer."},
+  {d:"ÉPARGNE", q:"« Avez-vous vous-même des contrats d'épargne en cours ? »",
+   r:"Oui, un <b>PER de " + eur0(PER_GERARD) + "</b>, jamais liquidé. Versements déduits à l'entrée.",
+   why:"Il est retraité depuis quatre ans et n'a rien fait de ce plan. Une décision est à prendre, et une échéance approche."},
+  {d:"PRÉVOYANCE", q:"« Comment vous débrouillez-vous au quotidien, chez vous ? »",
+   r:"Il monte son escalier difficilement depuis six mois. <b>Sa fille Karine vient l'aider trois fois par semaine</b> pour les courses et le ménage.",
+   why:"Personne ne signale spontanément une perte d'autonomie. C'est la question la plus difficile à poser, et la plus utile de tout le dossier."},
+  {d:"SANTÉ", q:"« Avez-vous des dépenses de santé qui vous pèsent en ce moment ? »",
+   r:"Son <b>appareil auditif droit ne fonctionne plus</b>. Il l'a acheté il y a cinq ans et n'ose pas le remplacer, « vu le prix ».",
+   why:"Le renouvellement est possible passé le délai réglementaire, et le panier sans reste à charge existe. Il s'en prive faute de le savoir."},
+  {d:"PRÉVOYANCE", q:"« Votre épouse travaillait-elle encore, ou percevait-elle une pension d'invalidité ? »",
+   r:"Non. Monique était retraitée depuis six ans. <b>Aucun capital décès n'est donc dû.</b>",
+   why:"Réponse négative, et c'est ce qui la rend utile : le réflexe « décès du conjoint, donc capital décès » ne s'applique pas ici. Un stagiaire qui pose la question a raison ; un stagiaire qui conclut sans l'avoir posée a tort."},
+];
+
+function renderReveals(){
+  el("reveals").innerHTML = REVELATIONS.map(function(rv, i){
+    return '<div class="rev">' +
+      '<div class="rev-head"><span class="rev-dom">' + rv.d + '</span>' +
+      '<span class="rev-q">' + rv.q + '</span></div>' +
+      '<button class="rev-btn" id="rbtn' + i + '" onclick="revele(' + i + ')">Révéler la réponse</button>' +
+      '<div class="rev-body" id="rbody' + i + '"><div class="rev-in"><p>' + rv.r + '</p>' +
+      '<p class="rev-why"><b>Pourquoi cette question compte :</b> ' + rv.why + '</p></div></div>' +
+    '</div>';
+  }).join("");
+}
+function revele(i){
+  const b = el("rbody" + i), t = el("rbtn" + i);
+  const ouvert = b.classList.toggle("show");
+  t.classList.toggle("open", ouvert);
+  t.textContent = ouvert ? "Masquer" : "Révéler la réponse";
+}
+function toutReveler(ouvrir){
+  REVELATIONS.forEach(function(_, i){
+    const b = el("rbody" + i), t = el("rbtn" + i);
+    b.classList.toggle("show", ouvrir);
+    t.classList.toggle("open", ouvrir);
+    t.textContent = ouvrir ? "Masquer" : "Révéler la réponse";
+  });
+}
+
+/* ─────────── Le corrigé ─────────── */
+function calculs(){
+  const revBase   = r2(REV_BASE_MONIQUE * P.reversion_taux);
+  const revComp   = r2(REV_COMP_MONIQUE * P.reversion_comp_taux);
+  const ressAn    = r2(REVENUS_GERARD * 12);
+  const totalAvant= r2(ressAn + revBase * 12);
+  const depassAn  = r2(Math.max(0, totalAvant - P.reversion_plafond_seul));
+  const ecretMois = r2(depassAn / 12);
+  const revBaseNet= r2(Math.max(0, revBase - ecretMois));
+  const revTotal  = r2(revBaseNet + revComp);
+  const revAn     = r2(revTotal * 12);
+  const perduParMois = revTotal;
+
+  const amAudio   = r2(P.sante_audio_br_classe1_2_20ans_plus * P.sante_taux_aide_auditive);
+  const plvAudio  = P.sante_audio_plv_classe1_20ans_plus;
+  const anneesAvant70 = P.per_age_limite_deduction - AGE;
+
+  return {revBase, revComp, ressAn, totalAvant, depassAn, ecretMois, revBaseNet, revTotal, revAn,
+          perduParMois, amAudio, plvAudio, anneesAvant70};
+}
+function tableau(rows){
+  return '<table class="calc">' + rows.map(function(r){
+    return '<tr' + (r[2] ? ' class="tot"' : '') + '><td>' + r[0] + '</td><td>' + r[1] + '</td></tr>';
+  }).join("") + '</table>';
+}
+
+function questions(){
+  const c = calculs();
+  return [
+  {
+    txt: "Avant tout calcul : quelles questions poseriez-vous à Gérard ?",
+    corr:
+      '<h4>Ce qu\'on évalue ici, et en premier</h4>' +
+      '<p>Non pas la justesse d\'un calcul, mais <b>la couverture du dossier</b>. Un stagiaire qui pose six questions pertinentes vaut mieux qu\'un stagiaire qui en pose deux et calcule bien.</p>' +
+      '<h4>La méthode : passer la grille domaine par domaine</h4>' +
+      '<ul>' +
+      '<li><b>Retraite</b> — sa femme était-elle retraitée ? Quelles pensions percevait-elle ? A-t-il déposé une demande ? Quels sont ses propres revenus ?</li>' +
+      '<li><b>Épargne</b> — avait-elle des contrats ? En est-il bénéficiaire ? A-t-il lui-même des placements en cours ?</li>' +
+      '<li><b>Prévoyance</b> — comment se débrouille-t-il au quotidien ? Quelqu\'un l\'aide-t-il ? Sa femme travaillait-elle encore, ou percevait-elle une pension d\'invalidité ?</li>' +
+      '<li><b>Santé</b> — a-t-il des dépenses qui lui pèsent ? Renonce-t-il à des soins ?</li>' +
+      '</ul>' +
+      '<p>Huit questions suffisent à ouvrir tout le dossier. Le tableau ci-dessus les liste, avec les réponses de Gérard — à révéler <b>une à une</b>, et seulement quand le groupe les formule.</p>' +
+      '<div class="relance"><b>À faire dire au groupe :</b> laquelle de ces questions vous paraît la plus difficile à poser à un homme de 68 ans que vous avez au téléphone ? ' +
+      'Et pourquoi celle-là est-elle justement la plus importante ?</div>' +
+      '<div class="erreur"><b>Erreur fréquente :</b> ne poser que des questions sur le courrier. Gérard a appelé pour un sujet ; il en a quatre. ' +
+      'Le conseiller qui répond exactement à la question posée fait son travail à un quart.</div>'
+  },
+  {
+    txt: "Le courrier de la caisse complémentaire : de quoi s'agit-il, et quels droits Gérard peut-il faire valoir ?",
+    corr:
+      '<h4>Ce que le courrier annonce</h4>' +
+      '<p>Selon toute probabilité, une <b>information sur la réversion</b> ou une demande de pièces. La caisse complémentaire a été informée du décès ; le régime de base ne l\'a pas nécessairement été, et surtout : <b>ni l\'un ni l\'autre ne verse quoi que ce soit sans demande</b>.</p>' +
+      '<h4>Deux régimes, deux jeux de règles</h4>' +
+      tableau([
+        ["Réversion du régime de base — taux", pct(P.reversion_taux)],
+        ["Condition d\'âge : " + P.reversion_age_min + " ans, Gérard en a " + AGE, "remplie"],
+        ["Condition de ressources", "OUI — à vérifier"],
+        ["Réversion complémentaire — taux", pct(P.reversion_comp_taux)],
+        ["Condition de ressources", "NON", true],
+      ]) +
+      '<p>Gérard est un homme, et beaucoup de conseillers l\'oublient : <b>la réversion n\'a rien de féminin</b>. Il y a droit exactement dans les mêmes conditions.</p>' +
+      '<h4>Le point de délai, qui est le vrai sujet</h4>' +
+      '<p>La réversion ne se prescrit pas, mais sa <b>rétroactivité</b>, oui. Déposée dans les douze mois du décès, elle est due depuis le premier jour du mois suivant le décès. Au-delà, elle ne part que de la demande.</p>' +
+      '<p>Le décès remonte à <b>quatre mois</b>. Gérard a donc encore huit mois pour récupérer l\'intégralité de l\'arriéré — et chaque mois d\'attente au-delà sera définitivement perdu.</p>' +
+      '<div class="relance"><b>À faire dire au groupe :</b> que se passerait-il si Gérard avait appelé dans dix-huit mois plutôt que dans quatre ?</div>' +
+      '<div class="erreur"><b>Erreur fréquente :</b> répondre « il n\'y a pas de délai, la réversion n\'est pas forclose ». C\'est exact sur le principe et faux en pratique : ' +
+      'ce qui se perd, c\'est l\'arriéré, et il se compte en mois.</div>'
+  },
+  {
+    txt: "Quels sujets avez-vous identifiés en plus de celui qu'il a évoqué ? Rattachez chacun à son domaine.",
+    corr:
+      '<h4>Quatre domaines, dont un seul avait été nommé</h4>' +
+      tableau([
+        ["RETRAITE — la réversion, sur les deux régimes", "le sujet de son appel"],
+        ["ÉPARGNE — le contrat d\'assurance vie de Monique, dont il est bénéficiaire", "non demandé"],
+        ["ÉPARGNE — son propre PER, jamais liquidé", "non traité"],
+        ["PRÉVOYANCE — une perte d\'autonomie qui s\'installe", "jamais évoquée", true],
+        ["SANTÉ — un appareil auditif hors service qu\'il n\'ose pas remplacer", "renoncement aux soins"],
+      ]) +
+      '<h4>Deux d\'entre eux méritent un mot de plus</h4>' +
+      '<p><b>L\'assurance vie.</b> L\'assureur n\'est pas informé du décès : rien ne bougera tant que personne ne l\'aura prévenu. ' +
+      'Gérard étant le conjoint bénéficiaire, il est <b>totalement exonéré</b> — ni droits de succession, ni prélèvement de l\'article 990 I. ' +
+      'Quatre-vingt-quinze mille euros dorment parce que personne n\'a écrit une lettre.</p>' +
+      '<p><b>La perte d\'autonomie.</b> Karine vient trois fois par semaine, et personne n\'a jamais parlé d\'une évaluation. ' +
+      'Gérard a plus de ' + P.apa_age_min + ' ans : une demande d\'allocation d\'autonomie est possible, sous réserve du classement. ' +
+      'C\'est aussi, à terme, le sujet qui coûtera le plus cher à la famille.</p>' +
+      '<div class="relance"><b>À faire dire au groupe :</b> lequel de ces cinq sujets Gérard aurait-il évoqué de lui-même dans six mois ? ' +
+      'Et lequel n\'aurait-il jamais évoqué ?</div>' +
+      '<div class="erreur"><b>Erreur fréquente :</b> s\'arrêter à trois sujets et considérer le dossier couvert. ' +
+      'Le renoncement aux soins ne se déclare pas — il se devine à une phrase comme « vu le prix ».</div>'
+  },
+  {
+    txt: "Sur le sujet le plus urgent, chiffrez ce que vous pouvez.",
+    corr:
+      '<h4>Le plus urgent est la réversion — et c\'est chiffrable</h4>' +
+      '<p>C\'est le seul sujet qui fait perdre de l\'argent <b>chaque mois qui passe</b>. L\'assurance vie attendra sans dommage, le PER aussi, l\'appareil auditif également. Pas l\'arriéré de réversion.</p>' +
+      '<h4>Réversion du régime de base, avant écrêtement</h4>' +
+      tableau([
+        ["Pension de base de Monique", eur0(REV_BASE_MONIQUE)],
+        ["Réversion : × " + pct(P.reversion_taux), eur(c.revBase), true],
+      ]) +
+      '<h4>La condition de ressources</h4>' +
+      tableau([
+        ["Ressources annuelles de Gérard", eur0(c.ressAn)],
+        ["Réversion annuelle avant écrêtement", eur(r2(c.revBase * 12))],
+        ["Total à comparer au plafond", eur(c.totalAvant)],
+        ["Plafond, personne seule", eur0(P.reversion_plafond_seul)],
+        ["Dépassement annuel", eur(c.depassAn)],
+        ["Écrêtement mensuel", "− " + eur(c.ecretMois)],
+        ["Réversion de base effectivement versée", eur(c.revBaseNet), true],
+      ]) +
+      '<h4>Réversion complémentaire — aucune condition de ressources</h4>' +
+      tableau([
+        ["Pension complémentaire de Monique", eur0(REV_COMP_MONIQUE)],
+        ["Réversion : × " + pct(P.reversion_comp_taux), eur(c.revComp), true],
+      ]) +
+      '<h4>Le total, et ce qui se joue</h4>' +
+      tableau([
+        ["Réversion mensuelle totale", eur(c.revTotal), true],
+        ["Sur une année", eur(c.revAn)],
+        ["Perdu pour chaque mois d\'attente au-delà du douzième", eur(c.perduParMois), true],
+      ]) +
+      '<p>Noter que la <b>complémentaire n\'est pas écrêtée</b> : elle représente ici près de la moitié du total, et c\'est précisément celle qu\'un conseiller distrait oublie de mentionner.</p>' +
+      '<div class="relance"><b>À faire dire au groupe :</b> si Gérard avait 2 400 € de revenus au lieu de ' + eur0(REVENUS_GERARD) + ', que deviendrait chaque part ? ' +
+      '(La base disparaîtrait ou presque ; la complémentaire, elle, ne bougerait pas d\'un centime.)</div>' +
+      '<div class="erreur"><b>Erreur fréquente :</b> appliquer l\'écrêtement aux deux réversions. Seul le régime de base regarde les ressources — ' +
+      'et c\'est l\'erreur qui fait renoncer des conjoints survivants à des droits qu\'ils ont.</div>'
+  },
+  {
+    txt: "Répondez à Gérard en trois phrases, puis donnez l'ordre de traitement.",
+    corr:
+      '<h4>Une réponse possible</h4>' +
+      '<p>« Ce courrier vous annonce que vous avez droit à une part de la retraite de votre épouse, sur ses deux régimes — ' +
+      'environ ' + eur(c.revTotal) + ' par mois — mais rien ne vous sera versé tant que vous n\'aurez pas déposé les demandes, et il faut le faire avant l\'anniversaire de son décès ' +
+      'pour ne pas perdre les mois écoulés. Nous allons faire ces deux dossiers ensemble cette semaine. ' +
+      'Et pendant que je vous ai, il y a trois autres choses dont j\'aimerais qu\'on parle : le contrat d\'épargne de votre femme, votre propre plan, et votre appareil auditif. »</p>' +
+      '<h4>L\'ordre de traitement</h4>' +
+      '<ol style="margin-left:18px;font-size:14px">' +
+      '<li><b>Les deux demandes de réversion.</b> Seul sujet sous horloge. Huit mois pour ne rien perdre.</li>' +
+      '<li><b>Prévenir l\'assureur du contrat de Monique.</b> Une lettre. ' + eur0(AV_MONIQUE) + ' totalement exonérés pour le conjoint, mais bloqués tant que personne n\'écrit.</li>' +
+      '<li><b>L\'évaluation de son autonomie.</b> Le plus lourd des cinq à terme, et celui qu\'il n\'évoquera jamais seul. À traiter avec Karine, pas au téléphone.</li>' +
+      '<li><b>L\'appareil auditif.</b> Renouvelable, et le panier sans reste à charge existe : sur un équipement plafonné à ' + eur0(c.plvAudio) + ' par oreille, l\'Assurance Maladie verse ' + eur(c.amAudio) + ' et une complémentaire responsable prend le solde.</li>' +
+      '<li><b>Son PER.</b> Le seul sans urgence. À noter tout de même : la déduction des versements disparaît à ' + P.per_age_limite_deduction + ' ans, il lui reste ' + c.anneesAvant70 + ' ans.</li>' +
+      '</ol>' +
+      '<div class="relance"><b>Ce qu\'on évalue :</b> avoir répondu à la question posée <b>avant</b> d\'ouvrir les autres sujets, avoir hiérarchisé par l\'urgence réelle et non par la facilité, ' +
+      'et avoir su annoncer quatre sujets sans noyer un homme de 68 ans qui appelait pour un courrier.</div>' +
+      '<div class="erreur"><b>Erreur fréquente :</b> déverser les cinq sujets d\'un coup. Gérard raccrochera en n\'ayant retenu ni l\'un ni l\'autre. ' +
+      'Un sujet traité, une date, et un rendez-vous pour le reste.</div>'
+  },
+  {
+    txt: "Quelle est la prochaine action dans le dossier, et qui la fait ?",
+    corr: "<h4>La prochaine action : les deux demandes de réversion</h4><p>C'est le seul sujet sous horloge : déposées avant le premier anniversaire du décès, les réversions sont dues depuis le mois qui suit le décès ; il reste huit mois. <b>Qui la fait :</b> Gérard — une demande en ligne commune aux régimes de Monique existe — avec l'aide de Karine ou du conseiller s'il le souhaite, <b>cette semaine</b>.</p><h4>Juste après : prévenir l'assureur du contrat de Monique</h4><p>Un courrier de Gérard, bénéficiaire, avec l'acte de décès, sa pièce d'identité et un RIB. Tant que l'assureur n'est pas informé, rien ne bouge. <b>Ce que fait le conseiller :</b> il donne la liste des pièces, et note au dossier les deux démarches, la date limite des réversions et une date de rappel. L'évaluation de l'autonomie se prépare ensuite avec Karine, en rendez-vous.</p><div class=\"relance\"><b>À faire dire au groupe :</b> une action, un nom, une date — pour chacune des deux démarches.</div><div class=\"erreur\"><b>Erreur fréquente :</b> annoncer les cinq sujets comme « à voir » sans en lancer aucun. Gérard raccroche, et rien ne bouge.</div>"
+  },
+  ];
+}
+
+function renderQuestions(){
+  const qs = questions();
+  el("questions").innerHTML = qs.map(function(q, i){
+    return '<div class="q">' +
+      '<div class="q-head"><div class="q-num">Question ' + (i + 1) + '</div><div class="q-txt">' + q.txt + '</div></div>' +
+      '<button class="q-btn" id="btn' + i + '" onclick="bascule(' + i + ')">Révéler la correction</button>' +
+      '<div class="corr" id="corr' + i + '"><div class="corr-in">' + q.corr + '</div></div>' +
+    '</div>';
+  }).join("");
+}
+function bascule(i){
+  const c = el("corr" + i), b = el("btn" + i);
+  const ouvert = c.classList.toggle("show");
+  b.classList.toggle("open", ouvert);
+  b.textContent = ouvert ? "Masquer la correction" : "Révéler la correction";
+}
+function tout(ouvrir){
+  questions().forEach(function(_, i){
+    const c = el("corr" + i), b = el("btn" + i);
+    c.classList.toggle("show", ouvrir);
+    b.classList.toggle("open", ouvrir);
+    b.textContent = ouvrir ? "Masquer la correction" : "Révéler la correction";
+  });
+}
+
+renderParams();
+renderReveals();
+renderQuestions();
+chargerParametres();
+
+</script>
+</body>
+</html>

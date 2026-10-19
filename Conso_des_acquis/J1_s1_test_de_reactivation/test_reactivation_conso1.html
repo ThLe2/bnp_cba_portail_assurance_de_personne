@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Test de réactivation — Prévoyance et Santé</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Karla:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#16243B; --blue:#1F4E79; --blue-2:#2E75B6; --paper:#F5F2EB;
+    --card:#FFFFFF; --ink:#1d2733; --muted:#5d6b7a; --line:#e3ddd0; --gold:#B08D57;
+    --ok:#2F7A4F; --ok-bg:#EAF4ED; --ko:#B23B3B; --ko-bg:#FAEDED;
+    --amber:#B5852A; --amber-bg:#FBF1DC;
+    --shadow:0 1px 2px rgba(22,36,59,.05),0 8px 24px rgba(22,36,59,.06);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Karla',-apple-system,system-ui,sans-serif;background:var(--paper);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:860px;margin:0 auto;padding:28px 20px 64px}
+  .card-main{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);overflow:hidden}
+  .header{background:var(--navy);color:#fff;padding:30px 34px}
+  .chapter-tag{display:inline-block;background:rgba(255,255,255,.14);color:#e9eef6;padding:5px 13px;border-radius:99px;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;margin-bottom:14px}
+  .chapter-tag span{color:var(--gold)}
+  .header h1{font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:clamp(23px,4.2vw,33px);line-height:1.14;letter-spacing:-.01em;margin-bottom:8px}
+  .header p{font-size:14px;color:#b9c4d4}
+  .gold-rule{height:3px;width:60px;background:var(--gold);border:0;margin:16px 0 0}
+  .body{padding:30px 34px}
+  .identity{text-align:center;padding:14px 0}
+  .identity h2{font-family:'Fraunces',serif;font-weight:600;font-size:21px;color:var(--navy);margin-bottom:8px}
+  .identity p.sub{color:var(--muted);margin-bottom:26px;font-size:14.5px}
+  .form-group{margin-bottom:16px;text-align:left;max-width:420px;margin-left:auto;margin-right:auto}
+  .form-group label{display:block;font-size:13px;font-weight:700;color:var(--navy);margin-bottom:6px;letter-spacing:.02em}
+  .form-group input{width:100%;padding:12px 14px;border:1.5px solid var(--line);border-radius:9px;font-size:15px;font-family:'Karla',sans-serif;transition:border-color .2s;background:#fdfcf9}
+  .form-group input:focus{outline:none;border-color:var(--blue-2)}
+  .btn{cursor:pointer;font-family:'Karla',sans-serif;font-weight:700;font-size:15px;letter-spacing:.03em;border-radius:10px;transition:transform .12s,box-shadow .15s,filter .15s,background .15s}
+  .btn-primary{background:var(--blue);color:#fff;border:none;padding:13px 34px;margin:6px}
+  .btn-primary:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 8px 20px rgba(31,78,121,.28)}
+  .btn-primary:disabled{opacity:.45;cursor:not-allowed}
+  .btn-gold{background:var(--gold);color:var(--navy)}
+  .btn-gold:hover:not(:disabled){filter:brightness(1.06);transform:translateY(-2px)}
+  .btn-secondary{background:#fff;color:var(--blue);border:1.5px solid var(--blue);padding:11px 28px;margin:6px}
+  .btn-secondary:hover:not(:disabled){background:#f0f4f9}
+  .btn-secondary:disabled{opacity:.4;cursor:not-allowed;border-color:#bbb;color:#bbb}
+  .stagiaire-bar{background:#efeadf;padding:11px 34px;border-bottom:1px solid var(--line);font-size:13px;color:var(--muted);display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+  .stagiaire-bar strong{color:var(--navy)}
+  .consigne{background:#fff;border:1px solid var(--line);border-left:4px solid var(--gold);border-radius:10px;padding:12px 16px;margin-bottom:20px;font-size:13.5px;line-height:1.5;color:#3a4654}
+  .consigne b{color:var(--navy)}
+  .meta{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:18px}
+  .progress{flex:1;min-width:180px}
+  .progress .track{height:8px;background:#e6e0d3;border-radius:99px;overflow:hidden}
+  .progress .fill{height:100%;width:0;background:var(--blue-2);border-radius:99px;transition:width .4s cubic-bezier(.2,.7,.2,1)}
+  .progress .plabel{font-size:12.5px;color:var(--muted);margin-top:6px}
+  .scorepill{font-family:'Fraunces',serif;font-weight:600;color:var(--navy);background:#fff;border:1px solid var(--line);border-radius:99px;padding:7px 15px;font-size:14.5px}
+  .scorepill b{color:var(--blue);font-size:17px}
+  .cq{background:#fff;border:1px solid var(--line);border-radius:11px;padding:16px 18px;margin-bottom:13px;box-shadow:var(--shadow)}
+  .cq .ask{font-weight:600;font-size:15px;color:var(--ink);margin-bottom:10px;display:flex;gap:10px;align-items:flex-start}
+  .cq .ask .qn{flex:none;width:26px;height:26px;border-radius:50%;background:var(--navy);color:#fff;font-family:'Fraunces',serif;font-weight:600;font-size:13px;display:flex;align-items:center;justify-content:center;margin-top:1px}
+  .theme-tag{display:inline-block;background:#eef3f9;color:var(--blue);font-size:11px;font-weight:700;border-radius:5px;padding:2px 8px;margin-left:8px;letter-spacing:.02em;vertical-align:middle;white-space:nowrap}
+  .multi-tag{display:inline-block;background:#fbf1dc;color:var(--amber);font-size:11px;font-weight:700;border-radius:5px;padding:2px 8px;margin-left:6px;letter-spacing:.02em;vertical-align:middle;white-space:nowrap}
+  select.cs{width:100%;padding:11px 13px;border:1.5px solid var(--line);border-radius:9px;font-size:14.5px;font-family:'Karla',sans-serif;background:#fdfcf9;color:var(--ink);cursor:pointer;transition:border-color .15s}
+  select.cs:focus{outline:none;border-color:var(--blue-2)}
+  select.cs:disabled{cursor:default;opacity:1}
+  select.cs.ok{border-color:var(--ok);background:var(--ok-bg);color:var(--ok)}
+  select.cs.ko{border-color:var(--ko);background:var(--ko-bg);color:var(--ko)}
+  .checks{display:flex;flex-direction:column;gap:8px}
+  .checks label{display:flex;gap:10px;align-items:flex-start;border:1.5px solid var(--line);border-radius:9px;padding:10px 13px;background:#fdfcf9;cursor:pointer;font-size:14.5px;transition:.15s}
+  .checks label:hover{border-color:var(--blue-2)}
+  .checks label.ok{border-color:var(--ok);background:var(--ok-bg)}
+  .checks label.ko{border-color:var(--ko);background:var(--ko-bg)}
+  .checks input{margin-top:3px}
+  .open-tag{display:inline-block;background:#eaf4ed;color:var(--ok);font-size:11px;font-weight:700;border-radius:5px;padding:2px 8px;margin-left:6px;letter-spacing:.02em;vertical-align:middle;white-space:nowrap}
+  textarea.oa{width:100%;min-height:96px;padding:11px 13px;border:1.5px solid var(--line);border-radius:9px;font-size:14.5px;font-family:'Karla',sans-serif;background:#fdfcf9;color:var(--ink);resize:vertical;line-height:1.5}
+  textarea.oa:focus{outline:none;border-color:var(--blue-2)}
+  textarea.oa:disabled{cursor:default;opacity:1;background:#f7f5ef;border-color:var(--gold)}
+  .oa-hint{font-size:11.5px;color:var(--muted);margin-top:5px;font-style:italic}
+  .model{background:#f7f5ef;border:1px solid var(--gold);border-radius:9px;padding:13px 15px;margin-top:11px}
+  .model h5{margin:0 0 7px;font-family:'Fraunces',Georgia,serif;font-size:14px;color:var(--navy)}
+  .model p{margin:0 0 7px;font-size:13.5px;line-height:1.55}
+  .model ul{margin:6px 0 0;padding-left:17px;font-size:13px}
+  .model li{margin-bottom:3px}
+  .model .ref{color:var(--gold);font-weight:700;font-size:11.5px}
+  .model .note{font-size:12px;color:var(--muted);font-style:italic;margin-top:8px;padding-top:7px;border-top:1px dashed var(--line)}
+  .pass-banner{border-radius:10px;padding:15px 18px;margin:14px 0 4px;font-size:14.5px;line-height:1.55}
+  .pass-banner.ok{background:var(--ok-bg);border:1.5px solid var(--ok);color:#1f5c39}
+  .pass-banner.ko{background:var(--amber-bg);border:1.5px solid var(--amber);color:#8a6420}
+  .pass-banner b{display:block;font-family:'Fraunces',Georgia,serif;font-size:16px;margin-bottom:5px}
+  .cfb{max-height:0;overflow:hidden;opacity:0;transition:max-height .4s,opacity .35s;font-size:13px;border-left:3px solid var(--line);padding-left:14px}
+  .cfb.show{max-height:320px;opacity:1;margin-top:12px}
+  .cfb.good{border-color:var(--ok);color:#1c5234} .cfb.bad{border-color:var(--ko);color:#7a2222}
+  .cfb .vd{font-weight:700}
+  .cfb .ref{display:inline-block;margin-top:6px;font-size:12px;color:var(--blue);background:#eef3f9;border-radius:6px;padding:2px 8px;font-weight:600}
+  .actions{margin-top:24px;text-align:center}
+  .result-screen{text-align:center;padding:20px 0}
+  .score-circle{width:132px;height:132px;border-radius:50%;margin:0 auto 18px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;box-shadow:0 8px 24px rgba(22,36,59,.18)}
+  .score-circle.excellent{background:var(--ok)} .score-circle.good{background:var(--blue)}
+  .score-circle.average{background:var(--amber)} .score-circle.poor{background:var(--ko)}
+  .score-circle .sv{font-family:'Fraunces',serif;font-size:30px;font-weight:600}
+  .score-circle .sl{font-size:12px;opacity:.95;margin-top:2px;letter-spacing:.05em}
+  .result-msg{font-family:'Fraunces',serif;font-size:21px;font-weight:600;margin-bottom:8px;color:var(--navy)}
+  .result-detail{color:var(--muted);font-size:14px;margin-bottom:20px;max-width:56ch;margin-left:auto;margin-right:auto}
+  .recap{text-align:left;max-width:600px;margin:0 auto 8px}
+  .recap h4{font-family:'Fraunces',serif;font-weight:600;font-size:15px;color:var(--navy);margin-bottom:6px}
+  .recap-row{display:flex;align-items:center;gap:11px;padding:9px 4px;border-bottom:1px solid var(--line);font-size:13.5px}
+  .recap-row .dot{flex:none;width:11px;height:11px;border-radius:50%}
+  .recap-row .lab{flex:1;color:var(--ink)}
+  .recap-row .sc{font-weight:700;color:var(--navy);font-variant-numeric:tabular-nums}
+  .recap-row .hint{flex-basis:100%;font-size:12px;color:var(--blue);padding-left:22px}
+  .pdf-info{background:var(--amber-bg);border-left:4px solid var(--amber);padding:12px 16px;border-radius:8px;text-align:left;font-size:13px;color:#6d4c00;margin:18px 0}
+  .pdf-info strong{display:block;margin-bottom:4px}
+  .note{background:#eef3f9;border-left:4px solid var(--blue-2);padding:12px 16px;border-radius:8px;text-align:left;font-size:13px;color:var(--blue);margin:16px 0;line-height:1.5}
+  footer{margin-top:26px;text-align:center;font-size:12px;color:#9a9384;letter-spacing:.04em}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card-main">
+    <div class="header">
+      <div class="chapter-tag">TMK Performances · Conso des acquis 1/4 <span>/</span> Séquence 1</div>
+      <h1>Test de réactivation — Prévoyance et Santé</h1>
+      <p>15 questions · 5 thèmes · aucune note, aucun classement</p>
+      <hr class="gold-rule">
+    </div>
+
+    <div id="screen-quiz">
+      <div class="stagiaire-bar"><span>Test de réactivation &middot; <strong>aucune note, aucun enregistrement</strong></span><span id="date-quiz"></span></div>
+      <div class="body">
+        <div class="consigne"><b>🎯 Un diagnostic, pas une évaluation.</b> Ce test ne compte pas et n'est transmis à personne. Il sert uniquement à savoir sur quoi appuyer pendant les deux rappels qui suivent. <b>Répondez sans chercher</b> : ce qui nous intéresse, c'est ce que vous avez gardé des fondamentaux, pas ce que vous savez retrouver. À la fin, notez vos <b>deux thèmes les plus faibles</b> — c'est ce relevé que le formateur va utiliser.</div>
+        <div class="meta">
+          <div class="progress"><div class="track"><div class="fill" id="fill"></div></div><div class="plabel" id="plabel">0 / 15 répondu</div></div>
+          <div class="scorepill">Score&nbsp;: <b id="score">—</b> / 15</div>
+        </div>
+        <div id="qcm"></div>
+        <div class="actions"><button class="btn btn-primary" id="btn-validate" disabled onclick="validateQuiz()">Valider mes réponses</button></div>
+      </div>
+    </div>
+
+    <div id="screen-result" style="display:none;">
+      <div class="stagiaire-bar"><span>Test de réactivation &middot; <strong>aucune note, aucun enregistrement</strong></span><span id="date-quiz-2"></span></div>
+      <div class="body">
+        <div class="result-screen">
+          <div class="score-circle" id="score-circle"><div class="sv" id="score-value">0/15</div><div class="sl" id="score-label">questions</div></div>
+          <div class="result-msg" id="result-message"></div>
+          <div id="pass-banner" style="display:none;"></div>
+          <div class="result-detail" id="result-detail"></div>
+          <div class="recap" id="recap-block"><h4>Bilan par thème</h4><div id="recap-list"></div></div>
+          <div class="note" id="note-pdf" style="display:none;"></div>
+          <div class="actions">
+            <button class="btn btn-secondary" id="btn-restart" onclick="restartQuiz()">↻ Refaire le test</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer>TMK Performances - N° Siret : 49841924100027 - Code NAF : 8559A</footer>
+  </div>
+</div>
+
+<script>
+const CFG = {"THEME_INFO": {"AT": {"label": "Arrêt de travail"}, "INV": {"label": "Invalidité"}, "DEC": {"label": "Décès et dépendance"}, "REMB": {"label": "Parcours de soins et remboursement"}, "RAC": {"label": "Reste à charge et 100 % santé"}}, "THEME_ORDER": ["AT", "INV", "DEC", "REMB", "RAC"], "QUESTIONS": [{"th": "AT", "kind": "qcm", "ask": "En cas d'arrêt maladie « vie normale », à partir de quel jour la Sécurité sociale verse-t-elle des indemnités journalières ?", "options": ["Dès le 1er jour d'arrêt", "À partir du 4e jour d'arrêt", "À partir du 8e jour d'arrêt", "À partir du 15e jour d'arrêt"], "correct": [1], "multi": false, "expl": "Le délai de carence est de 3 jours : les indemnités journalières partent du 4e jour d'arrêt. Ce délai ne s'applique pas en accident du travail ou maladie professionnelle, où l'indemnisation démarre dès le lendemain de l'accident.", "ref": "art. R. 323-1 du code de la Sécurité sociale"}, {"th": "AT", "kind": "qcm", "ask": "Sur quelle base l'indemnité journalière maladie est-elle calculée ?", "options": ["Le salaire brut du dernier mois précédant l'arrêt", "La moyenne des salaires bruts des 3 derniers mois", "Le salaire net moyen des 12 derniers mois", "Le salaire annuel moyen des 10 meilleures années"], "correct": [1], "multi": false, "expl": "Le salaire journalier de base est établi à partir des salaires bruts des 3 mois civils précédant l'arrêt, chacun retenu dans la limite d'un plafond. La moyenne des 10 meilleures années, elle, sert au calcul de la pension d'invalidité — c'est une confusion fréquente.", "ref": "art. R. 323-4 du code de la Sécurité sociale"}, {"th": "AT", "kind": "qcm", "ask": "Quelle ancienneté un salarié doit-il avoir pour bénéficier du maintien de salaire prévu par la loi de mensualisation ?", "options": ["Aucune ancienneté n'est exigée", "6 mois", "1 an", "3 ans"], "correct": [2], "multi": false, "expl": "La loi de mensualisation exige un an d'ancienneté dans l'entreprise. En dessous, le salarié ne perçoit que les indemnités journalières de la Sécurité sociale — sauf convention collective plus favorable, ce qu'il faut toujours vérifier.", "ref": "art. L. 1226-1 du code du travail"}, {"th": "INV", "kind": "qcm", "ask": "À quel pourcentage du salaire annuel moyen correspond une pension d'invalidité de catégorie 2 ?", "options": ["30 %", "50 %", "80 %", "100 %"], "correct": [1], "multi": false, "expl": "La catégorie 2 ouvre droit à 50 % du salaire annuel moyen, contre 30 % en catégorie 1. La catégorie 3 conserve ce taux de 50 % et y ajoute la majoration pour tierce personne.", "ref": "art. R. 341-4 du code de la Sécurité sociale"}, {"th": "INV", "kind": "qcm", "ask": "Sur quelle période est calculé le salaire annuel moyen servant de base à la pension d'invalidité ?", "options": ["Les 3 derniers mois", "Les 12 derniers mois", "Les 10 meilleures années", "Les 25 meilleures années"], "correct": [2], "multi": false, "expl": "Le salaire annuel moyen retient les 10 meilleures années, chacune plafonnée. Les 25 meilleures années servent au calcul de la retraite de base : les deux régimes n'utilisent pas la même assiette.", "ref": "art. R. 341-4 du code de la Sécurité sociale"}, {"th": "INV", "kind": "qcm", "ask": "Que caractérise la catégorie 1 d'invalidité ?", "options": ["L'assuré peut encore exercer une activité rémunérée", "L'assuré est absolument incapable d'exercer une activité", "L'assuré a besoin de l'assistance d'une tierce personne", "L'assuré est reconnu inapte à son poste par le médecin du travail"], "correct": [0], "multi": false, "expl": "La catégorie 1 vise l'assuré capable d'exercer une activité rémunérée. La catégorie 2 correspond à l'incapacité d'exercer une profession quelconque, la catégorie 3 y ajoute le besoin d'assistance d'une tierce personne. L'inaptitude prononcée par le médecin du travail est une notion distincte, qui relève du droit du travail.", "ref": "art. L. 341-4 du code de la Sécurité sociale"}, {"th": "DEC", "kind": "qcm", "ask": "Comment est déterminé le montant du capital décès du régime général ?", "options": ["Il est proportionnel au salaire du défunt", "Il équivaut à trois mois de salaire", "Il est forfaitaire et identique pour tous", "Il dépend du nombre d'enfants à charge"], "correct": [2], "multi": false, "expl": "Le capital décès du régime général est forfaitaire : son montant est le même quel que soit le salaire du défunt, revalorisé chaque année. Il est par ailleurs exonéré d'impôt et de cotisations.", "ref": "art. D. 361-1 du code de la Sécurité sociale"}, {"th": "DEC", "kind": "qcm", "ask": "Comment le capital décès est-il versé aux ayants droit ?", "options": ["Automatiquement, dès la déclaration du décès", "Uniquement sur demande des bénéficiaires", "Par le notaire, dans le cadre de la succession", "Par l'employeur du défunt"], "correct": [1], "multi": false, "expl": "Le capital décès ne se verse jamais automatiquement : il faut une demande des bénéficiaires, dans un délai d'un mois pour les bénéficiaires prioritaires et de deux ans au-delà. Des familles le perdent faute de l'avoir demandé — c'est un angle mort typique du régime obligatoire.", "ref": "art. R. 361-4 du code de la Sécurité sociale"}, {"th": "DEC", "kind": "qcm", "ask": "Quelles personnes peuvent bénéficier de l'allocation personnalisée d'autonomie (APA) ?", "options": ["Toute personne de 60 ans et plus, quel que soit son GIR", "Les personnes de 60 ans et plus classées en GIR 1 à 4", "Les personnes de 60 ans et plus classées en GIR 5 et 6", "Toute personne dépendante, sans condition d'âge"], "correct": [1], "multi": false, "expl": "L'APA suppose deux conditions cumulatives : avoir 60 ans au moins et être classé en GIR 1 à 4 après évaluation par la grille AGGIR. Les GIR 5 et 6 n'y ouvrent pas droit. En EHPAD, l'APA couvre le tarif dépendance, jamais l'hébergement.", "ref": "art. L. 232-1 et L. 232-2 du code de l'action sociale et des familles"}, {"th": "REMB", "kind": "qcm", "ask": "Quelle est la base de remboursement d'une consultation chez un médecin généraliste de secteur 1 ?", "options": ["23 €", "26,50 €", "30 €", "31,50 €"], "correct": [2], "multi": false, "expl": "La base est de 30 € depuis décembre 2024. Les 23 € correspondent à la base minorée applicable au secteur 2 non adhérent à l'OPTAM, et 31,50 € à la consultation de spécialiste.", "ref": "convention médicale 2024"}, {"th": "REMB", "kind": "qcm", "ask": "Un patient sans médecin traitant déclaré consulte un généraliste de secteur 1. Comment l'Assurance Maladie calcule-t-elle son remboursement ?", "options": ["30 % de la base de remboursement", "70 % de la base de remboursement", "70 % de la base de remboursement, moins 10,60 €", "50 % de la base de remboursement"], "correct": [2], "multi": false, "expl": "Hors parcours de soins, il existe deux règles et non une. Chez un médecin de secteur 1 ou adhérent à l'OPTAM, le remboursement reste calculé à 70 % mais subit une majoration du ticket modérateur de 10,60 €, un montant fixe. Le taux ne tombe à 30 % que chez un médecin de secteur 2 non adhérent à l'OPTAM. Et cette majoration n'est jamais prise en charge par un contrat responsable.", "ref": "art. L. 162-5-3 du code de la Sécurité sociale"}, {"th": "REMB", "kind": "qcm", "ask": "À quelles dépenses la participation forfaitaire de 2 € s'applique-t-elle ?", "options": ["À toutes les dépenses de santé, sans exception", "Aux consultations de médecin, examens de radiologie et analyses de biologie", "Aux actes des infirmiers, kinésithérapeutes et autres auxiliaires médicaux", "Aux boîtes de médicaments délivrées en pharmacie"], "correct": [1], "multi": false, "expl": "La participation forfaitaire de 2 € vise les actes réalisés par un médecin, la radiologie et la biologie médicale. Les actes des auxiliaires médicaux et les boîtes de médicaments relèvent, eux, de la franchise médicale de 1 € : ce sont deux dispositifs distincts, avec des plafonds distincts, qu'on confond très souvent.", "ref": "art. L. 160-13 du code de la Sécurité sociale"}, {"th": "RAC", "kind": "qcm", "ask": "Le forfait journalier hospitalier est-il remboursé par l'Assurance Maladie ?", "options": ["Oui, à 80 %", "Oui, à 100 %", "Jamais", "Oui, mais seulement au-delà de 30 jours"], "correct": [2], "multi": false, "expl": "Le forfait journalier hospitalier n'est jamais pris en charge par l'Assurance Maladie : il correspond à la participation du patient à ses frais d'hébergement. Un contrat responsable doit le couvrir intégralement et sans limitation de durée — sans complémentaire, il reste entièrement à la charge du patient, jour de sortie compris.", "ref": "art. L. 174-4 du code de la Sécurité sociale"}, {"th": "RAC", "kind": "qcm", "ask": "Pour une aide auditive de classe I chez un adulte, quelle est la base de remboursement de la Sécurité sociale ?", "options": ["240 € par oreille", "400 € par oreille", "950 € par oreille", "1 400 € par oreille"], "correct": [1], "multi": false, "expl": "La base est de 400 € par oreille, et le taux de 60 % : l'Assurance Maladie verse donc 240 €. Les 950 € sont le prix limite de vente, que l'audioprothésiste ne peut pas dépasser en classe I. La complémentaire responsable couvre l'écart, d'où un reste à charge nul.", "ref": "liste des produits et prestations remboursables"}, {"th": "RAC", "kind": "qcm", "ask": "À quel taux l'Assurance Maladie rembourse-t-elle aujourd'hui les soins et prothèses dentaires ?", "options": ["60 %", "65 %", "70 %", "80 %"], "correct": [0], "multi": false, "expl": "Le taux est de 60 % depuis le 15 octobre 2023 : il a été abaissé de 70 % à 60 % sur environ 280 cotations, ce qui a transféré 500 millions d'euros vers les complémentaires. Beaucoup de supports circulent encore avec l'ancien taux de 70 %. Restent à 70 % une vingtaine d'actes de chirurgie ; l'Alsace-Moselle est à 90 %.", "ref": "décret n° 2023-701 du 31 juillet 2023"}], "HAS_THEMES": true, "PASS": null, "PASS_OK": "", "PASS_KO": "", "PDF": {"header": "TMK PERFORMANCES · CONSO DES ACQUIS 1/4 · TEST DE RÉACTIVATION", "att_title": "Test de réactivation", "att_sub": "Prévoyance et Santé", "footer": "TMK Performances · Conso des acquis 1/4", "fname": "Test_reactivation_Conso1"}};
+const THEME_INFO = CFG.THEME_INFO, THEME_ORDER = CFG.THEME_ORDER;
+const QUESTIONS = CFG.QUESTIONS, TOTAL = QUESTIONS.length, HAS_THEMES = CFG.HAS_THEMES;
+const IS_OPEN = (c)=>c.kind==="open";
+const QCM_N = QUESTIONS.filter(c=>!IS_OPEN(c)).length;
+const OPEN_N = TOTAL - QCM_N;
+const PASS = CFG.PASS, PASS_OK = CFG.PASS_OK, PASS_KO = CFG.PASS_KO;
+const PDF = CFG.PDF;
+
+const state = { nom:"", prenom:"", answers:{}, validated:false, score:0, pdfGenerated:false, dateQuiz:null };
+
+
+function startQuiz(){
+  state.nom=""; state.prenom="";
+  state.dateQuiz=new Date();
+  const d=state.dateQuiz.toLocaleDateString("fr-FR",{day:"2-digit",month:"long",year:"numeric"});
+  document.getElementById("date-quiz").textContent=d; document.getElementById("date-quiz-2").textContent=d;
+  document.getElementById("screen-quiz").style.display="block";
+  if(!HAS_THEMES) document.getElementById("recap-block").style.display="none";
+  render();
+}
+
+function themeTag(c){
+  if(!c.th || !THEME_INFO[c.th]) return "";
+  return `<span class="theme-tag">${c.th} · ${THEME_INFO[c.th].label}</span>`;
+}
+
+function render(){
+  const qcm=document.getElementById("qcm"); qcm.innerHTML="";
+  QUESTIONS.forEach((c,i)=>{
+    const tag=themeTag(c);
+    let control;
+    if(IS_OPEN(c)){
+      const prev=state.answers[i]||"";
+      control=`<div class="open-tag">Question ouverte</div><textarea class="oa" data-q="${i}" rows="4" placeholder="Rédigez votre réponse, comme à l'examen — en phrases complètes.">${prev}</textarea><div class="oa-hint">Réponse attendue : ${c.minlen} caractères minimum. La réponse attendue s'affichera après validation : c'est à vous de confronter la vôtre.</div>`;
+    } else if(c.multi){
+      let boxes="";
+      c.options.forEach((o,oi)=>{boxes+=`<label data-opt="${oi}"><input type="checkbox" data-q="${i}" value="${oi}"><span>${o}</span></label>`;});
+      control=`<div class="multi-tag">Plusieurs réponses</div><div class="checks" data-q="${i}">${boxes}</div>`;
+    } else {
+      let opts='<option value="">— choisir une réponse —</option>';
+      c.options.forEach((o,oi)=>opts+=`<option value="${oi}">${o}</option>`);
+      control=`<select class="cs" data-q="${i}">${opts}</select>`;
+    }
+    qcm.innerHTML+=`<div class="cq"><div class="ask"><span class="qn">${i+1}</span><span>${c.ask}${tag}</span></div>${control}<div class="cfb" id="cfb-${i}"></div></div>`;
+  });
+  document.querySelectorAll("select.cs").forEach(s=>s.addEventListener("change",onSelect));
+  document.querySelectorAll(".checks input").forEach(s=>s.addEventListener("change",onCheck));
+  document.querySelectorAll("textarea.oa").forEach(s=>s.addEventListener("input",onOpen));
+  update();
+}
+
+function onSelect(e){ if(state.validated)return; const i=+e.currentTarget.dataset.q,v=e.currentTarget.value; if(v==="") delete state.answers[i]; else state.answers[i]=+v; update(); }
+function onCheck(e){
+  if(state.validated)return; const i=+e.currentTarget.dataset.q;
+  const checked=[...document.querySelectorAll(`.checks input[data-q="${i}"]:checked`)].map(x=>+x.value);
+  if(checked.length===0) delete state.answers[i]; else state.answers[i]=checked.sort((a,b)=>a-b);
+  update();
+}
+
+function onOpen(e){
+  if(state.validated)return; const i=+e.currentTarget.dataset.q, v=e.currentTarget.value.trim();
+  if(v.length < QUESTIONS[i].minlen) delete state.answers[i]; else state.answers[i]=e.currentTarget.value.trim();
+  update();
+}
+
+function update(){
+  const n=Object.keys(state.answers).length;
+  document.getElementById("fill").style.width=(n/TOTAL*100)+"%";
+  document.getElementById("plabel").textContent=n+" / "+TOTAL+" répondu"+(n>1?"es":"");
+  document.getElementById("btn-validate").disabled=(n!==TOTAL);
+}
+
+function isCorrect(c, ans){
+  if(IS_OPEN(c)) return null;          // non notée automatiquement
+  if(ans==null) return false;
+  if(c.multi){
+    const a=[...ans].sort((x,y)=>x-y).join(","), g=[...c.correct].sort((x,y)=>x-y).join(",");
+    return a===g;
+  }
+  return ans===c.correct[0];
+}
+function answerLabel(c, ans){
+  if(ans==null) return "—";
+  if(c.multi) return ans.map(i=>c.options[i]).join(" ; ");
+  return c.options[ans];
+}
+function correctLabel(c){
+  return c.correct.map(i=>c.options[i]).join(" ; ");
+}
+
+function themeStats(){
+  const st={}; THEME_ORDER.forEach(t=>st[t]={ok:0,total:0});
+  QUESTIONS.forEach((c,i)=>{ if(IS_OPEN(c)||!st[c.th])return; st[c.th].total++; if(isCorrect(c,state.answers[i])) st[c.th].ok++; });
+  return st;
+}
+
+function validateQuiz(){
+  if(state.validated)return; state.validated=true;
+  let score=0;
+  QUESTIONS.forEach((c,i)=>{
+    const ans=state.answers[i], ok=isCorrect(c,ans); if(ok)score++;
+    if(IS_OPEN(c)){
+      const ta=document.querySelector(`textarea.oa[data-q="${i}"]`); ta.disabled=true;
+      const pts=(c.points&&c.points.length)?`<ul>${c.points.map(x=>`<li>${x}</li>`).join("")}</ul>`:"";
+      const rf=c.ref?`<p class="ref">${c.ref}</p>`:"";
+      const f0=document.getElementById("cfb-"+i);
+      f0.className="cfb good";
+      f0.innerHTML=`<div class="model"><h5>La réponse attendue</h5><p>${c.model}</p>${pts}${rf}<p class="note">Cette question n'est pas notée automatiquement : confrontez votre rédaction à la réponse attendue. Votre texte et la réponse attendue figurent tous deux dans votre attestation PDF.</p></div>`;
+      requestAnimationFrame(()=>f0.classList.add("show"));
+      return;
+    }
+    if(c.multi){
+      const cont=document.querySelector(`.checks[data-q="${i}"]`);
+      cont.querySelectorAll("input").forEach(x=>x.disabled=true);
+      c.correct.forEach(g=>cont.querySelector(`label[data-opt="${g}"]`).classList.add("ok"));
+      (ans||[]).forEach(a=>{ if(!c.correct.includes(a)) cont.querySelector(`label[data-opt="${a}"]`).classList.add("ko"); });
+    } else {
+      const sel=document.querySelector(`select.cs[data-q="${i}"]`); sel.disabled=true;
+      sel.classList.add(ok?"ok":"ko");
+    }
+    const f=document.getElementById("cfb-"+i);
+    f.className="cfb "+(ok?"good":"bad");
+    const vd=ok?"Exact.":((c.multi?"Bonnes réponses : ":"Bonne réponse : ")+correctLabel(c)+".");
+    const refLine=c.ref?`<br><span class="ref">${c.ref}</span>`:"";
+    f.innerHTML=`<span class="vd">${vd}</span> ${c.expl}${refLine}`;
+    requestAnimationFrame(()=>f.classList.add("show"));
+  });
+  state.score=score;
+  document.getElementById("score").textContent=score;
+  document.getElementById("btn-validate").disabled=true;
+  showResults();
+}
+
+function showResults(){
+  const pct=Math.round(state.score/QCM_N*100);
+  document.getElementById("screen-result").style.display="block";
+  document.getElementById("score-value").textContent=state.score+"/"+QCM_N;
+  const sl=document.getElementById("score-label"); if(sl) sl.textContent = OPEN_N ? "questions à choix" : "questions";
+  const c=document.getElementById("score-circle"),m=document.getElementById("result-message"),d=document.getElementById("result-detail");
+  const suffix = OPEN_N ? " Vos "+OPEN_N+" question"+(OPEN_N>1?"s":"")+" ouverte"+(OPEN_N>1?"s ne sont":" n'est")+" pas notée"+(OPEN_N>1?"s":"")+" : confrontez votre rédaction à la réponse attendue, affichée sous chacune." : "";
+  c.className="score-circle";
+  if(PASS){
+    const ok = pct>=PASS;
+    c.classList.add(ok?(pct>=90?"excellent":"good"):(pct>=50?"average":"poor"));
+    m.textContent = ok ? "Objectif atteint" : "Objectif non atteint";
+    d.textContent = (ok?"Vous êtes au-dessus du seuil de "+PASS+" %.":"Vous êtes en dessous du seuil de "+PASS+" %.")+suffix;
+    const b=document.getElementById("pass-banner");
+    b.className="pass-banner "+(ok?"ok":"ko");
+    b.innerHTML = ok
+      ? `<b>Réussite — ${pct} % de bonnes réponses</b>${PASS_OK||"Vous avez atteint le seuil de "+PASS+" %. Les acquis de la journée sont consolidés : vous pouvez aborder la suite du parcours."}`
+      : `<b>Seuil non atteint — ${pct} % de bonnes réponses</b>${PASS_KO||"Le seuil de réussite est fixé à "+PASS+" %. Reprenez les fiches mémo et les séquences des thèmes en rouge, puis <strong>refaites ce QCM afin de vous entraîner</strong> : c'est en le repassant que les automatismes s'installent."}`;
+    b.style.display="block";
+  }
+  else if(pct>=90){c.classList.add("excellent");m.textContent="Évaluation validée — Excellent !";d.textContent="Vous maîtrisez l'ensemble des notions du module."+suffix;}
+  else if(pct>=70){c.classList.add("good");m.textContent="Évaluation validée";d.textContent="Bon niveau global. Le détail commenté de vos réponses figure ci-dessus."+suffix;}
+  else if(pct>=50){c.classList.add("average");m.textContent="Presque — à consolider";d.textContent="Acquis partiels. Le détail commenté de chaque réponse figure ci-dessus."+suffix;}
+  else{c.classList.add("poor");m.textContent="À retravailler";d.textContent="Le détail commenté reprend la bonne réponse et l'explication de chaque question."+suffix;}
+
+  if(HAS_THEMES){
+    const st=themeStats(); let html="";
+    THEME_ORDER.forEach(t=>{
+      const s=st[t]; if(!s||s.total===0) return;
+      const full=(s.ok===s.total);
+      const color=full?"var(--ok)":(s.ok===0?"var(--ko)":"var(--amber)");
+      html+=`<div class="recap-row"><span class="dot" style="background:${color}"></span><span class="lab">${t} · ${THEME_INFO[t].label}</span><span class="sc">${s.ok} / ${s.total}</span></div>`;
+    });
+    document.getElementById("recap-list").innerHTML=html;
+  }
+  const np=document.getElementById("note-pdf");
+  np.innerHTML="\u2192 Relevez vos <strong>deux th\u00e8mes les plus faibles</strong> dans le bilan ci-dessus : c'est ce que le formateur va vous demander avant de d\u00e9marrer les rappels. Rien n'est enregistr\u00e9 ni transmis.";np.style.display="block";
+  document.getElementById("screen-result").scrollIntoView({behavior:"smooth",block:"start"});
+}
+
+function restartQuiz(){
+  state.answers={};state.validated=false;state.score=0;state.dateQuiz=new Date();
+  const d=state.dateQuiz.toLocaleDateString("fr-FR",{day:"2-digit",month:"long",year:"numeric"});
+  document.getElementById("date-quiz").textContent=d;document.getElementById("date-quiz-2").textContent=d;
+  document.getElementById("score").textContent="—";
+  const bv=document.getElementById("btn-validate");
+  
+  document.getElementById("note-pdf").style.display="none";
+  const pb=document.getElementById("pass-banner"); if(pb) pb.style.display="none";
+  document.getElementById("screen-result").style.display="none";
+  render(); window.scrollTo({top:0,behavior:"smooth"});
+}
+
+</script>
+<script>
+/* Mode entrainement : demarrage direct, sans ecran d'identite */
+startQuiz();
+/* Copier-coller neutralise (standard TMK) */
+["copy","cut","paste","contextmenu","dragstart"].forEach(function(ev){
+  document.addEventListener(ev, function(e){ e.preventDefault(); });
+});
+document.addEventListener("keydown", function(e){
+  if((e.ctrlKey||e.metaKey) && ["c","x","v","u","s","p"].indexOf(e.key.toLowerCase())>-1){ e.preventDefault(); }
+});
+</script>
+</body>
+</html>

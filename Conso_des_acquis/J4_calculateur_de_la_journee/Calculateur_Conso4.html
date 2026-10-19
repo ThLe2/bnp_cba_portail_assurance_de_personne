@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculateur — Conso des acquis 4/4</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Karla:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#16243B;--bleu:#1F4E79;--bleu-clair:#2E75B6;--or:#B08D57;--creme:#F5F2EB;--card:#FFFFFF;
+  --line:#e3ddd0;--muted:#6B6459;--ok:#2F7A4F;--ko:#B23B3B;--amber:#B5852A;--shadow:0 2px 10px rgba(22,36,59,.07);}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Karla',system-ui,sans-serif;background:var(--creme);color:var(--navy);line-height:1.55}
+.wrap{max-width:1060px;margin:0 auto;padding:26px 18px 60px}
+.card-main{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);overflow:hidden}
+.header{padding:26px 32px 0}
+.chapter-tag{font-size:11.5px;font-weight:700;letter-spacing:1.6px;text-transform:uppercase;color:var(--or)}
+.chapter-tag span{opacity:.5}
+h1{font-family:'Fraunces',serif;font-weight:600;font-size:26px;line-height:1.2;margin:8px 0 5px}
+.header p{color:var(--muted);font-size:14px}
+.gold-rule{border:none;border-top:2px solid var(--or);width:64px;margin:16px 0 0}
+.body{padding:20px 32px 28px}
+.srcline{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:12.5px;color:var(--muted);margin-bottom:18px}
+.src{font-weight:700;font-size:11.5px;padding:3px 10px;border-radius:99px}
+.src.live{background:#E8F2EA;color:var(--ok)}.src.local{background:#FBF1DC;color:var(--amber)}
+.tabs{display:flex;gap:6px;background:#F0EADF;padding:5px;border-radius:11px;margin-bottom:20px;flex-wrap:wrap}
+.tab{flex:1;min-width:150px;padding:11px 14px;border:none;background:transparent;font-family:inherit;font-size:14px;font-weight:700;color:var(--muted);border-radius:8px;cursor:pointer}
+.tab:hover{color:var(--bleu)}
+.tab.active{background:#fff;color:var(--navy);box-shadow:var(--shadow)}
+.panel{display:none}.panel.active{display:block}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:760px){.grid{grid-template-columns:1fr}}
+.field{display:flex;flex-direction:column;gap:5px;margin-bottom:13px}
+.field label{font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.4px}
+.field .hint{font-size:11.5px;color:var(--muted);text-transform:none;letter-spacing:0;font-weight:400;font-style:italic}
+.field input,.field select{padding:10px 12px;border:1.5px solid var(--line);border-radius:8px;font-family:inherit;font-size:14.5px;font-variant-numeric:tabular-nums;background:#fff;color:var(--navy)}
+.field input:focus,.field select:focus{outline:none;border-color:var(--bleu);box-shadow:0 0 0 3px rgba(31,78,121,.12)}
+.res{background:#FBF7EE;border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin-top:4px}
+.res h3{font-family:'Fraunces',serif;font-size:16px;font-weight:600;margin-bottom:10px}
+table.calc{width:100%;border-collapse:collapse;font-size:13.5px;background:#fff;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+table.calc td{padding:7px 11px;border-bottom:1px solid var(--line)}
+table.calc tr:last-child td{border-bottom:none}
+table.calc td:last-child{text-align:right;font-weight:700;white-space:nowrap;font-variant-numeric:tabular-nums}
+table.calc tr.tot td{background:#EEF4F9;font-weight:700}
+table.calc tr.sep td{background:#FBF7EE;font-size:11px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--or)}
+.flag{margin-top:11px;padding:10px 13px;border-radius:7px;font-size:13px;border-left:3px solid var(--amber);background:#FFF8E8}
+.flag.ko{border-left-color:var(--ko);background:#FBF3F3}
+.flag.ok{border-left-color:var(--ok);background:#F2F8F4}
+.flag b{color:var(--navy)}
+.footer{text-align:center;font-size:11.5px;color:var(--muted);padding:16px 32px 22px;border-top:1px solid var(--line)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card-main">
+    <div class="header">
+      <div class="chapter-tag">TMK Performances · Conso des acquis 4/4 <span>/</span> Outil de la journée</div>
+      <h1>Calculateur</h1>
+      <p>Les quatre domaines dans un seul outil</p>
+      <hr class="gold-rule">
+    </div>
+    <div class="body">
+      <div class="srcline">
+        <span class="src local" id="src-badge">valeurs de secours</span>
+        <span>Les paramètres sont lus en direct. Aucune donnée saisie ici n'est enregistrée.</span>
+      </div>
+      <div class="tabs">
+        <button class="tab active" data-p="at" onclick="onglet('at')">Prévoyance</button>
+        <button class="tab" data-p="sante" onclick="onglet('sante')">Santé</button>
+        <button class="tab" data-p="retr" onclick="onglet('retr')">Retraite</button>
+        <button class="tab" data-p="av" onclick="onglet('av')">Épargne</button>
+      </div>
+
+<div class="panel active" id="panel-at">
+        <div class="grid">
+          <div>
+            <div class="field"><label>Salaire mensuel brut <span class="hint">identique sur les 3 derniers mois</span></label>
+              <input type="number" step="0.01" id="at_sal" value="2300"></div>
+            <div class="field"><label>Durée de l'arrêt (jours)</label>
+              <input type="number" step="1" id="at_jours" value="21"></div>
+          </div>
+          <div>
+            <div class="field"><label>Ancienneté dans l'entreprise (années)</label>
+              <input type="number" step="0.5" id="at_anc" value="3"></div>
+            <div class="field"><label>Nature de l'arrêt</label>
+              <select id="at_nature">
+                <option value="mal">Maladie — vie privée</option>
+                <option value="atmp">Accident du travail ou maladie professionnelle</option>
+              </select></div>
+          </div>
+        </div>
+        <div class="grid">
+          <div>
+            <div class="field"><label>Prévoyance collective : relais à partir du jour <span class="hint">laisser 0 s'il n'y en a pas</span></label>
+              <input type="number" step="1" id="at_relais" value="91"></div>
+          </div>
+          <div>
+            <div class="field"><label>Niveau garanti par la prévoyance (% du brut) <span class="hint">sous déduction des indemnités journalières</span></label>
+              <input type="number" step="1" id="at_prev" value="75"></div>
+          </div>
+        </div>
+        <div class="res"><h3>Résultat</h3><div id="at_out"></div></div>
+      </div>
+
+<div class="panel" id="panel-sante">
+        <div class="grid">
+          <div>
+            <div class="field"><label>Type de consultation</label>
+              <select id="s_type">
+                <option value="gen">Médecin généraliste</option>
+                <option value="spe" selected>Médecin spécialiste</option>
+              </select></div>
+            <div class="field"><label>Situation du médecin</label>
+              <select id="s_secteur">
+                <option value="s1">Secteur 1</option>
+                <option value="optam">Secteur 2 — adhérent OPTAM</option>
+                <option value="nonoptam">Secteur 2 — non adhérent OPTAM</option>
+              </select></div>
+            <div class="field"><label>Honoraire pratiqué</label>
+              <input type="number" step="0.01" id="s_hono" value="55"></div>
+          </div>
+          <div>
+            <div class="field"><label>Parcours de soins</label>
+              <select id="s_parcours">
+                <option value="oui" selected>Respecté</option>
+                <option value="non">Non respecté</option>
+              </select></div>
+            <div class="field"><label>Soin en rapport avec une affection de longue durée</label>
+              <select id="s_ald">
+                <option value="non" selected>Non</option>
+                <option value="oui">Oui</option>
+              </select></div>
+          </div>
+        </div>
+        <div class="res"><h3>Résultat</h3><div id="s_out"></div></div>
+      </div>
+
+<div class="panel" id="panel-retr">
+        <div class="grid">
+          <div>
+            <div class="field"><label>Salaire annuel moyen <span class="hint">25 meilleures années, plafonnées</span></label><input type="number" step="0.01" id="r_sam" value="34800"></div>
+            <div class="field"><label>Trimestres acquis au départ</label><input type="number" step="1" id="r_acquis" value="176"></div>
+            <div class="field"><label>Durée de référence de la génération</label><input type="number" step="1" id="r_requis" value="172"></div>
+          </div>
+          <div>
+            <div class="field"><label>Points AGIRC-ARRCO au départ</label><input type="number" step="1" id="r_points" value="6820"></div>
+            <div class="field"><label>Départ avant l'âge du taux plein automatique</label>
+              <select id="r_avant"><option value="oui" selected>Oui</option><option value="non">Non — taux plein acquis d'office</option></select></div>
+            <div class="field"><label>Dernier salaire annuel brut <span class="hint">pour le taux de remplacement</span></label><input type="number" step="0.01" id="r_dernier" value="58000"></div>
+          </div>
+        </div>
+        <div class="res"><h3>Résultat</h3><div id="r_out"></div></div>
+      </div>
+
+<div class="panel" id="panel-av">
+        <div class="grid">
+          <div>
+            <div class="field"><label>Valeur actuelle du contrat</label><input type="number" step="0.01" id="a_valeur" value="250000"></div>
+            <div class="field"><label>Total des versements</label><input type="number" step="0.01" id="a_verse" value="200000"></div>
+            <div class="field"><label>Montant du rachat</label><input type="number" step="0.01" id="a_rachat" value="50000"></div>
+          </div>
+          <div>
+            <div class="field"><label>Ancienneté du contrat (années)</label><input type="number" step="1" id="a_anc" value="14"></div>
+            <div class="field"><label>Situation fiscale</label>
+              <select id="a_couple"><option value="non">Personne seule</option><option value="oui" selected>Couple, imposition commune</option></select></div>
+            <div class="field"><label>Abattement déjà utilisé cette année</label><input type="number" step="0.01" id="a_deja" value="0"></div>
+          </div>
+        </div>
+        <div class="res"><h3>Résultat</h3><div id="a_out"></div></div>
+      </div>
+    </div>
+    <div class="footer">TMK Performances - N° Siret : 49841924100027 - Code NAF : 8559A</div>
+  </div>
+</div>
+
+<script>
+const SB_URL = "https://ibkvyjlglwufxvzxnysa.supabase.co";
+const SB_KEY = "sb_publishable_xUfZHSOHf4TnBRRyzU_qJA_TcXIMSKX";
+
+const DEF_PREV = {
+  ij_mal_taux: 0.50, ij_mal_diviseur: 91.25, ij_mal_carence: 3, ij_mal_montant_max: 42.97,
+  at_taux1: 0.60, at_taux2: 0.80, at_diviseur_sjr: 30.42, at_carence: 0,
+  mens_taux1: 0.90, mens_carence_maladie: 7, mens_carence_atmp: 0,
+  mens_anciennete_min: 1, mens_duree_periode1: 30,
+  mens_taux2: 0.6666, mens_duree_periode2: 30, mens_annees_par_palier: 5, mens_bonus_jours_par_palier: 10, mens_duree_max_periode: 90,
+};
+const DEF_PARC = {
+  taux_plein_base: 0.50, decote_point_par_trimestre: 0.00625, decote_trimestres_max: 20,
+  taux_plancher_base: 0.375, surcote_taux_par_trimestre: 0.0125, valeur_point_agirc_arrco: 1.4386,
+};
+const DEF_SANTE = {
+  sante_br_generaliste_s1: 30, sante_br_generaliste_optam: 30, sante_br_generaliste_non_optam: 23,
+  sante_br_specialiste_s1: 31.50, sante_br_specialiste_optam: 31.50, sante_br_specialiste_non_optam: 23,
+  sante_taux_consultation_parcours: 0.70,
+  sante_taux_consultation_hors_parcours_non_optam: 0.30,
+  sante_majoration_tm_hors_parcours: 10.60,
+  sante_participation_forfaitaire: 2,
+};
+const DEF_EP = {
+  av_duree_seuil_annees: 8, av_abattement_annuel_seul: 4600, av_abattement_annuel_couple: 9200,
+  av_taux_reduit: 0.075, av_taux_pfu_ir: 0.128, av_seuil_versements: 150000,
+  epargne_ps_taux_assurance_vie: 0.172, epargne_pfu_taux_ir: 0.128, epargne_ps_taux_general: 0.186,
+};
+let P = Object.assign({}, DEF_PREV, DEF_PARC, DEF_SANTE, DEF_EP);
+
+function el(id){ return document.getElementById(id); }
+function num(id){ const v = parseFloat(String(el(id).value).replace(",", ".")); return isNaN(v) ? 0 : v; }
+function eur(n){ return n.toLocaleString("fr-FR",{minimumFractionDigits:2,maximumFractionDigits:2}) + " €"; }
+function eur0(n){ return n.toLocaleString("fr-FR",{minimumFractionDigits:0,maximumFractionDigits:0}) + " €"; }
+function eur4(n){ return n.toLocaleString("fr-FR",{minimumFractionDigits:4,maximumFractionDigits:4}) + " €"; }
+function pct(n, d){ return (Math.round(n*10000)/100).toLocaleString("fr-FR", d ? {minimumFractionDigits:d,maximumFractionDigits:d} : {}) + " %"; }
+function r2(n){ return Math.round(n*100)/100; }
+function tableau(rows){
+  return '<table class="calc">' + rows.map(function(r){
+    if(r[0] === "--") return '<tr class="sep"><td colspan="2">' + r[1] + '</td></tr>';
+    return '<tr' + (r[2] ? ' class="tot"' : '') + '><td>' + r[0] + '</td><td>' + r[1] + '</td></tr>';
+  }).join("") + '</table>';
+}
+async function lire(table, cles){
+  const r = await fetch(SB_URL + "/rest/v1/" + table + "?select=cle,valeur&cle=in.(" + cles.join(",") + ")&apikey=" + SB_KEY);
+  if(!r.ok) throw new Error(r.status);
+  const rows = await r.json();
+  if(!rows.length) throw new Error("vide");
+  rows.forEach(function(row){ if(row.valeur !== null) P[row.cle] = Number(row.valeur); });
+}
+async function chargerParametres(){
+  let ok = 0;
+  try{ await lire("parametres_prevoyance", Object.keys(DEF_PREV)); ok++; }catch(e){}
+  try{ await lire("parametres_parcours", Object.keys(DEF_PARC)); ok++; }catch(e){}
+  try{ await lire("parametres_sante", Object.keys(DEF_SANTE)); ok++; }catch(e){}
+  try{ await lire("parametres_epargne", Object.keys(DEF_EP)); ok++; }catch(e){}
+  const b = el("src-badge");
+  if(ok === 4){ b.className = "src live"; b.textContent = "valeurs à jour"; }
+  else if(ok > 0){ b.className = "src local"; b.textContent = "valeurs partiellement à jour"; }
+  else { b.className = "src local"; b.textContent = "valeurs de secours"; }
+  tout();
+}
+function onglet(n){
+  document.querySelectorAll(".tab").forEach(function(t){ t.classList.toggle("active", t.dataset.p === n); });
+  document.querySelectorAll(".panel").forEach(function(p){ p.classList.toggle("active", p.id === "panel-" + n); });
+}
+
+/* ─────────── Arrêt de travail ─────────── */
+function calcAT(){
+  const sal = num("at_sal"), jours = Math.max(0, Math.round(num("at_jours"))), anc = num("at_anc");
+  const atmp = el("at_nature").value === "atmp";
+  const relais = Math.round(num("at_relais")), prevTaux = num("at_prev") / 100;
+
+  const carenceSecu = atmp ? P.at_carence : P.ij_mal_carence;
+  const carenceEmp  = atmp ? P.mens_carence_atmp : P.mens_carence_maladie;
+
+  let sjb, ij, libelleBase;
+  if(atmp){
+    sjb = r2(sal / P.at_diviseur_sjr);
+    ij  = r2(sjb * P.at_taux1);
+    libelleBase = "Salaire journalier de référence : " + eur(sal) + " ÷ " + String(P.at_diviseur_sjr).replace(".", ",");
+  } else {
+    sjb = r2(sal * 3 / P.ij_mal_diviseur);
+    ij  = r2(sjb * P.ij_mal_taux);
+    libelleBase = "Salaire journalier de base : " + eur(sal) + " × 3 ÷ " + String(P.ij_mal_diviseur).replace(".", ",");
+  }
+  const ijBrute = ij;
+  let plafonnee = false;
+  if(!atmp && P.ij_mal_montant_max > 0 && ij > P.ij_mal_montant_max){ ij = P.ij_mal_montant_max; plafonnee = true; }
+
+  const jSecu = Math.max(0, jours - carenceSecu);
+  const ijss  = r2(ij * jSecu);
+
+  /* maintien de salaire : deux périodes, allongées de 10 jours par tranche de 5 ans au-delà de l'ancienneté minimale */
+  const eligible = anc >= P.mens_anciennete_min;
+  const paliers  = eligible ? Math.floor((anc - P.mens_anciennete_min) / P.mens_annees_par_palier) : 0;
+  const p1 = Math.min(P.mens_duree_max_periode, P.mens_duree_periode1 + paliers * P.mens_bonus_jours_par_palier);
+  const p2 = Math.min(P.mens_duree_max_periode, P.mens_duree_periode2 + paliers * P.mens_bonus_jours_par_palier);
+  const salJour = r2(sal / 30);
+  const g1 = r2(salJour * P.mens_taux1), g2 = r2(salJour * P.mens_taux2);
+  const c1 = Math.max(0, r2(g1 - ij)), c2 = Math.max(0, r2(g2 - ij));
+  const jEmpBrut = Math.max(0, jours - carenceEmp);
+  const j1 = eligible ? Math.min(jEmpBrut, p1) : 0;
+  const j2 = eligible ? Math.min(Math.max(0, jEmpBrut - p1), p2) : 0;
+  const e1 = r2(c1 * j1), e2 = r2(c2 * j2), comp = r2(e1 + e2);
+  const finMaintien = eligible ? carenceEmp + p1 + p2 : 0;
+
+  /* prévoyance collective : jours à partir du relais, total porté au niveau garanti, sous déduction des IJ et du maintien éventuel */
+  let prev = 0, jPrev = 0, prevJ = 0;
+  const lignesPrev = [];
+  if(relais > 0 && prevTaux > 0 && jours >= relais){
+    const cible = r2(salJour * prevTaux);
+    const segs = {};
+    for(let d = relais; d <= jours; d++){
+      const ijd = d > carenceSecu ? ij : 0;
+      let empd = 0;
+      if(eligible && d > carenceEmp){ const k = d - carenceEmp; empd = k <= p1 ? c1 : (k <= p1 + p2 ? c2 : 0); }
+      const v = Math.max(0, r2(cible - ijd - empd));
+      segs[v] = (segs[v] || 0) + 1;
+    }
+    Object.keys(segs).forEach(function(v){ const n = segs[v]; jPrev += n; prev = r2(prev + r2(Number(v) * n));
+      lignesPrev.push([n + " jour(s) × " + eur(Number(v)), eur(r2(Number(v) * n))]); });
+    prevJ = cible;
+  }
+
+  const total    = r2(ijss + comp + prev);
+  const habituel = r2(sal * jours / 30);
+  const perte    = r2(habituel - total);
+  const tauxPerte = habituel > 0 ? Math.round(perte / habituel * 1000) / 10 : 0;
+
+  const rows = [
+    ["--", "Ce que verse la Sécurité sociale"],
+    [libelleBase, eur(sjb)],
+    ["Indemnité journalière : " + eur(sjb) + " × " + pct(atmp ? P.at_taux1 : P.ij_mal_taux) + (plafonnee ? " = " + eur(ijBrute) + ", ramenée au maximum" : ""), eur(ij)],
+    ["Jours indemnisés : " + jours + " − " + carenceSecu + " de carence", jSecu + " jours"],
+    ["Total Sécurité sociale", eur(ijss), true],
+    ["--", "Ce que verse l'employeur"],
+  ];
+  if(!eligible){
+    rows.push(["Ancienneté de " + anc + " an(s) — minimum requis : " + P.mens_anciennete_min, "aucun complément"]);
+    rows.push(["Total employeur", eur(0), true]);
+  } else {
+    rows.push(["Salaire journalier de référence : " + eur(sal) + " ÷ 30", eur(salJour)]);
+    rows.push(["Durée de chaque période (ancienneté " + anc + " an(s))", p1 + " jours + " + p2 + " jours"]);
+    rows.push(["1re période : " + pct(P.mens_taux1) + " = " + eur(g1) + ", complément " + eur(c1) + " × " + j1 + " j", eur(e1)]);
+    rows.push(["2e période : " + pct(P.mens_taux2) + " = " + eur(g2) + ", complément " + eur(c2) + " × " + j2 + " j", eur(e2)]);
+    rows.push(["Total employeur", eur(comp), true]);
+  }
+  if(relais > 0 && prevTaux > 0){
+    rows.push(["--", "Ce que verse la prévoyance collective"]);
+    if(jPrev){ rows.push(["Niveau garanti à partir du jour " + relais + " : " + eur(salJour) + " × " + pct(prevTaux), eur(prevJ)]);
+      lignesPrev.forEach(function(l){ rows.push(l); }); rows.push(["Total prévoyance", eur(prev), true]); }
+    else rows.push(["Arrêt plus court que le délai de relais (jour " + relais + ")", "rien"]);
+  }
+  rows.push(["--", "Le résultat"]);
+  rows.push(["Total perçu sur " + jours + " jours", eur(total), true]);
+  rows.push(["Salaire habituel sur la même période", eur(habituel)]);
+  rows.push(["Perte de revenu", eur(perte) + "  (" + String(tauxPerte).replace(".", ",") + " %)", true]);
+
+  let html = tableau(rows);
+  if(plafonnee) html += '<div class="flag"><b>Indemnité plafonnée.</b> Le calcul brut dépassait le maximum journalier ; c\'est ce plafond qui est retenu.</div>';
+  if(eligible && jours > finMaintien) html += '<div class="flag"><b>Fin du maintien de salaire au jour ' + finMaintien + '.</b> Au-delà, seules les indemnités journalières' + (relais > 0 && prevTaux > 0 ? ', puis la prévoyance à partir du jour ' + relais + ',' : '') + ' sont versées.</div>';
+  if(!eligible) html += '<div class="flag ko"><b>Pas de maintien de salaire.</b> L\'ancienneté est insuffisante. Vérifier la convention collective : elle peut être plus favorable que la loi.</div>';
+  el("at_out").innerHTML = html;
+}
+
+/* ─────────── Reste à charge santé ─────────── */
+function calcSANTE(){
+  const spe = el("s_type").value === "spe";
+  const sect = el("s_secteur").value;
+  const hono = num("s_hono");
+  const horsParcours = el("s_parcours").value === "non";
+  const ald = el("s_ald").value === "oui";
+
+  let br;
+  if(spe) br = (sect === "s1") ? P.sante_br_specialiste_s1 : (sect === "optam" ? P.sante_br_specialiste_optam : P.sante_br_specialiste_non_optam);
+  else    br = (sect === "s1") ? P.sante_br_generaliste_s1 : (sect === "optam" ? P.sante_br_generaliste_optam : P.sante_br_generaliste_non_optam);
+
+  const nonOptam = (sect === "nonoptam");
+  let taux = P.sante_taux_consultation_parcours, majo = 0, regle;
+
+  if(ald){
+    taux = 1; regle = "Affection de longue durée : ticket modérateur exonéré, la base est prise en totalité.";
+    if(horsParcours){
+      if(nonOptam){ taux = P.sante_taux_consultation_hors_parcours_non_optam; regle = "Hors parcours chez un secteur 2 non OPTAM : l'exonération ALD ne protège pas de la minoration du taux."; }
+      else { majo = P.sante_majoration_tm_hors_parcours; regle = "Hors parcours chez un secteur 1 ou OPTAM : la base reste prise en totalité au titre de l'ALD, mais la majoration s'applique."; }
+    }
+  } else if(horsParcours){
+    if(nonOptam){ taux = P.sante_taux_consultation_hors_parcours_non_optam; regle = "Hors parcours chez un secteur 2 non OPTAM : le taux tombe réellement."; }
+    else { majo = P.sante_majoration_tm_hors_parcours; regle = "Hors parcours chez un secteur 1 ou OPTAM : le taux ne bouge pas, une majoration forfaitaire est retenue."; }
+  } else {
+    regle = "Parcours de soins respecté : taux de droit commun sur la base de remboursement.";
+  }
+
+  const brute = r2(br * taux);
+  const pf = P.sante_participation_forfaitaire;
+  const am = r2(Math.max(0, brute - majo - pf));
+  const tm = r2(br - brute);
+  const depass = r2(Math.max(0, hono - br));
+  const irred = r2(majo + pf);
+  const resteAvant = r2(hono - am);
+
+  const rows = [
+    ["--", "Le calcul de l'Assurance Maladie"],
+    ["Base de remboursement retenue", eur(br)],
+    ["Taux appliqué", pct(taux)],
+    [eur(br) + " × " + pct(taux), eur(brute)],
+  ];
+  if(majo > 0) rows.push(["Majoration hors parcours", "− " + eur(majo)]);
+  rows.push(["Participation forfaitaire", "− " + eur(pf)]);
+  rows.push(["Remboursement de l'Assurance Maladie", eur(am), true]);
+  rows.push(["--", "Qui paie quoi"]);
+  rows.push(["Honoraire facturé", eur(hono)]);
+  rows.push(["Assurance Maladie", eur(am)]);
+  rows.push(["Ticket modérateur — pris par une complémentaire responsable", eur(tm)]);
+  rows.push(["Dépassement d'honoraires — selon le niveau du contrat", eur(depass)]);
+  rows.push(["Reste à charge irréductible du client", eur(irred), true]);
+  rows.push(["Total à sa charge avant intervention de la complémentaire", eur(resteAvant)]);
+
+  let html = tableau(rows);
+  html += '<div class="flag"><b>La règle appliquée :</b> ' + regle + '</div>';
+  if(irred > 0) html += '<div class="flag ko"><b>' + eur(irred) + ' ne seront jamais remboursés</b>, ni par la Sécurité sociale ni par la complémentaire, même responsable.</div>';
+  if(depass > 0 && nonOptam) html += '<div class="flag"><b>Praticien non adhérent à l\'OPTAM :</b> la prise en charge du dépassement par un contrat responsable est plus fortement bridée que chez un adhérent.</div>';
+  el("s_out").innerHTML = html;
+}
+
+/* ─────────── Pension de retraite ─────────── */
+function calcRetr(){
+  const sam = num("r_sam"), acquis = num("r_acquis"), requis = num("r_requis");
+  const points = num("r_points"), dernier = num("r_dernier");
+  const avant = el("r_avant").value === "oui";
+
+  const manquants = Math.max(0, requis - acquis);
+  const retenus = Math.min(manquants, P.decote_trimestres_max);
+  let taux = P.taux_plein_base;
+  let decote = false;
+  if(avant && manquants > 0){ taux = P.taux_plein_base - retenus * P.decote_point_par_trimestre; decote = true; }
+  if(taux < P.taux_plancher_base) taux = P.taux_plancher_base;
+
+  const prorata = Math.min(acquis / requis, 1);
+  const baseAvant = r2(sam * taux * prorata);
+  const supp = Math.max(0, acquis - requis);
+  const surcote = r2(baseAvant * supp * P.surcote_taux_par_trimestre);
+  const base = r2(baseAvant + surcote);
+  const comp = r2(points * P.valeur_point_agirc_arrco);
+  const total = r2(base + comp);
+  const rempl = dernier > 0 ? total / dernier : 0;
+
+  const rows = [
+    ["--", "Régime de base"],
+    ["Trimestres manquants", manquants + " trimestres"],
+    ["Taux appliqué" + (decote ? " (après décote sur " + retenus + " trimestres)" : ""), pct(taux, 3)],
+    ["Proratisation : " + acquis + "/" + requis + ", plafonnée à 1", prorata.toLocaleString("fr-FR",{maximumFractionDigits:4})],
+    [eur0(sam) + " × " + pct(taux, 3) + " × " + prorata.toLocaleString("fr-FR",{maximumFractionDigits:4}), eur(baseAvant)],
+  ];
+  if(supp > 0) rows.push(["Surcote : " + supp + " trimestres × " + pct(P.surcote_taux_par_trimestre), "+ " + eur(surcote)]);
+  rows.push(["Pension de base annuelle", eur(base), true]);
+  rows.push(["--", "Complémentaire"]);
+  rows.push([points.toLocaleString("fr-FR") + " points × " + eur4(P.valeur_point_agirc_arrco), eur(comp), true]);
+  rows.push(["--", "Le résultat"]);
+  rows.push(["Pension annuelle totale", eur(total), true]);
+  rows.push(["Soit par mois", eur(r2(total / 12))]);
+  rows.push(["Taux de remplacement", pct(rempl, 1), true]);
+
+  let html = tableau(rows);
+  if(decote) html += '<div class="flag ko"><b>Décote appliquée.</b> Le nombre de trimestres retenu est le plus favorable des deux calculs : ceux qui manquent pour la durée, ou ceux qui restent jusqu\'à l\'âge du taux plein automatique. Vérifiez lequel s\'applique.</div>';
+  if(supp > 0) html += '<div class="flag ok"><b>Surcote acquise.</b> Elle majore le montant, pas le taux, et n\'est pas plafonnée. La proratisation, elle, reste bloquée à 1.</div>';
+  html += '<div class="flag"><b>À dire au client :</b> le taux porte sur un salaire moyen historique, pas sur le dernier salaire. L\'écart réel est presque toujours plus large que le pourcentage ne le laisse croire.</div>';
+  el("r_out").innerHTML = html;
+}
+
+/* ─────────── Rachat en assurance vie ─────────── */
+function calcAv(){
+  const valeur = num("a_valeur"), verse = num("a_verse"), rachat = num("a_rachat");
+  const anc = num("a_anc"), deja = num("a_deja");
+  const couple = el("a_couple").value === "oui";
+
+  const produitsTot = Math.max(0, valeur - verse);
+  const part = valeur > 0 ? produitsTot / valeur : 0;
+  const produits = r2(rachat * part);
+  const apres = anc >= P.av_duree_seuil_annees;
+
+  const abatPlein = couple ? P.av_abattement_annuel_couple : P.av_abattement_annuel_seul;
+  const abat = apres ? Math.max(0, abatPlein - deja) : 0;
+  const assiette = r2(Math.max(0, produits - abat));
+  const prorata = Math.min(1, verse > 0 ? P.av_seuil_versements / verse : 1);
+
+  let ir, detail;
+  if(apres){
+    const partRed = r2(assiette * prorata), partPlein = r2(assiette - partRed);
+    const irRed = r2(partRed * P.av_taux_reduit), irPlein = r2(partPlein * P.av_taux_pfu_ir);
+    ir = r2(irRed + irPlein);
+    detail = [
+      ["Abattement annuel restant", "− " + eur(abat)],
+      ["Assiette soumise à l'impôt", eur(assiette)],
+      ["Prorata sous le seuil de " + eur0(P.av_seuil_versements), pct(prorata, 1)],
+      ["Fraction à " + pct(P.av_taux_reduit) + " : " + eur(partRed), eur(irRed)],
+      ["Fraction à " + pct(P.av_taux_pfu_ir) + " : " + eur(partPlein), eur(irPlein)],
+    ];
+  } else {
+    ir = r2(produits * P.av_taux_pfu_ir);
+    detail = [
+      ["Contrat de moins de " + P.av_duree_seuil_annees + " ans : ni abattement ni taux réduit", "—"],
+      ["Impôt : " + eur(produits) + " × " + pct(P.av_taux_pfu_ir), eur(ir)],
+    ];
+  }
+  const ps = r2(produits * P.epargne_ps_taux_assurance_vie);
+  const total = r2(ir + ps);
+  const net = r2(rachat - total);
+  const tauxRachat = rachat > 0 ? total / rachat : 0;
+  const tauxProduits = produits > 0 ? total / produits : 0;
+  const siCt = r2(produits * (P.epargne_pfu_taux_ir + P.epargne_ps_taux_general));
+
+  const rows = [["--", "Les produits contenus dans le rachat"],
+    ["Produits du contrat : " + eur0(valeur) + " − " + eur0(verse), eur(produitsTot)],
+    ["Part de produits dans la valeur", pct(part, 2)],
+    ["Produits contenus dans le rachat", eur(produits), true],
+    ["--", "L'impôt sur le revenu"]].concat(detail);
+  rows.push(["Impôt sur le revenu total", eur(ir), true]);
+  rows.push(["--", "Les prélèvements sociaux"]);
+  rows.push(["Sur la totalité des produits, sans abattement : × " + pct(P.epargne_ps_taux_assurance_vie), eur(ps), true]);
+  rows.push(["--", "Le résultat"]);
+  rows.push(["Total prélevé", eur(total), true]);
+  rows.push(["Perçu réellement", eur(net), true]);
+  rows.push(["Taux effectif sur le rachat", pct(tauxRachat, 2)]);
+  rows.push(["Taux effectif sur les seuls produits", pct(tauxProduits, 1)]);
+
+  let html = tableau(rows);
+  if(apres) html += '<div class="flag ok"><b>Contrat de plus de ' + P.av_duree_seuil_annees + ' ans.</b> L\'abattement annuel se reconstitue chaque année : rien n\'oblige à tout retirer d\'un coup.</div>';
+  else html += '<div class="flag"><b>Contrat de moins de ' + P.av_duree_seuil_annees + ' ans.</b> Attendre le seuil ferait passer l\'imposition de ' + pct(P.av_taux_pfu_ir + P.epargne_ps_taux_assurance_vie) + ' à ' + pct(P.av_taux_reduit + P.epargne_ps_taux_assurance_vie) + ', abattement non compris.</div>';
+  if(verse > P.av_seuil_versements) html += '<div class="flag"><b>Versements au-delà du seuil.</b> Une fraction de l\'assiette passe au taux plein, au prorata. Un même rachat supporte donc deux taux.</div>';
+  html += '<div class="flag"><b>Comparaison :</b> les mêmes ' + eur(produits) + ' de gains sur un compte-titres coûteraient ' + eur(siCt) + ', soit ' + eur(r2(siCt - total)) + ' de plus. L\'assurance vie a été exclue de la hausse des prélèvements sociaux.</div>';
+  el("a_out").innerHTML = html;
+}
+
+function tout(){ calcAT(); calcSANTE(); calcRetr(); calcAv(); }
+document.querySelectorAll("input, select").forEach(function(e){
+  e.addEventListener("input", tout); e.addEventListener("change", tout);
+});
+tout();
+chargerParametres();
+</script>
+</body>
+</html>

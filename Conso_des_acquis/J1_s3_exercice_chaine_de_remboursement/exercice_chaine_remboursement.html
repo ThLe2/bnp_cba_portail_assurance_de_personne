@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exercice — La chaîne de remboursement</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Karla:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#16243B; --bleu:#1F4E79; --bleu-clair:#2E75B6; --or:#B08D57;
+  --creme:#F5F2EB; --card:#FFFFFF; --line:#e3ddd0; --muted:#6B6459;
+  --ok:#2F7A4F; --ko:#B23B3B; --amber:#B5852A;
+  --shadow:0 2px 10px rgba(22,36,59,.07);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Karla',system-ui,sans-serif;background:var(--creme);color:var(--navy);line-height:1.55;
+  -webkit-user-select:none;user-select:none}
+.wrap{max-width:1120px;margin:0 auto;padding:26px 18px 60px}
+.card-main{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);overflow:hidden}
+.header{padding:26px 34px 0}
+.chapter-tag{font-size:11.5px;font-weight:700;letter-spacing:1.6px;text-transform:uppercase;color:var(--or)}
+.chapter-tag span{opacity:.5}
+h1{font-family:'Fraunces',serif;font-weight:600;font-size:27px;line-height:1.2;margin:8px 0 5px}
+.header p{color:var(--muted);font-size:14.5px}
+.gold-rule{border:none;border-top:2px solid var(--or);width:64px;margin:18px 0 0}
+.body{padding:22px 34px 30px}
+.consigne{background:#FBF7EE;border:1px solid var(--line);border-left:3px solid var(--or);border-radius:8px;padding:14px 17px;font-size:14px;margin-bottom:22px}
+
+.part{margin-bottom:30px}
+.part-head{display:flex;align-items:baseline;gap:11px;margin-bottom:6px}
+.part-num{background:var(--navy);color:#fff;border-radius:99px;width:25px;height:25px;display:inline-flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0}
+.part-head h2{font-family:'Fraunces',serif;font-size:20px;font-weight:600}
+.part-sub{font-size:13.5px;color:var(--muted);margin:0 0 15px 36px}
+
+/* ---- partie 1 : remise en ordre ---- */
+.steps{display:flex;flex-direction:column;gap:9px}
+.step{display:flex;align-items:center;gap:13px;background:#fff;border:1.5px solid var(--line);border-radius:10px;padding:12px 15px;cursor:pointer;
+  font-size:14px;text-align:left;font-family:inherit;color:var(--navy);transition:border-color .15s,background .15s}
+.step:hover{border-color:var(--bleu-clair)}
+.step .rank{width:29px;height:29px;border-radius:50%;background:#EFE9DD;color:var(--muted);display:inline-flex;align-items:center;justify-content:center;
+  font-weight:700;font-size:13.5px;flex-shrink:0}
+.step.picked .rank{background:var(--bleu);color:#fff}
+.step.picked{border-color:var(--bleu)}
+.step .lab{flex:1}
+.step .fix{display:block;font-size:12.5px;color:var(--muted);margin-top:5px}
+.step.good{border-color:var(--ok);background:#F2F8F4}
+.step.good .rank{background:var(--ok);color:#fff}
+.step.bad{border-color:var(--ko);background:#FBF3F3}
+.step.bad .rank{background:var(--ko);color:#fff}
+
+/* ---- paramètres ---- */
+.params{background:#FCFAF5;border:1px dashed var(--line);border-radius:10px;padding:14px 16px;margin-bottom:18px}
+.params-title{font-size:11px;font-weight:700;letter-spacing:1.3px;text-transform:uppercase;color:var(--muted);margin-bottom:10px;
+  display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.src{font-weight:600;letter-spacing:0;text-transform:none;font-size:11.5px;padding:2px 9px;border-radius:99px}
+.src.live{background:#E8F2EA;color:var(--ok)}
+.src.local{background:#FBF1DC;color:var(--amber)}
+.plist{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:8px 20px}
+.prow{display:flex;justify-content:space-between;gap:12px;font-size:13.5px;border-bottom:1px dotted var(--line);padding-bottom:4px}
+.prow span:last-child{font-weight:700;white-space:nowrap}
+
+/* ---- partie 2 : cas ---- */
+.cas{border:1.5px solid var(--line);border-radius:12px;padding:16px 18px;margin-bottom:14px;background:#fff}
+.cas h3{font-family:'Fraunces',serif;font-size:17px;font-weight:600;margin-bottom:5px}
+.cas .enonce{font-size:14px;color:var(--muted);margin-bottom:14px}
+.champs{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:700px){.champs{grid-template-columns:1fr}}
+.champ label{display:block;font-size:12px;font-weight:600;color:var(--muted);margin-bottom:5px}
+.champ .inrow{display:flex;align-items:center;gap:8px}
+.champ input{width:120px;padding:9px 11px;border:1.5px solid var(--line);border-radius:7px;font-family:inherit;font-size:14.5px;
+  font-variant-numeric:tabular-nums;text-align:right;background:#fff;color:var(--navy);-webkit-user-select:text;user-select:text}
+.champ input:focus{outline:none;border-color:var(--bleu);box-shadow:0 0 0 3px rgba(31,78,121,.12)}
+.champ input.good{border-color:var(--ok);background:#F2F8F4}
+.champ input.bad{border-color:var(--ko);background:#FBF3F3}
+.champ .unit{font-size:14px;color:var(--muted)}
+.champ .corr{font-size:12.5px;margin-top:7px;display:none}
+.champ .corr.show{display:block}
+.champ .corr b{color:var(--navy)}
+
+.meta{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:18px}
+.progress{flex:1;min-width:220px}
+.track{height:8px;background:#e6e0d3;border-radius:99px;overflow:hidden}
+.fill{height:100%;width:0;background:var(--bleu-clair);transition:width .3s}
+.plabel{font-size:12.5px;color:var(--muted);margin-top:6px}
+.scorepill{background:var(--navy);color:#fff;border-radius:99px;padding:6px 15px;font-size:13px;font-weight:600}
+
+.actions{margin-top:8px;display:flex;gap:12px;flex-wrap:wrap}
+.btn{border:none;border-radius:9px;padding:13px 24px;font-family:inherit;font-size:14.5px;font-weight:700;cursor:pointer}
+.btn-primary{background:var(--bleu);color:#fff}
+.btn-primary:disabled{background:#c9c2b6;cursor:not-allowed}
+.btn-secondary{background:#fff;color:var(--bleu);border:1.5px solid var(--bleu)}
+.result{display:none;margin-top:24px;border-radius:12px;padding:20px 22px;border:1px solid var(--line);background:#FBF7EE}
+.result.show{display:block}
+.result h2{font-family:'Fraunces',serif;font-size:21px;font-weight:600;margin-bottom:6px}
+.result .big{font-size:34px;font-weight:700;font-family:'Fraunces',serif}
+.result p{font-size:14px;color:var(--muted)}
+.footer{text-align:center;font-size:11.5px;color:var(--muted);padding:16px 34px 24px;border-top:1px solid var(--line);margin-top:6px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card-main">
+    <div class="header">
+      <div class="chapter-tag">TMK Performances · Conso des acquis 1/4 <span>/</span> Séquence 3</div>
+      <h1>La chaîne de remboursement</h1>
+      <p>5 maillons à remettre dans l'ordre · 3 consultations à chiffrer · exercice d'entraînement, sans note</p>
+      <hr class="gold-rule">
+    </div>
+
+    <div class="body">
+      <div class="consigne">
+        <b>🎯 Consigne :</b> d'abord remettre la chaîne dans l'ordre en cliquant les maillons du premier au dernier.
+        Ensuite chiffrer trois consultations, à l'euro et au centime, en vous servant des paramètres affichés.
+        Rien n'est enregistré. Ce qui compte, c'est de repérer <b>à quel maillon vous vous trompez</b>.
+      </div>
+
+      <div class="meta">
+        <div class="progress">
+          <div class="track"><div class="fill" id="fill"></div></div>
+          <div class="plabel" id="plabel">0 / 11 réponse donnée</div>
+        </div>
+        <div class="scorepill">Score&nbsp;: <b id="score">—</b> / 11</div>
+      </div>
+
+      <div class="part">
+        <div class="part-head"><span class="part-num">1</span><h2>Remettre la chaîne dans l'ordre</h2></div>
+        <p class="part-sub">Cliquez les cinq maillons du premier au dernier. Un clic sur un maillon déjà numéroté annule tout le classement.</p>
+        <div class="steps" id="steps"></div>
+      </div>
+
+      <div class="part">
+        <div class="part-head"><span class="part-num">2</span><h2>Chiffrer trois consultations</h2></div>
+        <p class="part-sub">Trois fois la même mécanique, trois résultats très différents.</p>
+
+        <div class="params">
+          <div class="params-title">Paramètres de l'année <span class="src local" id="src-badge">valeurs de secours</span></div>
+          <div class="plist" id="plist"></div>
+        </div>
+
+        <div id="cas"></div>
+      </div>
+
+      <div class="actions">
+        <button class="btn btn-primary" id="btn-validate" disabled onclick="valider()">Valider mes réponses</button>
+        <button class="btn btn-secondary" id="btn-reset" onclick="reinitialiser()">↻ Recommencer</button>
+      </div>
+
+      <div class="result" id="result">
+        <h2 id="res-title">—</h2>
+        <p><span class="big" id="res-score">0 / 11</span></p>
+        <p id="res-msg"></p>
+      </div>
+    </div>
+
+    <div class="footer">TMK Performances - N° Siret : 49841924100027 - Code NAF : 8559A</div>
+  </div>
+</div>
+
+<script>
+/* ─────────── Paramètres : lecture en direct sur Supabase, repli local ─────────── */
+const SB_URL = "https://ibkvyjlglwufxvzxnysa.supabase.co";
+const SB_KEY = "sb_publishable_xUfZHSOHf4TnBRRyzU_qJA_TcXIMSKX";
+
+const DEFAUT = {
+  sante_br_generaliste_s1: 30,
+  sante_br_specialiste_non_optam: 23,
+  sante_taux_consultation_parcours: 0.70,
+  sante_majoration_tm_hors_parcours: 10.60,
+  sante_participation_forfaitaire: 2,
+};
+let P = Object.assign({}, DEFAUT);
+
+const AFFICHE = [
+  ["sante_br_generaliste_s1",            "Base — généraliste secteur 1",        "€"],
+  ["sante_br_specialiste_non_optam",     "Base — spécialiste secteur 2 non OPTAM", "€"],
+  ["sante_taux_consultation_parcours",   "Taux de remboursement",               "%"],
+  ["sante_majoration_tm_hors_parcours",  "Majoration hors parcours",            "€"],
+  ["sante_participation_forfaitaire",    "Participation forfaitaire",           "€"],
+];
+
+async function chargerParametres(){
+  try{
+    const cles = Object.keys(DEFAUT).join(",");
+    const url = SB_URL + "/rest/v1/parametres_sante?select=cle,valeur&cle=in.(" + cles + ")&apikey=" + SB_KEY;
+    const r = await fetch(url);
+    if(!r.ok) throw new Error(r.status);
+    const rows = await r.json();
+    if(!rows.length) throw new Error("vide");
+    rows.forEach(function(row){ if(row.valeur !== null) P[row.cle] = Number(row.valeur); });
+    const b = el("src-badge"); b.className = "src live"; b.textContent = "valeurs à jour";
+  }catch(e){
+    const b = el("src-badge"); b.className = "src local"; b.textContent = "valeurs de secours";
+  }
+  renderParams();
+  renderCas();
+}
+
+function eur(n){ return n.toLocaleString("fr-FR",{minimumFractionDigits:2,maximumFractionDigits:2}) + " €"; }
+function el(id){ return document.getElementById(id); }
+
+function renderParams(){
+  el("plist").innerHTML = AFFICHE.map(function(a){
+    const v = a[2] === "%" ? Math.round(P[a[0]]*100) + " %" : eur(P[a[0]]);
+    return '<div class="prow"><span>' + a[1] + '</span><span>' + v + '</span></div>';
+  }).join("");
+}
+
+/* ─────────── Partie 1 : la chaîne ─────────── */
+const MAILLONS = [
+  {id:"taux",  ordre:3, txt:"Appliquer le taux de remboursement",
+   fix:"Le taux s'applique à la base, jamais au tarif pratiqué."},
+  {id:"tarif", ordre:1, txt:"Relever le tarif pratiqué par le professionnel",
+   fix:"C'est le point de départ, et le seul montant que le client a sous les yeux."},
+  {id:"reste", ordre:5, txt:"Déterminer ce qui reste à la charge du patient",
+   fix:"Ticket modérateur, dépassement éventuel, et les retenues que rien ne couvre."},
+  {id:"base",  ordre:2, txt:"Identifier la base de remboursement applicable",
+   fix:"Elle dépend du secteur et de l'adhésion à l'OPTAM — c'est elle qui sert au calcul."},
+  {id:"reten", ordre:4, txt:"Retirer les participations et franchises dues",
+   fix:"Participation forfaitaire, franchises, majoration hors parcours : elles se déduisent du remboursement."},
+];
+let ordreChoisi = [];
+
+function renderSteps(){
+  el("steps").innerHTML = MAILLONS.map(function(m){
+    const pos = ordreChoisi.indexOf(m.id);
+    const cls = valide ? (pos + 1 === m.ordre ? "good" : "bad") : (pos > -1 ? "picked" : "");
+    const rank = valide ? m.ordre : (pos > -1 ? pos + 1 : "·");
+    const fix = valide ? '<span class="fix">' + (pos + 1 === m.ordre ? "✓ " : "✗ ce maillon vient en position " + m.ordre + " — ") + m.fix + '</span>' : "";
+    return '<button type="button" class="step ' + cls + '" data-id="' + m.id + '">' +
+           '<span class="rank">' + rank + '</span><span class="lab">' + m.txt + fix + '</span></button>';
+  }).join("");
+  if(!valide){
+    Array.prototype.forEach.call(document.querySelectorAll(".step"), function(b){
+      b.onclick = function(){ cliquerMaillon(b.dataset.id); };
+    });
+  }
+}
+function cliquerMaillon(id){
+  if(valide) return;
+  if(ordreChoisi.indexOf(id) > -1) ordreChoisi = [];
+  else ordreChoisi.push(id);
+  renderSteps(); majProgression();
+}
+
+/* ─────────── Partie 2 : les cas ─────────── */
+const CAS = [
+  {
+    titre: "Cas 1 · Dans le parcours de soins",
+    enonce: "Nadia consulte son médecin traitant, généraliste installé en secteur 1. Elle a bien déclaré ce médecin traitant.",
+    champs: [
+      {lab:"Remboursement de l'Assurance Maladie", calc:function(){ return P.sante_br_generaliste_s1 * P.sante_taux_consultation_parcours - P.sante_participation_forfaitaire; },
+       det:function(){ return "Base " + eur(P.sante_br_generaliste_s1) + " × " + Math.round(P.sante_taux_consultation_parcours*100) + " % = " + eur(P.sante_br_generaliste_s1*P.sante_taux_consultation_parcours) + ", moins la participation forfaitaire de " + eur(P.sante_participation_forfaitaire) + "."; }},
+      {lab:"Reste à charge même avec un contrat responsable", calc:function(){ return P.sante_participation_forfaitaire; },
+       det:function(){ return "La participation forfaitaire n'est jamais remboursable, ni par la Sécurité sociale ni par la complémentaire. Le ticket modérateur, lui, est pris par la mutuelle."; }},
+    ]
+  },
+  {
+    titre: "Cas 2 · Hors parcours de soins",
+    enonce: "Même consultation, même médecin généraliste de secteur 1, même tarif — mais cette fois le patient n'a déclaré aucun médecin traitant.",
+    champs: [
+      {lab:"Remboursement de l'Assurance Maladie", calc:function(){ return P.sante_br_generaliste_s1 * P.sante_taux_consultation_parcours - P.sante_majoration_tm_hors_parcours - P.sante_participation_forfaitaire; },
+       det:function(){ return "Le taux ne bouge pas : base " + eur(P.sante_br_generaliste_s1) + " × " + Math.round(P.sante_taux_consultation_parcours*100) + " % = " + eur(P.sante_br_generaliste_s1*P.sante_taux_consultation_parcours) + ", moins la majoration de " + eur(P.sante_majoration_tm_hors_parcours) + ", moins la participation forfaitaire de " + eur(P.sante_participation_forfaitaire) + ". C'est une majoration en euros, pas une chute du taux à 30 %."; }},
+      {lab:"Reste à charge même avec un contrat responsable", calc:function(){ return P.sante_majoration_tm_hors_parcours + P.sante_participation_forfaitaire; },
+       det:function(){ return "La majoration hors parcours s'ajoute à la participation forfaitaire : ni l'une ni l'autre n'est prise en charge par un contrat responsable."; }},
+    ]
+  },
+  {
+    titre: "Cas 3 · Spécialiste qui dépasse",
+    enonce: "Orientée par son médecin traitant, Nadia consulte un spécialiste installé en secteur 2 et non adhérent à l'OPTAM. Il lui facture 75,00 €. Elle est donc dans le parcours de soins.",
+    champs: [
+      {lab:"Remboursement de l'Assurance Maladie", calc:function(){ return P.sante_br_specialiste_non_optam * P.sante_taux_consultation_parcours - P.sante_participation_forfaitaire; },
+       det:function(){ return "Le calcul se fait sur la base de " + eur(P.sante_br_specialiste_non_optam) + ", pas sur les 75,00 € facturés : " + eur(P.sante_br_specialiste_non_optam) + " × " + Math.round(P.sante_taux_consultation_parcours*100) + " % = " + eur(P.sante_br_specialiste_non_optam*P.sante_taux_consultation_parcours) + ", moins " + eur(P.sante_participation_forfaitaire) + "."; }},
+      {lab:"Montant du dépassement d'honoraires", calc:function(){ return 75 - P.sante_br_specialiste_non_optam; },
+       det:function(){ return "75,00 € facturés moins la base de " + eur(P.sante_br_specialiste_non_optam) + ". Un contrat responsable peut en couvrir une partie, mais dans une limite réglementaire — c'est là que le client découvre son reste à charge."; }},
+    ]
+  },
+];
+
+function renderCas(){
+  el("cas").innerHTML = CAS.map(function(c, ci){
+    const champs = c.champs.map(function(ch, chi){
+      return '<div class="champ"><label>' + ch.lab + '</label>' +
+             '<div class="inrow"><input type="number" step="0.01" inputmode="decimal" id="c' + ci + '_' + chi + '" placeholder="0,00"><span class="unit">€</span></div>' +
+             '<div class="corr" id="corr' + ci + '_' + chi + '"></div></div>';
+    }).join("");
+    return '<div class="cas"><h3>' + c.titre + '</h3><p class="enonce">' + c.enonce + '</p><div class="champs">' + champs + '</div></div>';
+  }).join("");
+  CAS.forEach(function(c, ci){
+    c.champs.forEach(function(ch, chi){
+      el("c" + ci + "_" + chi).addEventListener("input", majProgression);
+    });
+  });
+  majProgression();
+}
+
+/* ─────────── Progression, validation ─────────── */
+let valide = false;
+const TOTAL = 5 + 6;
+
+function nbRepondu(){
+  let n = ordreChoisi.length;
+  CAS.forEach(function(c, ci){ c.champs.forEach(function(ch, chi){
+    const v = el("c" + ci + "_" + chi); if(v && v.value.trim() !== "") n++;
+  }); });
+  return n;
+}
+function majProgression(){
+  const n = nbRepondu();
+  el("fill").style.width = (n / TOTAL * 100) + "%";
+  el("plabel").textContent = n + " / " + TOTAL + " réponse" + (n > 1 ? "s données" : " donnée");
+  el("btn-validate").disabled = valide || n !== TOTAL;
+}
+
+function valider(){
+  valide = true;
+  let score = 0;
+  MAILLONS.forEach(function(m){ if(ordreChoisi.indexOf(m.id) + 1 === m.ordre) score++; });
+  renderSteps();
+
+  CAS.forEach(function(c, ci){
+    c.champs.forEach(function(ch, chi){
+      const inp = el("c" + ci + "_" + chi), corr = el("corr" + ci + "_" + chi);
+      const attendu = Math.round(ch.calc() * 100) / 100;
+      const donne = Math.round(parseFloat(inp.value.replace(",", ".")) * 100) / 100;
+      const bon = Math.abs(donne - attendu) < 0.005;
+      if(bon) score++;
+      inp.classList.add(bon ? "good" : "bad");
+      inp.readOnly = true;
+      corr.className = "corr show";
+      corr.innerHTML = (bon ? "✓ " : "✗ ") + "<b>" + eur(attendu) + "</b> — " + ch.det();
+    });
+  });
+
+  el("score").textContent = score;
+  el("res-score").textContent = score + " / " + TOTAL;
+  let t, m;
+  if(score === TOTAL){ t = "Sans faute."; m = "La chaîne est en place et les trois chiffrages tombent juste. Vous pouvez attaquer les cas."; }
+  else if(score >= 8){ t = "Presque."; m = "L'essentiel tient. Reprenez les réponses en rouge : ce sont exactement les erreurs qui coûtent un client."; }
+  else if(score >= 5){ t = "À consolider."; m = "La mécanique n'est pas encore automatique. Relisez les corrections avant le premier cas."; }
+  else { t = "À reprendre."; m = "La chaîne n'est pas stabilisée. Signalez-le au formateur avant de démarrer les cas."; }
+  el("res-title").textContent = t;
+  el("res-score").style.color = score >= 8 ? "var(--ok)" : (score >= 5 ? "var(--amber)" : "var(--ko)");
+  el("res-msg").textContent = m;
+  el("result").classList.add("show");
+  el("btn-validate").disabled = true;
+  el("result").scrollIntoView({behavior:"smooth", block:"nearest"});
+}
+
+function reinitialiser(){
+  valide = false; ordreChoisi = [];
+  el("score").textContent = "—";
+  el("result").classList.remove("show");
+  renderSteps(); renderCas();
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+
+renderParams();
+renderSteps();
+renderCas();
+chargerParametres();
+
+/* Copier-coller neutralisé (standard TMK) */
+["copy","cut","contextmenu","dragstart"].forEach(function(ev){
+  document.addEventListener(ev, function(e){ e.preventDefault(); });
+});
+document.addEventListener("keydown", function(e){
+  if((e.ctrlKey || e.metaKey) && ["c","x","u","s","p"].indexOf(e.key.toLowerCase()) > -1){ e.preventDefault(); }
+});
+</script>
+</body>
+</html>

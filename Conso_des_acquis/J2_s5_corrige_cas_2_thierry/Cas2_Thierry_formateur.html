@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cas 2 — Thierry, 55 ans · Corrigé formateur</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Karla:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#16243B; --bleu:#1F4E79; --bleu-clair:#2E75B6; --or:#B08D57;
+  --creme:#F5F2EB; --card:#FFFFFF; --line:#e3ddd0; --muted:#6B6459;
+  --ok:#2F7A4F; --ko:#B23B3B; --amber:#B5852A;
+  --shadow:0 2px 10px rgba(22,36,59,.07);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Karla',system-ui,sans-serif;background:var(--creme);color:var(--navy);line-height:1.55}
+.wrap{max-width:1000px;margin:0 auto;padding:26px 18px 70px}
+.card-main{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);overflow:hidden}
+.header{padding:26px 34px 0}
+.chapter-tag{font-size:11.5px;font-weight:700;letter-spacing:1.6px;text-transform:uppercase;color:var(--or)}
+.chapter-tag span{opacity:.5}
+h1{font-family:'Fraunces',serif;font-weight:600;font-size:27px;line-height:1.2;margin:8px 0 5px}
+.header p{color:var(--muted);font-size:14.5px}
+.gold-rule{border:none;border-top:2px solid var(--or);width:64px;margin:18px 0 0}
+.body{padding:22px 34px 30px}
+
+.warn{background:#FBF1DC;border:1px solid #E6D3A8;border-left:3px solid var(--amber);border-radius:8px;padding:13px 16px;font-size:13.5px;margin-bottom:20px}
+.warn b{color:var(--navy)}
+
+.situation{background:#FBF7EE;border:1px solid var(--line);border-radius:10px;padding:15px 18px;margin-bottom:18px;font-size:14px}
+.situation h2{font-family:'Fraunces',serif;font-size:17px;margin-bottom:7px}
+.situation .don{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:6px 22px;margin-top:11px}
+.don .r{display:flex;justify-content:space-between;gap:12px;border-bottom:1px dotted var(--line);padding-bottom:3px;font-size:13px}
+.don .r b{white-space:nowrap}
+
+.params{background:#FCFAF5;border:1px dashed var(--line);border-radius:10px;padding:14px 16px;margin-bottom:22px}
+.params-title{font-size:11px;font-weight:700;letter-spacing:1.3px;text-transform:uppercase;color:var(--muted);margin-bottom:10px;display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.src{font-weight:600;letter-spacing:0;text-transform:none;font-size:11.5px;padding:2px 9px;border-radius:99px}
+.src.live{background:#E8F2EA;color:var(--ok)}
+.src.local{background:#FBF1DC;color:var(--amber)}
+.plist{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:7px 22px}
+.prow{display:flex;justify-content:space-between;gap:12px;font-size:13px;border-bottom:1px dotted var(--line);padding-bottom:3px}
+.prow span:last-child{font-weight:700;white-space:nowrap}
+
+.tools{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px}
+.btn{border:none;border-radius:9px;padding:11px 20px;font-family:inherit;font-size:14px;font-weight:700;cursor:pointer}
+.btn-primary{background:var(--bleu);color:#fff}
+.btn-secondary{background:#fff;color:var(--bleu);border:1.5px solid var(--bleu)}
+
+.q{border:1.5px solid var(--line);border-radius:12px;margin-bottom:16px;overflow:hidden;background:#fff}
+.q-head{padding:16px 20px}
+.q-num{font-size:10.5px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--or);margin-bottom:5px}
+.q-txt{font-size:15.5px;font-weight:700;line-height:1.45}
+.q-btn{margin:0 20px 16px;background:var(--navy);color:#fff;border:none;border-radius:8px;padding:10px 18px;
+  font-family:inherit;font-size:13.5px;font-weight:700;cursor:pointer}
+.q-btn.open{background:#fff;color:var(--navy);border:1.5px solid var(--line)}
+.corr{max-height:0;overflow:hidden;transition:max-height .35s ease;background:#FBF7EE;border-top:1px solid var(--line)}
+.corr.show{max-height:2600px}
+.corr-in{padding:18px 20px 20px}
+.corr h4{font-size:11px;font-weight:700;letter-spacing:1.3px;text-transform:uppercase;color:var(--bleu);margin:16px 0 7px}
+.corr h4:first-child{margin-top:0}
+.corr p{font-size:14px;margin-bottom:8px}
+.corr ul{margin:0 0 8px 18px;font-size:14px}
+.corr li{margin-bottom:5px}
+.calc{width:100%;border-collapse:collapse;font-size:13.5px;margin:4px 0 10px;background:#fff;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.calc td{padding:7px 11px;border-bottom:1px solid var(--line)}
+.calc tr:last-child td{border-bottom:none}
+.calc td:last-child{text-align:right;font-weight:700;white-space:nowrap;font-variant-numeric:tabular-nums}
+.calc tr.tot td{background:#EEF4F9;color:var(--navy);font-weight:700}
+.calc tr.tot td:first-child{font-weight:700}
+.relance{background:#EEF4F9;border-left:3px solid var(--bleu-clair);border-radius:6px;padding:11px 14px;font-size:13.5px;margin-bottom:9px}
+.erreur{background:#FBF3F3;border-left:3px solid var(--ko);border-radius:6px;padding:11px 14px;font-size:13.5px}
+.erreur b,.relance b{color:var(--navy)}
+.footer{text-align:center;font-size:11.5px;color:var(--muted);padding:16px 34px 24px;border-top:1px solid var(--line)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card-main">
+    <div class="header">
+      <div class="chapter-tag">TMK Performances · Conso des acquis 2/4 <span>/</span> Séquence 5</div>
+      <h1>Cas 2 — Thierry, 55 ans</h1>
+      <p>Corrigé formateur · corrections révélables · 75 minutes</p>
+      <hr class="gold-rule">
+    </div>
+
+    <div class="body">
+      <div class="warn">
+        <b>⚠ Document formateur.</b> Ne pas projeter avant la restitution. Brief 10 min · recherche individuelle 30 min ·
+        correction collective 25 min · synthèse 10 min. Interrogez nominativement plutôt que d'attendre les volontaires,
+        et faites expliciter le raisonnement <b>avant</b> de révéler le résultat.
+      </div>
+
+      <div class="situation">
+        <h2>La situation remise aux stagiaires</h2>
+        <p>Thierry Berthier, 55 ans, cadre commercial, père de Camille, apporte son relevé de carrière :
+        « est-ce que je peux partir bientôt, et est-ce que je dois ouvrir un PER ? ». Il a entendu qu'un
+        versement PER « fait gagner 30 % » et envisage d'y placer 6 000 € cette année, sans en avoir
+        jamais versé auparavant.</p>
+        <div class="don">
+          <div class="r"><span>Âge actuel</span><b>55 ans</b></div>
+          <div class="r"><span>Âge légal de sa génération</span><b>64 ans</b></div>
+          <div class="r"><span>Durée de référence</span><b>172 trimestres</b></div>
+          <div class="r"><span>Trimestres acquis</span><b>140 trimestres</b></div>
+          <div class="r"><span>Salaire annuel brut</span><b>58 000,00 €</b></div>
+          <div class="r"><span>Salaire annuel moyen (25 ans)</span><b>34 800,00 €</b></div>
+          <div class="r"><span>Points AGIRC-ARRCO</span><b>5 200 points</b></div>
+          <div class="r"><span>Points acquis par an</span><b>180 points</b></div>
+          <div class="r"><span>Tranche marginale</span><b>30 %</b></div>
+          <div class="r"><span>Versement PER envisagé</span><b>6 000,00 €</b></div>
+        </div>
+      </div>
+
+      <div class="params">
+        <div class="params-title">Paramètres utilisés pour le corrigé <span class="src local" id="src-badge">valeurs de secours</span></div>
+        <div class="plist" id="plist"></div>
+      </div>
+
+      <div class="tools">
+        <button class="btn btn-primary" onclick="tout(true)">Tout révéler</button>
+        <button class="btn btn-secondary" onclick="tout(false)">Tout masquer</button>
+      </div>
+
+      <div id="questions"></div>
+    </div>
+
+    <div class="footer">TMK Performances - N° Siret : 49841924100027 - Code NAF : 8559A</div>
+  </div>
+</div>
+
+<script>
+/* ─────────── Paramètres live (retraite + épargne), repli local ─────────── */
+const SB_URL = "https://ibkvyjlglwufxvzxnysa.supabase.co";
+const SB_KEY = "sb_publishable_xUfZHSOHf4TnBRRyzU_qJA_TcXIMSKX";
+
+const DEF_PARC = {
+  taux_plein_base: 0.50,
+  surcote_taux_par_trimestre: 0.0125,
+  decote_point_par_trimestre: 0.00625,
+  valeur_point_agirc_arrco: 1.4386,
+};
+const DEF_EP = {
+  per_taux_deduction: 0.10,
+  per_plafond_coef_pass: 8,
+  per_report_plafond_annees: 5,
+  epargne_pfu_taux_ir: 0.128,
+  epargne_ps_taux_general: 0.186,
+  epargne_ps_taux_assurance_vie: 0.172,
+};
+let P = Object.assign({}, DEF_PARC, DEF_EP);
+
+const AFFICHE = [
+  ["taux_plein_base", "Taux plein du régime général", "%"],
+  ["surcote_taux_par_trimestre", "Surcote par trimestre supplémentaire", "%"],
+  ["valeur_point_agirc_arrco", "Valeur de service du point", "€"],
+  ["per_taux_deduction", "PER — pourcentage des revenus déductible", "%"],
+  ["per_report_plafond_annees", "PER — report des plafonds non utilisés", "a"],
+  ["epargne_pfu_taux_ir", "PER — impôt sur les plus-values", "%"],
+  ["epargne_ps_taux_general", "PER — prélèvements sociaux", "%"],
+  ["epargne_ps_taux_assurance_vie", "Assurance vie — prélèvements sociaux", "%"],
+];
+
+function el(id){ return document.getElementById(id); }
+function eur(n){ return n.toLocaleString("fr-FR",{minimumFractionDigits:2,maximumFractionDigits:2}) + " €"; }
+function eur0(n){ return n.toLocaleString("fr-FR",{minimumFractionDigits:0,maximumFractionDigits:0}) + " €"; }
+function pct(n, d){ return (Math.round(n*10000)/100).toLocaleString("fr-FR", d ? {minimumFractionDigits:d,maximumFractionDigits:d} : {}) + " %"; }
+function r2(n){ return Math.round(n*100)/100; }
+function eur4(n){ return n.toLocaleString("fr-FR",{minimumFractionDigits:4,maximumFractionDigits:4}) + " €"; }
+
+function renderParams(){
+  el("plist").innerHTML = AFFICHE.map(function(a){
+    const v = P[a[0]];
+    const aff = a[2] === "%" ? pct(v) : (a[2] === "a" ? v + " ans" : (a[0] === "valeur_point_agirc_arrco" ? eur4(v) : eur(v)));
+    return '<div class="prow"><span>' + a[1] + '</span><span>' + aff + '</span></div>';
+  }).join("");
+}
+async function lire(table, cles){
+  const r = await fetch(SB_URL + "/rest/v1/" + table + "?select=cle,valeur&cle=in.(" + cles.join(",") + ")&apikey=" + SB_KEY);
+  if(!r.ok) throw new Error(r.status);
+  const rows = await r.json();
+  if(!rows.length) throw new Error("vide");
+  rows.forEach(function(row){ if(row.valeur !== null) P[row.cle] = Number(row.valeur); });
+}
+async function chargerParametres(){
+  let ok = 0;
+  try{ await lire("parametres_parcours", Object.keys(DEF_PARC)); ok++; }catch(e){}
+  try{ await lire("parametres_epargne", Object.keys(DEF_EP)); ok++; }catch(e){}
+  const b = el("src-badge");
+  if(ok === 2){ b.className = "src live"; b.textContent = "valeurs à jour"; }
+  else if(ok === 1){ b.className = "src local"; b.textContent = "valeurs partiellement à jour"; }
+  else { b.className = "src local"; b.textContent = "valeurs de secours"; }
+  renderParams(); renderQuestions();
+}
+
+/* ─────────── Le corrigé ─────────── */
+const AGE = 55, AGE_LEGAL = 64, REQUIS = 172, ACQUIS = 140;
+const SAL = 58000, SAM = 34800, PTS = 5200, PTS_AN = 180;
+const TMI = 0.30, VERSEMENT = 6000, TMI_RETRAITE = 0.11;
+
+function calculs(){
+  const manquants = REQUIS - ACQUIS;
+  const anneesDuree = manquants / 4;
+  const ageDuree = AGE + anneesDuree;          // âge auquel la durée est atteinte
+  const ageDepart = Math.max(ageDuree, AGE_LEGAL);
+  const anneesTotal = ageDepart - AGE;
+  const trimAuDepart = ACQUIS + anneesTotal * 4;
+  const trimSupp = Math.max(0, trimAuDepart - REQUIS);
+
+  const baseSansSurcote = r2(SAM * P.taux_plein_base * Math.min(trimAuDepart / REQUIS, 1));
+  const surcote = r2(baseSansSurcote * trimSupp * P.surcote_taux_par_trimestre);
+  const base = r2(baseSansSurcote + surcote);
+
+  const ptsFinal = PTS + anneesTotal * PTS_AN;
+  const comp = r2(ptsFinal * P.valeur_point_agirc_arrco);
+
+  const total = r2(base + comp);
+  const totalMois = r2(total / 12);
+  const remplacement = total / SAL;
+
+  // PER
+  const plafond = r2(SAL * P.per_taux_deduction);
+  const depassement = r2(Math.max(0, VERSEMENT - plafond));
+  const economie = r2(VERSEMENT * TMI);
+  const effort = r2(VERSEMENT - economie);
+  const sortieMemeTmi = r2(VERSEMENT * TMI);
+  const sortieTmiBasse = r2(VERSEMENT * TMI_RETRAITE);
+  const gainNet = r2(economie - sortieTmiBasse);
+  const tauxPvPer = P.epargne_pfu_taux_ir + P.epargne_ps_taux_general;
+  const tauxPvAv = P.epargne_pfu_taux_ir + P.epargne_ps_taux_assurance_vie;
+
+  return {manquants, anneesDuree, ageDuree, ageDepart, anneesTotal, trimAuDepart, trimSupp,
+          baseSansSurcote, surcote, base, ptsFinal, comp, total, totalMois, remplacement,
+          plafond, depassement, economie, effort, sortieMemeTmi, sortieTmiBasse, gainNet,
+          tauxPvPer, tauxPvAv};
+}
+
+function tableau(rows){
+  return '<table class="calc">' + rows.map(function(r){
+    return '<tr' + (r[2] ? ' class="tot"' : '') + '><td>' + r[0] + '</td><td>' + r[1] + '</td></tr>';
+  }).join("") + '</table>';
+}
+
+function questions(){
+  const c = calculs();
+  return [
+  {
+    txt: "À quel âge Thierry pourra-t-il partir au taux plein ? Combien de trimestres lui manque-t-il, et sa durée est-elle la seule condition ?",
+    corr:
+      '<h4>La durée</h4>' +
+      tableau([
+        ["Durée de référence de sa génération", REQUIS + " trimestres"],
+        ["Trimestres acquis", "− " + ACQUIS + " trimestres"],
+        ["Trimestres manquants", c.manquants + " trimestres", true],
+        ["À quatre trimestres par an", c.anneesDuree + " ans"],
+        ["Âge auquel la durée est atteinte", c.ageDuree + " ans"],
+      ]) +
+      '<h4>Mais la durée n\'est pas la seule condition</h4>' +
+      '<p>Thierry aurait sa durée à <b>' + c.ageDuree + ' ans</b>. Or l\'âge légal de départ de sa génération est de <b>' + AGE_LEGAL + ' ans</b>. ' +
+      'Ces deux conditions sont <b>cumulatives</b> : il devra donc attendre ' + c.ageDepart + ' ans.</p>' +
+      tableau([
+        ["Âge de départ effectif", c.ageDepart + " ans", true],
+        ["Trimestres à cette date : " + ACQUIS + " + " + c.anneesTotal + " × 4", c.trimAuDepart + " trimestres"],
+        ["Trimestres au-delà du requis", "+ " + c.trimSupp + " trimestres"],
+      ]) +
+      '<p>Loin d\'être pénalisé, il partira avec <b>' + c.trimSupp + ' trimestres de plus</b> que nécessaire. Ces trimestres ne sont pas perdus : ils ouvrent droit à une surcote.</p>' +
+      '<div class="relance"><b>À faire dire au groupe :</b> beaucoup de clients calculent leur date de départ sur la seule durée et se trompent d\'un an ou deux. ' +
+      'Quelle est la bonne formulation à leur donner ? Et si Thierry voulait absolument partir à ' + c.ageDuree + ' ans, que se passerait-il ?</div>' +
+      '<div class="erreur"><b>Erreur fréquente :</b> répondre « il partira à ' + c.ageDuree + ' ans » en s\'arrêtant à la durée. ' +
+      'C\'est l\'erreur la plus fréquente sur ce sujet, et elle fait annoncer au client une date qu\'il ne pourra pas tenir.</div>'
+  },
+  {
+    txt: "Estimez sa pension annuelle totale à cette date, base et complémentaire, puis son taux de remplacement.",
+    corr:
+      '<h4>Le régime de base</h4>' +
+      tableau([
+        ["Salaire annuel moyen", eur0(SAM)],
+        ["Taux plein", pct(P.taux_plein_base)],
+        ["Proratisation : " + c.trimAuDepart + "/" + REQUIS + ", plafonnée à 1", "1,00"],
+        ["Pension avant surcote", eur(c.baseSansSurcote), true],
+        ["Surcote : " + c.trimSupp + " trimestres × " + pct(P.surcote_taux_par_trimestre), "+ " + eur(c.surcote)],
+        ["Pension de base annuelle", eur(c.base), true],
+      ]) +
+      '<p>Deux points à ne pas manquer : la proratisation est <b>plafonnée à 1</b> — des trimestres en excès ne l\'augmentent pas — et la surcote majore <b>le montant</b>, pas le taux.</p>' +
+      '<h4>La complémentaire</h4>' +
+      tableau([
+        ["Points acquis à ce jour", PTS.toLocaleString("fr-FR") + " points"],
+        ["Points acquis d\'ici le départ : " + c.anneesTotal + " × " + PTS_AN, "+ " + (c.anneesTotal * PTS_AN).toLocaleString("fr-FR") + " points"],
+        ["Total au départ", c.ptsFinal.toLocaleString("fr-FR") + " points", true],
+        ["Pension : " + c.ptsFinal.toLocaleString("fr-FR") + " points × " + eur4(P.valeur_point_agirc_arrco), eur(c.comp), true],
+      ]) +
+      '<p>Aucune durée n\'intervient ici, et aucune surcote non plus : ce sont les points supplémentaires acquis en travaillant qui font la différence.</p>' +
+      '<h4>Le total et le taux de remplacement</h4>' +
+      tableau([
+        ["Pension annuelle totale", eur(c.total), true],
+        ["Soit par mois", eur(c.totalMois)],
+        ["Salaire annuel brut actuel", eur0(SAL)],
+        ["Taux de remplacement", pct(c.remplacement, 1), true],
+      ]) +
+      '<div class="relance"><b>À faire dire au groupe :</b> Thierry a une carrière complète, il part avec une surcote, et il perd tout de même plus de la moitié de son revenu. Pourquoi ? ' +
+      '(Le salaire moyen des 25 meilleures années est très inférieur au dernier salaire d\'un cadre en fin de carrière — c\'est là que se creuse l\'écart.)</div>' +
+      '<div class="erreur"><b>Erreur fréquente :</b> appliquer la proratisation avec ' + c.trimAuDepart + '/' + REQUIS + ' sans la plafonner, ce qui gonfle la pension. ' +
+      'Les trimestres en excès passent par la surcote, jamais par le prorata.</div>'
+  },
+  {
+    txt: "Sur son versement de 6 000 € au PER : vérifiez son plafond, chiffrez l'économie d'impôt, puis dites ce que ce versement coûtera à la sortie.",
+    corr:
+      '<h4>Le plafond de déduction — la surprise</h4>' +
+      tableau([
+        ["Revenus professionnels", eur0(SAL)],
+        ["Plafond de l'année : " + pct(P.per_taux_deduction) + " des revenus", eur0(c.plafond), true],
+        ["Versement envisagé", eur0(VERSEMENT)],
+        ["Fraction au-delà du plafond de l'année", eur0(c.depassement), true],
+      ]) +
+      '<p>Le versement dépasse le plafond de l\'année de <b>' + eur0(c.depassement) + '</b>. Sans autre ressource, cette fraction ne serait pas déductible. ' +
+      'Mais Thierry n\'a <b>jamais versé auparavant</b> : ses plafonds non utilisés des années précédentes, reportables sur ' + P.per_report_plafond_annees + ' ans, ' +
+      'absorbent largement ce dépassement. <b>Les 6 000 € sont donc intégralement déductibles.</b></p>' +
+      '<p style="font-size:13px"><b>Attention au millésime :</b> le report à ' + P.per_report_plafond_annees + ' ans ne vaut que pour les plafonds nés à compter de 2026. Ceux des années antérieures restent reportables trois ans seulement. Sur un dossier réel, il faut lire le millésime de chaque plafond disponible.</p>' +
+      '<h4>L\'économie d\'impôt</h4>' +
+      tableau([
+        ["Versement déductible", eur0(VERSEMENT)],
+        ["Tranche marginale d\'imposition", pct(TMI)],
+        ["Économie d\'impôt de l\'année", eur(c.economie), true],
+        ["Effort d\'épargne réel", eur(c.effort)],
+      ]) +
+      '<h4>Ce que ça coûtera à la sortie</h4>' +
+      '<p>À la sortie en capital, la part correspondant aux versements déduits est imposée <b>au barème</b>, dans la catégorie des pensions. ' +
+      'Ce que Thierry n\'a pas payé cette année, il le paiera alors — au taux qui sera le sien à ce moment.</p>' +
+      tableau([
+        ["Si sa tranche est encore de " + pct(TMI) + " à la retraite", "− " + eur(c.sortieMemeTmi)],
+        ["Gain net de l\'opération", eur(0), true],
+        ["Si sa tranche descend à " + pct(TMI_RETRAITE), "− " + eur(c.sortieTmiBasse)],
+        ["Gain net de l\'opération", eur(c.gainNet), true],
+      ]) +
+      '<p>Avec un taux de remplacement de ' + pct(c.remplacement, 1) + ', ses revenus seront quasiment divisés par deux : le passage dans une tranche inférieure est probable, mais il n\'est pas certain.</p>' +
+      '<p><b>Et les plus-values ?</b> Elles supportent ' + pct(c.tauxPvPer) + ' à la sortie du PER, contre ' + pct(c.tauxPvAv) + ' en assurance vie. ' +
+      'Le PER n\'a pas été exclu de la hausse des prélèvements sociaux de cette année, l\'assurance vie si.</p>' +
+      '<div class="relance"><b>À faire dire au groupe :</b> à quelle condition précise l\'opération est-elle gagnante ? Et pour un client non imposable, que faut-il conseiller ?</div>' +
+      '<div class="erreur"><b>Erreur fréquente :</b> présenter les ' + eur(c.economie) + ' comme un gain acquis. C\'est un report d\'imposition, pas une réduction. ' +
+      'Le seul gain certain est celui de la trésorerie ; le reste dépend d\'un événement futur.</div>'
+  },
+  {
+    txt: "« Donc le PER me fait gagner 30 % ? » — répondez en trois phrases, puis dites ce qui déterminera si l'opération est bonne.",
+    corr:
+      '<h4>Une réponse possible</h4>' +
+      '<p>« Ce n\'est pas un gain de 30 %, c\'est un décalage : vous ne payez pas ' + eur(c.economie) + ' d\'impôt cette année, mais vous les paierez au moment où vous récupérerez cet argent. ' +
+      'L\'opération devient intéressante seulement si votre tranche d\'imposition est plus basse à la retraite qu\'aujourd\'hui — et d\'après votre relevé, vos revenus seront à peu près divisés par deux, ' +
+      'ce qui rend le passage dans une tranche inférieure probable. Si c\'est le cas, vous garderez environ ' + eur(c.gainNet) + ' sur les ' + eur(c.economie) + '. »</p>' +
+      '<h4>La condition qui tranche</h4>' +
+      '<ul>' +
+      '<li><b>La tranche marginale à la retraite</b>, et rien d\'autre. Tout le reste — rendement du support, frais, choix des unités de compte — est secondaire par rapport à cette comparaison.</li>' +
+      '<li>Elle dépend de ses autres revenus futurs, que nous ne connaissons pas : loyers, revenus du conjoint, éventuel cumul emploi-retraite. <b>C\'est la question à lui poser.</b></li>' +
+      '<li>Pour un client non imposable, la déduction ne rapporte rien : il vaut mieux renoncer à la déduction à l\'entrée pour bénéficier d\'une sortie allégée.</li>' +
+      '</ul>' +
+      '<div class="relance"><b>Ce qu\'on évalue :</b> refuser une formule commerciale sans démolir le produit, chiffrer les deux scénarios, et terminer par la question à poser au client.</div>' +
+      '<div class="erreur"><b>Erreur fréquente :</b> répondre « oui, à votre tranche c\'est très intéressant » et enregistrer le versement. ' +
+      'C\'est exactement le raccourci qui produit des clients déçus dix ans plus tard, quand l\'impôt revient.</div>'
+  },
+  ];
+}
+
+function renderQuestions(){
+  const qs = questions();
+  el("questions").innerHTML = qs.map(function(q, i){
+    return '<div class="q">' +
+      '<div class="q-head"><div class="q-num">Question ' + (i + 1) + '</div><div class="q-txt">' + q.txt + '</div></div>' +
+      '<button class="q-btn" id="btn' + i + '" onclick="bascule(' + i + ')">Révéler la correction</button>' +
+      '<div class="corr" id="corr' + i + '"><div class="corr-in">' + q.corr + '</div></div>' +
+    '</div>';
+  }).join("");
+}
+function bascule(i){
+  const c = el("corr" + i), b = el("btn" + i);
+  const ouvert = c.classList.toggle("show");
+  b.classList.toggle("open", ouvert);
+  b.textContent = ouvert ? "Masquer la correction" : "Révéler la correction";
+}
+function tout(ouvrir){
+  questions().forEach(function(_, i){
+    const c = el("corr" + i), b = el("btn" + i);
+    c.classList.toggle("show", ouvrir);
+    b.classList.toggle("open", ouvrir);
+    b.textContent = ouvrir ? "Masquer la correction" : "Révéler la correction";
+  });
+}
+
+renderParams();
+renderQuestions();
+chargerParametres();
+
+</script>
+</body>
+</html>

@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exercice — Expliquer sans jargon</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Karla:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#16243B;--bleu:#1F4E79;--bleu-clair:#2E75B6;--or:#B08D57;--creme:#F5F2EB;--card:#FFFFFF;
+  --line:#e3ddd0;--muted:#6B6459;--ok:#2F7A4F;--ko:#B23B3B;--amber:#B5852A;--shadow:0 2px 10px rgba(22,36,59,.07);}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Karla',system-ui,sans-serif;background:var(--creme);color:var(--navy);line-height:1.55;-webkit-user-select:none;user-select:none}
+.wrap{max-width:1000px;margin:0 auto;padding:26px 18px 60px}
+.card-main{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);overflow:hidden}
+.header{padding:26px 34px 0}
+.chapter-tag{font-size:11.5px;font-weight:700;letter-spacing:1.6px;text-transform:uppercase;color:var(--or)}
+.chapter-tag span{opacity:.5}
+h1{font-family:'Fraunces',serif;font-weight:600;font-size:27px;line-height:1.2;margin:8px 0 5px}
+.header p{color:var(--muted);font-size:14.5px}
+.gold-rule{border:none;border-top:2px solid var(--or);width:64px;margin:18px 0 0}
+.body{padding:22px 34px 30px}
+.consigne{background:#FBF7EE;border:1px solid var(--line);border-left:3px solid var(--or);border-radius:8px;padding:14px 17px;font-size:14px;margin-bottom:22px}
+.consigne ol{margin:8px 0 0 20px}
+.meta{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:20px}
+.progress{flex:1;min-width:220px}
+.track{height:8px;background:#e6e0d3;border-radius:99px;overflow:hidden}
+.fill{height:100%;width:0;background:var(--bleu-clair);transition:width .3s}
+.plabel{font-size:12.5px;color:var(--muted);margin-top:6px}
+.scorepill{background:var(--navy);color:#fff;border-radius:99px;padding:6px 15px;font-size:13px;font-weight:600}
+.sit{border:1.5px solid var(--line);border-radius:12px;padding:18px 20px;margin-bottom:16px;background:#fff}
+.sit.done{border-color:#cfc6b4;background:#FDFCF9}
+.sit .num{font-size:10.5px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--or);margin-bottom:8px}
+.client{font-size:14.5px;font-style:italic;color:var(--muted);margin-bottom:10px}
+.client b{font-style:normal;color:var(--navy)}
+.etape{font-size:11px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--bleu);margin:14px 0 7px}
+.phrase{font-size:15.5px;line-height:2.05;background:#F7FAFD;border:1px solid #dbe6f2;border-radius:8px;padding:10px 14px}
+.tok{border-radius:4px;padding:1px 1px;cursor:pointer;transition:background .12s}
+.tok:hover{background:#e7eff8}
+.tok.sel{background:#FDE7C8;border-bottom-color:var(--amber)}
+.tok.trouve{background:#DDEFE3;border-bottom:2px solid var(--ok)}
+.tok.trouve2{background:#EEF7F1;border-bottom:2px solid var(--ok)}
+.tok.oublie{background:#fff;border-bottom:2px solid var(--ko);color:var(--ko)}
+.tok.trop{background:#F7E1E1;border-bottom:2px solid var(--ko);text-decoration:line-through}
+.done .tok{cursor:default}
+.opts{display:flex;flex-direction:column;gap:9px}
+.opts label{display:flex;align-items:flex-start;gap:9px;font-size:14px;border:1.5px solid var(--line);border-radius:8px;padding:10px 12px;cursor:pointer;background:#fff;transition:border-color .15s,background .15s}
+.opts label:hover{border-color:var(--bleu-clair)}
+.opts label.sel{border-color:var(--bleu);background:#F7FAFD}
+.opts label.good{border-color:var(--ok);background:#F2F8F4}
+.opts label.bad{border-color:var(--ko);background:#FBF3F3}
+.opts label.attendu{border-color:var(--ok);background:#F2F8F4}
+.done .opts label{cursor:default}
+.opts input{margin-top:3px;flex-shrink:0}
+textarea{width:100%;min-height:70px;font-family:inherit;font-size:14px;border:1.5px solid var(--line);border-radius:8px;padding:9px 11px;resize:vertical;-webkit-user-select:text;user-select:text;color:var(--navy)}
+textarea:disabled{background:#F5F2EB;color:var(--muted)}
+.hint{font-size:12px;color:var(--muted);margin-top:4px}
+.row-act{display:flex;align-items:center;gap:12px;margin-top:14px;flex-wrap:wrap}
+.btn{border:none;border-radius:9px;padding:11px 20px;font-family:inherit;font-size:14px;font-weight:700;cursor:pointer}
+.btn-primary{background:var(--bleu);color:#fff}.btn-primary:disabled{background:#c9c2b6;cursor:not-allowed}
+.btn-done{background:var(--ok);color:#fff;cursor:default}
+.btn-secondary{background:#fff;color:var(--bleu);border:1.5px solid var(--bleu)}
+.need{font-size:12.5px;color:var(--muted)}
+.corr{font-size:13px;margin-top:14px;display:none;padding-top:12px;border-top:1px solid var(--line)}
+.corr.show{display:block}
+.corr p{margin-bottom:6px}
+.corr .lg{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--muted);margin-bottom:8px}
+.corr .lg span{display:inline-flex;align-items:center;gap:5px}
+.sw{width:12px;height:12px;border-radius:3px;display:inline-block}
+.actions{margin-top:20px;display:flex;gap:12px;flex-wrap:wrap}
+.result{display:none;margin-top:24px;border-radius:12px;padding:20px 22px;border:1px solid var(--line);background:#FBF7EE}
+.result.show{display:block}
+.result h2{font-family:'Fraunces',serif;font-size:21px;font-weight:600;margin-bottom:6px}
+.result .big{font-size:30px;font-weight:700;font-family:'Fraunces',serif}
+.result p{font-size:14px;color:var(--muted);margin-top:4px}
+.recap{margin-top:14px;display:flex;flex-direction:column;gap:7px}
+.recap-row{display:flex;align-items:center;gap:10px;font-size:13.5px}
+.dot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+.recap-row .lab{flex:1}
+.recap-row .sc{font-weight:700}
+.footer{text-align:center;font-size:11.5px;color:var(--muted);padding:16px 34px 24px;border-top:1px solid var(--line)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card-main">
+    <div class="header">
+      <div class="chapter-tag">TMK Performances · Pratique pro 1/4 <span>/</span> Séquence 2</div>
+      <h1>Expliquer sans jargon</h1>
+      <p>8 réponses de conseiller · justes, mais incompréhensibles · exercice d'entraînement, rien n'est enregistré</p>
+      <hr class="gold-rule">
+    </div>
+    <div class="body">
+      <div class="consigne">
+        <b>🎯 Consigne :</b> chaque réponse du conseiller est <b>exacte</b> — le client ne la comprendra pas pour autant. Pour chacune :
+        <ol>
+          <li>cliquez sur les mots que le client ne comprendra pas — un mot suffit pour repérer une expression ;</li>
+          <li>choisissez la reformulation que vous diriez au téléphone ;</li>
+          <li>si vous le souhaitez, écrivez la vôtre : elle servira à la reprise collective.</li>
+        </ol>
+        Une fois une situation validée, vos réponses sont figées. Le bouton « Recommencer » remet tout à zéro.
+      </div>
+      <div class="meta">
+        <div class="progress">
+          <div class="track"><div class="fill" id="fill"></div></div>
+          <div class="plabel" id="plabel">0 / 8 situation validée</div>
+        </div>
+        <div class="scorepill">Reformulations justes&nbsp;: <b id="score">—</b> / 8</div>
+      </div>
+      <div id="situations"></div>
+      <div class="actions">
+        <button class="btn btn-secondary" onclick="reinitialiser()">↻ Recommencer l'exercice</button>
+      </div>
+      <div class="result" id="result">
+        <h2 id="res-title">—</h2>
+        <p><span class="big" id="res-score">0 / 8</span> reformulations justes</p>
+        <p id="res-jargon"></p>
+        <p id="res-msg"></p>
+        <div class="recap" id="recap"></div>
+      </div>
+    </div>
+    <div class="footer">TMK Performances - N° Siret : 49841924100027 - Code NAF : 8559A</div>
+  </div>
+</div>
+
+<script>
+/* Chaque phrase du conseiller est découpée en segments : [texte, estJargon].
+   Les segments non cliquables (ponctuation, mots courants) sont des chaînes simples. */
+const SITUATIONS = [
+  { theme:"Santé",
+    client:"« J'ai vu un rhumatologue le mois dernier et je n'ai presque rien eu de remboursé. Pourquoi ? »",
+    phrase:["Vous avez consulté ", ["hors parcours de soins coordonnés",1], ", donc ", ["le taux de remboursement est minoré",1], " et ", ["la participation forfaitaire",1], " reste à votre charge."],
+    opts:[
+      "Votre consultation relève d'une minoration du ticket modérateur liée au non-respect du parcours, et la participation forfaitaire n'est pas remboursable.",
+      "Comme vous êtes allé voir ce spécialiste sans que votre médecin traitant vous y envoie, la Sécurité sociale vous rembourse moins que d'habitude. Et une petite somme fixe est retenue sur chaque consultation : personne ne peut vous la rembourser, pas même votre mutuelle.",
+      "Votre mutuelle ne rembourse pas les spécialistes, c'est pour cela que vous avez été peu remboursé.",
+    ], bon:1,
+    expl:"La première reformulation remplace un jargon par un autre. La troisième est fausse : la mutuelle n'y est pour rien, c'est le remboursement de la Sécurité sociale qui baisse hors parcours. La bonne réponse dit la cause dans les mots du client (« sans que votre médecin traitant vous y envoie ») et ce qui ne changera pas, quoi qu'il fasse." },
+
+  { theme:"Santé",
+    client:"« Il y a des sommes qui ont été retenues sur mes remboursements de pharmacie. C'est une erreur ? »",
+    phrase:["Non, il s'agit de ", ["la franchise médicale",1], ", ", ["déduite par conditionnement",1], " dans la limite d'", ["un plafond annuel",1], "."],
+    opts:[
+      "Ce n'est pas une erreur : sur chaque boîte de médicaments, l'Assurance maladie garde une petite somme. Elle arrête d'en retenir une fois un montant maximum atteint dans l'année. Votre mutuelle n'a pas le droit de vous la rembourser.",
+      "Ce n'est pas une erreur : la franchise est appliquée par conditionnement et plafonnée annuellement, conformément à la réglementation.",
+      "C'est probablement une erreur de votre pharmacie : je vous conseille de lui demander de refaire la facture.",
+    ], bon:0,
+    expl:"La deuxième réponse est exacte et ne sert à rien au client. La troisième l'envoie dans la mauvaise direction. La bonne réponse dit trois choses simples : ce n'est pas une erreur, il y a un maximum dans l'année, et ni la mutuelle ni le conseiller ne pourront la rembourser — c'est ce qui évite le rappel suivant." },
+
+  { theme:"Santé",
+    client:"« L'opticien m'a fait un devis et je vais avoir beaucoup à payer de ma poche. C'est normal ? »",
+    phrase:["Votre équipement relève du ", ["panier libre",1], " ; seul l'équipement de ", ["classe A",1], " est intégralement pris en charge dans le cadre du ", ["100 % santé",1], "."],
+    opts:[
+      "Votre équipement n'est pas dans le panier 100 % santé de classe A, donc le reste à charge n'est pas nul.",
+      "C'est normal, les lunettes sont toujours mal remboursées : il faut prévoir de payer une partie.",
+      "Il existe une sélection de montures et de verres remboursés entièrement, sans rien à payer de votre poche. Ceux de votre devis n'en font pas partie : demandez à l'opticien de vous proposer aussi un équipement de cette sélection — il doit le faire.",
+    ], bon:2,
+    expl:"La première reformulation garde « classe A » et « reste à charge ». La deuxième est fausse et décourage le client d'agir. La bonne réponse explique l'existence de l'offre sans reste à payer et donne une action précise : l'opticien est tenu de proposer un équipement de cette offre." },
+
+  { theme:"Santé",
+    client:"« Ma mutuelle ne m'a rien versé depuis deux mois. Qu'est-ce qui se passe ? »",
+    phrase:["Les ", ["flux NOEMIE",1], " ne sont plus actifs depuis votre changement de ", ["CPAM",1], " ; il faut nous transmettre votre nouvelle ", ["attestation de droits",1], "."],
+    opts:[
+      "Depuis votre déménagement, la Sécurité sociale ne nous envoie plus automatiquement vos remboursements : nous ne savons donc pas qu'il faut vous payer. Envoyez-nous le document qui prouve vos droits, que vous trouvez sur votre compte ameli, et pour les deux derniers mois, les relevés de remboursement de la Sécurité sociale.",
+      "Il y a un problème de télétransmission avec votre nouvelle caisse. Il faut régulariser votre dossier en nous envoyant votre attestation.",
+      "C'est un retard de traitement de notre côté, les remboursements vont arriver.",
+    ], bon:0,
+    expl:"La troisième réponse promet ce que le conseiller ne sait pas : rien n'arrivera sans action du client. La deuxième est plus simple, mais « télétransmission » et « régulariser » laissent le client sans savoir quoi faire. La bonne réponse explique la panne et liste précisément ce qu'il faut envoyer, y compris pour les soins déjà en attente." },
+
+  { theme:"Prévoyance",
+    client:"« Je suis arrêté depuis lundi. Quand est-ce que je serai payé ? »",
+    phrase:["Les ", ["IJSS",1], " sont versées après ", ["un délai de carence",1], " de trois jours ; ", ["le complément employeur",1], " dépend de votre ancienneté."],
+    opts:[
+      "Les indemnités journalières de la Sécurité sociale démarrent après le délai de carence, et votre employeur verse un complément selon les conditions légales.",
+      "La Sécurité sociale ne paie pas les trois premiers jours de votre arrêt : elle vous indemnise à partir du quatrième. Votre employeur peut compléter votre salaire, selon votre ancienneté et votre convention collective — c'est votre service paie qui vous dira exactement combien.",
+      "Vous serez payé normalement par votre employeur pendant tout votre arrêt.",
+    ], bon:1,
+    expl:"La troisième réponse est fausse et créera une mauvaise surprise sur la fiche de paie. La première garde « délai de carence ». La bonne réponse traduit la carence en « les trois premiers jours » et renvoie vers le bon interlocuteur pour la partie qui ne relève pas de l'assureur." },
+
+  { theme:"Prévoyance",
+    client:"« Je viens de recevoir le montant de ma pension d'invalidité. Pourquoi c'est si bas ? »",
+    phrase:["Votre pension de ", ["catégorie 2",1], " est égale à 50 % de votre ", ["SAM",1], ", calculé sur ", ["les dix meilleures années",1], "."],
+    opts:[
+      "Votre pension est égale à la moitié de votre salaire moyen, calculé sur vos dix meilleures années de travail. C'est pour cela qu'elle est plus basse que votre salaire d'avant. Je regarde avec vous si votre contrat de prévoyance prévoit un complément.",
+      "Votre pension de catégorie 2 correspond à 50 % de votre salaire annuel moyen.",
+      "Votre pension a été calculée sur votre dernier salaire, après déduction des cotisations.",
+    ], bon:0,
+    expl:"La deuxième réponse est juste mais garde « catégorie 2 » et « salaire annuel moyen » sans les expliquer. La troisième est fausse : ce n'est pas le dernier salaire. La bonne réponse donne la règle en une phrase, explique l'écart ressenti, et ouvre sur ce que le conseiller peut vérifier." },
+
+  { theme:"Prévoyance",
+    client:"« Je suis en arrêt depuis 45 jours. Pourquoi mon contrat ne me verse rien ? »",
+    phrase:["Votre contrat prévoit ", ["une franchise de 90 jours continus",1], " ; ", ["la garantie incapacité",1], " n'est donc pas ", ["mobilisable",1], " à ce stade."],
+    opts:[
+      "Votre garantie ne se déclenche qu'après la période de franchise prévue au contrat.",
+      "Votre contrat commence à vous verser des indemnités seulement quand l'arrêt dure plus de 90 jours d'affilée. Vous en êtes à 45 : pour l'instant, rien n'est dû. Si votre arrêt se prolonge, envoyez-nous la prolongation et les versements démarreront à partir du 91e jour.",
+      "Il y a sûrement un oubli de déclaration : je relance le dossier pour que vous soyez payé rapidement.",
+    ], bon:1,
+    expl:"La troisième réponse fait une promesse que le contrat ne permet pas de tenir : c'est la pire. La première est juste mais laisse le client deviner ce qu'est une franchise. La bonne réponse annonce clairement le refus, explique pourquoi, et dit ce qui se passera si l'arrêt continue." },
+
+  { theme:"Prévoyance",
+    client:"« Mon mari est décédé il y a trois semaines. Je voulais savoir s'il fallait faire quelque chose pour ses contrats. »",
+    phrase:["Je vous adresse mes condoléances. ", ["Le capital décès",1], " n'est pas versé ", ["d'office",1], " : il doit être demandé à la ", ["CPAM",1], " par ", ["les ayants droit",1], "."],
+    opts:[
+      "Je vous adresse mes condoléances. Votre mutuelle vous versera automatiquement une somme, vous n'avez rien à faire.",
+      "Je vous adresse mes condoléances. Pour le capital décès, les ayants droit doivent constituer une demande auprès de la caisse.",
+      "Toutes mes condoléances, Madame. Quand une personne qui travaillait décède, la Sécurité sociale peut verser une somme à sa famille. Mais elle ne le fait pas d'elle-même : il faut la demander. Si vous le voulez bien, je vous explique comment, et nous regardons ensemble ses autres contrats.",
+    ], bon:2,
+    expl:"La première réponse est fausse et rassure à tort : sans demande, rien ne sera versé. La deuxième est juste mais froide et technique pour une personne en deuil. La bonne réponse prend le temps de la condoléance, explique simplement, et propose d'accompagner — sans brusquer." },
+];
+
+let etat = [];   // par situation : {jargon:Set, choix:null, texte:"", valide:false}
+function el(id){ return document.getElementById(id); }
+function nbJargon(s){ return s.phrase.filter(function(p){ return Array.isArray(p) && p[1]; }).length; }
+
+function render(){
+  el("situations").innerHTML = SITUATIONS.map(function(s, i){
+    let k = 0, w = 0;
+    const ph = s.phrase.map(function(p){
+      const txt = typeof p === "string" ? p : p[0];
+      const seg = (typeof p !== "string" && p[1]) ? (i + "_" + (k++)) : "";
+      return txt.split(/(\s+)/).map(function(m){
+        if(!m.trim()) return m;
+        const lead = m.match(/^[«(]*/)[0], trail = m.match(/[.,;:»)!?]*$/)[0];
+        const core = m.slice(lead.length, m.length - trail.length);
+        if(!core) return m;
+        return lead + '<span class="tok" id="w_' + i + '_' + (w++) + '" data-seg="' + seg + '">' + core + '</span>' + trail;
+      }).join("");
+    }).join("");
+    const opts = s.opts.map(function(o, j){
+      return '<label id="lab_' + i + '_' + j + '"><input type="radio" name="q' + i + '" id="r_' + i + '_' + j + '"><span>' + o + '</span></label>';
+    }).join("");
+    return '<div class="sit" id="sit_' + i + '"><div class="num">Situation ' + (i + 1) + ' · ' + s.theme + '</div>' +
+      '<div class="client"><b>Le client :</b> ' + s.client + '</div>' +
+      '<div class="etape">1 · Cliquez sur les mots que le client ne comprendra pas</div>' +
+      '<div class="phrase"><b style="font-size:12px;letter-spacing:.8px;color:var(--bleu)">LE CONSEILLER :</b> ' + ph + '</div>' +
+      '<div class="etape">2 · La reformulation que vous diriez</div><div class="opts">' + opts + '</div>' +
+      '<div class="etape">3 · Votre propre formulation (facultatif)</div>' +
+      '<textarea id="tx_' + i + '" placeholder="Ce que vous diriez, avec vos mots…"></textarea>' +
+      '<div class="hint">Non noté. Elle servira à la reprise collective.</div>' +
+      '<div class="row-act"><button class="btn btn-primary" id="bv_' + i + '" disabled>Valider la situation</button>' +
+      '<span class="need" id="need_' + i + '">Repérez au moins un mot, puis choisissez une reformulation.</span></div>' +
+      '<div class="corr" id="corr_' + i + '"></div></div>';
+  }).join("");
+
+  SITUATIONS.forEach(function(s, i){
+    document.querySelectorAll("#sit_" + i + " .tok").forEach(function(t){
+      t.addEventListener("click", function(){
+        if(etat[i].valide) return;
+        t.classList.toggle("sel");
+        if(t.classList.contains("sel")) etat[i].jargon.add(t.id); else etat[i].jargon.delete(t.id);
+        majSit(i);
+      });
+    });
+    s.opts.forEach(function(_, j){
+      el("r_" + i + "_" + j).addEventListener("change", function(){
+        if(etat[i].valide) return;
+        etat[i].choix = j;
+        s.opts.forEach(function(_, k){ el("lab_" + i + "_" + k).classList.toggle("sel", k === j); });
+        majSit(i);
+      });
+    });
+    const tx = el("tx_" + i);
+    ["paste","copy","cut","drop"].forEach(function(ev){ tx.addEventListener(ev, function(e){ e.preventDefault(); }); });
+    el("bv_" + i).addEventListener("click", function(){ valider(i); });
+  });
+  majGlobal();
+}
+
+function majSit(i){
+  const e = etat[i];
+  const ok = e.jargon.size > 0 && e.choix !== null;
+  el("bv_" + i).disabled = !ok;
+  el("need_" + i).style.display = ok ? "none" : "";
+}
+
+function valider(i){
+  const s = SITUATIONS[i], e = etat[i];
+  e.valide = true; e.texte = el("tx_" + i).value;
+  let trouves = 0, trop = 0;
+  const toks = Array.prototype.slice.call(document.querySelectorAll("#sit_" + i + " .tok"));
+  const segs = {};
+  toks.forEach(function(t){ if(t.dataset.seg){ segs[t.dataset.seg] = segs[t.dataset.seg] || []; segs[t.dataset.seg].push(t); } });
+  Object.keys(segs).forEach(function(g){
+    const hit = segs[g].some(function(t){ return t.classList.contains("sel"); });
+    if(hit) trouves++;
+    segs[g].forEach(function(t){ t.classList.add(hit ? "trouve" : "oublie"); });
+  });
+  toks.forEach(function(t){
+    if(!t.dataset.seg && t.classList.contains("sel")){ t.classList.add("trop"); trop++; }
+    t.classList.remove("sel");
+  });
+  e.trouves = trouves; e.total = nbJargon(s); e.trop = trop;
+  e.juste = e.choix === s.bon;
+  s.opts.forEach(function(_, j){
+    const lab = el("lab_" + i + "_" + j);
+    lab.classList.remove("sel");
+    el("r_" + i + "_" + j).disabled = true;
+    if(j === s.bon) lab.classList.add(e.juste ? "good" : "attendu");
+    else if(j === e.choix) lab.classList.add("bad");
+  });
+  el("tx_" + i).disabled = true;
+  const bv = el("bv_" + i);
+  bv.textContent = "✓ Atelier validé"; bv.className = "btn btn-done"; bv.disabled = true;
+  el("sit_" + i).classList.add("done");
+  const corr = el("corr_" + i);
+  corr.className = "corr show";
+  corr.innerHTML =
+    '<div class="lg"><span><i class="sw" style="background:#DDEFE3"></i>repéré</span><span><i class="sw" style="background:#fff;border:2px solid var(--ko)"></i>oublié</span><span><i class="sw" style="background:#F7E1E1"></i>pas du jargon</span></div>' +
+    '<p><b>Jargon repéré :</b> ' + trouves + ' / ' + e.total + (trop ? ' · ' + trop + ' mot' + (trop > 1 ? 's' : '') + ' que le client comprend sans difficulté' : '') + '</p>' +
+    '<p><b>' + (e.juste ? '✓ Reformulation juste.' : '✗ Ce n’est pas celle-là.') + '</b> ' + s.expl + '</p>';
+  majGlobal();
+}
+
+function majGlobal(){
+  const faits = etat.filter(function(e){ return e.valide; });
+  const n = faits.length, N = SITUATIONS.length;
+  el("fill").style.width = (n / N * 100) + "%";
+  el("plabel").textContent = n + " / " + N + " situation" + (n > 1 ? "s validées" : " validée");
+  const score = faits.filter(function(e){ return e.juste; }).length;
+  el("score").textContent = n ? score : "—";
+  if(n < N){ el("result").classList.remove("show"); return; }
+  const tr = etat.reduce(function(a, e){ return a + e.trouves; }, 0);
+  const tot = etat.reduce(function(a, e){ return a + e.total; }, 0);
+  el("res-score").textContent = score + " / " + N;
+  el("res-score").style.color = score >= 7 ? "var(--ok)" : (score >= 5 ? "var(--amber)" : "var(--ko)");
+  el("res-jargon").textContent = "Jargon repéré : " + tr + " termes sur " + tot + ".";
+  let t, m;
+  if(score === N && tr === tot){ t = "Sans faute."; m = "Vous repérez le jargon et vous savez le traduire. Reste à le faire en direct, sans le choix sous les yeux : c'est l'objet des tours de l'après-midi."; }
+  else if(score >= 7){ t = "Presque."; m = "Regardez les termes oubliés : ce sont ceux qui vous sont devenus familiers, donc ceux que vous direz sans y penser."; }
+  else if(score >= 5){ t = "À consolider."; m = "Relisez les corrections : le piège le plus fréquent est la réponse exacte mais inutilisable pour le client."; }
+  else { t = "À reprendre."; m = "Signalez-le au formateur avant les mises en situation : on y revient en plénière."; }
+  el("res-title").textContent = t;
+  el("res-msg").textContent = m;
+  const th = {};
+  SITUATIONS.forEach(function(s, i){ th[s.theme] = th[s.theme] || {ok:0, tot:0}; th[s.theme].tot++; if(etat[i].juste) th[s.theme].ok++; });
+  el("recap").innerHTML = Object.keys(th).map(function(k){
+    const v = th[k], c = v.ok === v.tot ? "var(--ok)" : (v.ok === 0 ? "var(--ko)" : "var(--amber)");
+    return '<div class="recap-row"><span class="dot" style="background:' + c + '"></span><span class="lab">' + k + '</span><span class="sc">' + v.ok + ' / ' + v.tot + '</span></div>';
+  }).join("");
+  el("result").classList.add("show");
+}
+
+function reinitialiser(){
+  etat = SITUATIONS.map(function(){ return {jargon:new Set(), choix:null, texte:"", valide:false, trouves:0, total:0, juste:false}; });
+  render();
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+reinitialiser();
+
+["copy","cut","contextmenu","dragstart"].forEach(function(ev){ document.addEventListener(ev, function(e){ e.preventDefault(); }); });
+document.addEventListener("keydown", function(e){
+  if((e.ctrlKey || e.metaKey) && ["c","x","v","u","s","p"].indexOf(e.key.toLowerCase()) > -1){ e.preventDefault(); }
+});
+</script>
+</body>
+</html>

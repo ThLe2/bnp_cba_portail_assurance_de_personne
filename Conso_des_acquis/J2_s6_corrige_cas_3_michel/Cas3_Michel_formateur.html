@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cas 3 — Michel, 63 ans · Corrigé formateur</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Karla:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#16243B; --bleu:#1F4E79; --bleu-clair:#2E75B6; --or:#B08D57;
+  --creme:#F5F2EB; --card:#FFFFFF; --line:#e3ddd0; --muted:#6B6459;
+  --ok:#2F7A4F; --ko:#B23B3B; --amber:#B5852A;
+  --shadow:0 2px 10px rgba(22,36,59,.07);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Karla',system-ui,sans-serif;background:var(--creme);color:var(--navy);line-height:1.55}
+.wrap{max-width:1000px;margin:0 auto;padding:26px 18px 70px}
+.card-main{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);overflow:hidden}
+.header{padding:26px 34px 0}
+.chapter-tag{font-size:11.5px;font-weight:700;letter-spacing:1.6px;text-transform:uppercase;color:var(--or)}
+.chapter-tag span{opacity:.5}
+h1{font-family:'Fraunces',serif;font-weight:600;font-size:27px;line-height:1.2;margin:8px 0 5px}
+.header p{color:var(--muted);font-size:14.5px}
+.gold-rule{border:none;border-top:2px solid var(--or);width:64px;margin:18px 0 0}
+.body{padding:22px 34px 30px}
+
+.warn{background:#FBF1DC;border:1px solid #E6D3A8;border-left:3px solid var(--amber);border-radius:8px;padding:13px 16px;font-size:13.5px;margin-bottom:20px}
+.warn b{color:var(--navy)}
+
+.situation{background:#FBF7EE;border:1px solid var(--line);border-radius:10px;padding:15px 18px;margin-bottom:18px;font-size:14px}
+.situation h2{font-family:'Fraunces',serif;font-size:17px;margin-bottom:7px}
+.situation .don{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:6px 22px;margin-top:11px}
+.don .r{display:flex;justify-content:space-between;gap:12px;border-bottom:1px dotted var(--line);padding-bottom:3px;font-size:13px}
+.don .r b{white-space:nowrap}
+
+.params{background:#FCFAF5;border:1px dashed var(--line);border-radius:10px;padding:14px 16px;margin-bottom:22px}
+.params-title{font-size:11px;font-weight:700;letter-spacing:1.3px;text-transform:uppercase;color:var(--muted);margin-bottom:10px;display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.src{font-weight:600;letter-spacing:0;text-transform:none;font-size:11.5px;padding:2px 9px;border-radius:99px}
+.src.live{background:#E8F2EA;color:var(--ok)}
+.src.local{background:#FBF1DC;color:var(--amber)}
+.plist{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:7px 22px}
+.prow{display:flex;justify-content:space-between;gap:12px;font-size:13px;border-bottom:1px dotted var(--line);padding-bottom:3px}
+.prow span:last-child{font-weight:700;white-space:nowrap}
+
+.tools{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px}
+.btn{border:none;border-radius:9px;padding:11px 20px;font-family:inherit;font-size:14px;font-weight:700;cursor:pointer}
+.btn-primary{background:var(--bleu);color:#fff}
+.btn-secondary{background:#fff;color:var(--bleu);border:1.5px solid var(--bleu)}
+
+.q{border:1.5px solid var(--line);border-radius:12px;margin-bottom:16px;overflow:hidden;background:#fff}
+.q-head{padding:16px 20px}
+.q-num{font-size:10.5px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--or);margin-bottom:5px}
+.q-txt{font-size:15.5px;font-weight:700;line-height:1.45}
+.q-btn{margin:0 20px 16px;background:var(--navy);color:#fff;border:none;border-radius:8px;padding:10px 18px;
+  font-family:inherit;font-size:13.5px;font-weight:700;cursor:pointer}
+.q-btn.open{background:#fff;color:var(--navy);border:1.5px solid var(--line)}
+.corr{max-height:0;overflow:hidden;transition:max-height .35s ease;background:#FBF7EE;border-top:1px solid var(--line)}
+.corr.show{max-height:2600px}
+.corr-in{padding:18px 20px 20px}
+.corr h4{font-size:11px;font-weight:700;letter-spacing:1.3px;text-transform:uppercase;color:var(--bleu);margin:16px 0 7px}
+.corr h4:first-child{margin-top:0}
+.corr p{font-size:14px;margin-bottom:8px}
+.corr ul{margin:0 0 8px 18px;font-size:14px}
+.corr li{margin-bottom:5px}
+.calc{width:100%;border-collapse:collapse;font-size:13.5px;margin:4px 0 10px;background:#fff;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.calc td{padding:7px 11px;border-bottom:1px solid var(--line)}
+.calc tr:last-child td{border-bottom:none}
+.calc td:last-child{text-align:right;font-weight:700;white-space:nowrap;font-variant-numeric:tabular-nums}
+.calc tr.tot td{background:#EEF4F9;color:var(--navy);font-weight:700}
+.calc tr.tot td:first-child{font-weight:700}
+.relance{background:#EEF4F9;border-left:3px solid var(--bleu-clair);border-radius:6px;padding:11px 14px;font-size:13.5px;margin-bottom:9px}
+.erreur{background:#FBF3F3;border-left:3px solid var(--ko);border-radius:6px;padding:11px 14px;font-size:13.5px}
+.erreur b,.relance b{color:var(--navy)}
+.footer{text-align:center;font-size:11.5px;color:var(--muted);padding:16px 34px 24px;border-top:1px solid var(--line)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card-main">
+    <div class="header">
+      <div class="chapter-tag">TMK Performances · Conso des acquis 2/4 <span>/</span> Séquence 6</div>
+      <h1>Cas 3 — Michel, 63 ans</h1>
+      <p>Corrigé formateur · corrections révélables · 105 minutes</p>
+      <hr class="gold-rule">
+    </div>
+
+    <div class="body">
+      <div class="warn">
+        <b>⚠ Document formateur.</b> Ne pas projeter avant la restitution. Brief 10 min · recherche individuelle 40 min ·
+        correction collective 40 min · synthèse 15 min. Interrogez nominativement plutôt que d'attendre les volontaires,
+        et faites expliciter le raisonnement <b>avant</b> de révéler le résultat. <br><br><b>Ce cas contient une donnée volontairement absente</b> — le niveau de revenus de Michel à la retraite, donc sa tranche marginale. Ne la donnez sous aucun prétexte, même si le groupe la réclame : repérer le manque est l'objectif de la question 4.
+      </div>
+
+      <div class="situation">
+        <h2>La situation remise aux stagiaires</h2>
+        <p>Michel Berthier, 63 ans, père de Thierry, part à la retraite <b>dans six mois</b>. Deux enveloppes à
+        dénouer — un PER et un contrat d'assurance vie de quatorze ans — et une inquiétude pour son épouse
+        <b>Danielle, 61 ans</b>, qui n'a jamais travaillé et n'a aucun droit propre.</p>
+        <div class="don">
+          <div class="r"><span>PER — valeur totale</span><b>80 000,00 €</b></div>
+          <div class="r"><span>dont versements déduits</span><b>60 000,00 €</b></div>
+          <div class="r"><span>dont plus-values</span><b>20 000,00 €</b></div>
+          <div class="r"><span>Assurance vie — ancienneté</span><b>14 ans</b></div>
+          <div class="r"><span>Assurance vie — valeur</span><b>250 000,00 €</b></div>
+          <div class="r"><span>Assurance vie — versements</span><b>200 000,00 €</b></div>
+          <div class="r"><span>Rachat partiel envisagé</span><b>50 000,00 €</b></div>
+          <div class="r"><span>Situation fiscale</span><b>marié, imposition commune</b></div>
+          <div class="r"><span>Revenus à la retraite</span><b>non communiqués</b></div>
+          <div class="r"><span>Épouse</span><b>61 ans, aucun droit propre</b></div>
+        </div>
+      </div>
+
+      <div class="params">
+        <div class="params-title">Paramètres utilisés pour le corrigé <span class="src local" id="src-badge">valeurs de secours</span></div>
+        <div class="plist" id="plist"></div>
+      </div>
+
+      <div class="tools">
+        <button class="btn btn-primary" onclick="tout(true)">Tout révéler</button>
+        <button class="btn btn-secondary" onclick="tout(false)">Tout masquer</button>
+      </div>
+
+      <div id="questions"></div>
+    </div>
+
+    <div class="footer">TMK Performances - N° Siret : 49841924100027 - Code NAF : 8559A</div>
+  </div>
+</div>
+
+<script>
+/* ─────────── Paramètres live (retraite + épargne), repli local ─────────── */
+const SB_URL = "https://ibkvyjlglwufxvzxnysa.supabase.co";
+const SB_KEY = "sb_publishable_xUfZHSOHf4TnBRRyzU_qJA_TcXIMSKX";
+
+const DEF_PARC = {
+  reversion_base_taux: 0.54, reversion_base_age_min: 55,
+  reversion_comp_taux: 0.60, reversion_comp_age_min: 55,
+};
+const DEF_EP = {
+  av_duree_seuil_annees: 8,
+  av_abattement_annuel_couple: 9200,
+  av_abattement_annuel_seul: 4600,
+  av_taux_reduit: 0.075,
+  av_taux_pfu_ir: 0.128,
+  av_seuil_versements: 150000,
+  epargne_ps_taux_assurance_vie: 0.172,
+  epargne_pfu_taux_ir: 0.128,
+  epargne_ps_taux_general: 0.186,
+  per_rvtg_abattement: 0.10,
+  per_ps_rente_taux_plein: 0.091,
+};
+let P = Object.assign({}, DEF_PARC, DEF_EP);
+
+const AFFICHE = [
+  ["av_duree_seuil_annees", "Seuil d'ancienneté du régime favorable", "a"],
+  ["av_abattement_annuel_couple", "Abattement annuel — couple", "€"],
+  ["av_taux_reduit", "Taux réduit sous le seuil de versements", "%"],
+  ["av_taux_pfu_ir", "Taux au-delà du seuil de versements", "%"],
+  ["av_seuil_versements", "Seuil de versements", "€"],
+  ["epargne_ps_taux_assurance_vie", "Assurance vie — prélèvements sociaux", "%"],
+  ["epargne_ps_taux_general", "PER — prélèvements sociaux sur les plus-values", "%"],
+  ["per_ps_rente_taux_plein", "Rente PER déduite — prélèvements sociaux", "%"],
+  ["reversion_base_taux", "Réversion du régime de base", "%"],
+  ["reversion_comp_taux", "Réversion complémentaire", "%"],
+];
+
+function el(id){ return document.getElementById(id); }
+function eur(n){ return n.toLocaleString("fr-FR",{minimumFractionDigits:2,maximumFractionDigits:2}) + " €"; }
+function eur0(n){ return n.toLocaleString("fr-FR",{minimumFractionDigits:0,maximumFractionDigits:0}) + " €"; }
+function pct(n, d){ return (Math.round(n*10000)/100).toLocaleString("fr-FR", d ? {minimumFractionDigits:d,maximumFractionDigits:d} : {}) + " %"; }
+function r2(n){ return Math.round(n*100)/100; }
+
+function renderParams(){
+  el("plist").innerHTML = AFFICHE.map(function(a){
+    const v = P[a[0]];
+    const aff = a[2] === "%" ? pct(v) : (a[2] === "a" ? v + " ans" : eur0(v));
+    return '<div class="prow"><span>' + a[1] + '</span><span>' + aff + '</span></div>';
+  }).join("");
+}
+async function lire(table, cles){
+  const r = await fetch(SB_URL + "/rest/v1/" + table + "?select=cle,valeur&cle=in.(" + cles.join(",") + ")&apikey=" + SB_KEY);
+  if(!r.ok) throw new Error(r.status);
+  const rows = await r.json();
+  if(!rows.length) throw new Error("vide");
+  rows.forEach(function(row){ if(row.valeur !== null) P[row.cle] = Number(row.valeur); });
+}
+async function chargerParametres(){
+  let ok = 0;
+  try{ await lire("parametres_parcours", Object.keys(DEF_PARC)); ok++; }catch(e){}
+  try{ await lire("parametres_epargne", Object.keys(DEF_EP)); ok++; }catch(e){}
+  const b = el("src-badge");
+  if(ok === 2){ b.className = "src live"; b.textContent = "valeurs à jour"; }
+  else if(ok === 1){ b.className = "src local"; b.textContent = "valeurs partiellement à jour"; }
+  else { b.className = "src local"; b.textContent = "valeurs de secours"; }
+  renderParams(); renderQuestions();
+}
+
+/* ─────────── Le corrigé ─────────── */
+const PER_TOTAL = 80000, PER_VERSE = 60000, PER_PV = 20000;
+const AV_VALEUR = 250000, AV_VERSE = 200000, AV_RACHAT = 50000, AV_ANC = 14;
+const TMI_HAUTE = 0.30, TMI_BASSE = 0.11;
+
+function calculs(){
+  // ── PER, sortie en capital
+  const tauxPvPer = P.epargne_pfu_taux_ir + P.epargne_ps_taux_general;
+  const impotPv   = r2(PER_PV * tauxPvPer);
+  const capHaute  = r2(PER_VERSE * TMI_HAUTE);
+  const capBasse  = r2(PER_VERSE * TMI_BASSE);
+  const totHaute  = r2(capHaute + impotPv);
+  const totBasse  = r2(capBasse + impotPv);
+
+  // ── Assurance vie, rachat partiel
+  const produitsTotaux = AV_VALEUR - AV_VERSE;
+  const partProduits   = produitsTotaux / AV_VALEUR;
+  const produitsRachat = r2(AV_RACHAT * partProduits);
+  const abattement     = P.av_abattement_annuel_couple;
+  const assiette       = r2(Math.max(0, produitsRachat - abattement));
+  const prorataSous    = Math.min(1, P.av_seuil_versements / AV_VERSE);
+  const partReduite    = r2(assiette * prorataSous);
+  const partPleine     = r2(assiette - partReduite);
+  const irReduit       = r2(partReduite * P.av_taux_reduit);
+  const irPlein        = r2(partPleine * P.av_taux_pfu_ir);
+  const ir             = r2(irReduit + irPlein);
+  const ps             = r2(produitsRachat * P.epargne_ps_taux_assurance_vie);
+  const totalAv        = r2(ir + ps);
+  const netPercu       = r2(AV_RACHAT - totalAv);
+  const tauxSurRachat  = totalAv / AV_RACHAT;
+  const tauxSurProduits= totalAv / produitsRachat;
+  // comparaison : les mêmes produits dans un PER
+  const siPer          = r2(produitsRachat * tauxPvPer);
+
+  return {tauxPvPer, impotPv, capHaute, capBasse, totHaute, totBasse,
+          produitsTotaux, partProduits, produitsRachat, abattement, assiette,
+          prorataSous, partReduite, partPleine, irReduit, irPlein, ir, ps,
+          totalAv, netPercu, tauxSurRachat, tauxSurProduits, siPer};
+}
+
+function tableau(rows){
+  return '<table class="calc">' + rows.map(function(r){
+    return '<tr' + (r[2] ? ' class="tot"' : '') + '><td>' + r[0] + '</td><td>' + r[1] + '</td></tr>';
+  }).join("") + '</table>';
+}
+
+function questions(){
+  const c = calculs();
+  return [
+  {
+    txt: "La sortie du PER : présentez les deux options et leur fiscalité. Chiffrez ce qui peut l'être en l'état.",
+    corr:
+      '<h4>Le principe : deux parts, deux régimes</h4>' +
+      '<p>Un PER alimenté par des versements déduits se dénoue en deux morceaux qui ne suivent pas les mêmes règles. Il faut les séparer avant tout calcul.</p>' +
+      '<h4>Sortie en capital</h4>' +
+      tableau([
+        ["Part correspondant aux versements déduits", eur0(PER_VERSE)],
+        ["→ imposée au barème, catégorie des pensions, sans prélèvements sociaux", "TMI inconnue"],
+        ["Part correspondant aux plus-values", eur0(PER_PV)],
+        ["→ prélèvement forfaitaire : " + pct(P.epargne_pfu_taux_ir) + " + " + pct(P.epargne_ps_taux_general) + " = " + pct(c.tauxPvPer), eur(c.impotPv), true],
+      ]) +
+      '<p><b>Seules les plus-values sont chiffrables en l\'état</b> : ' + eur(c.impotPv) + '. La part des versements dépend de la tranche marginale de Michel une fois à la retraite, que l\'énoncé ne donne pas.</p>' +
+      tableau([
+        ["Coût total si sa tranche est de " + pct(TMI_HAUTE), eur(c.totHaute)],
+        ["Coût total si sa tranche est de " + pct(TMI_BASSE), eur(c.totBasse)],
+        ["Écart entre les deux hypothèses", eur(r2(c.totHaute - c.totBasse)), true],
+      ]) +
+      '<h4>Sortie en rente</h4>' +
+      '<p>La rente issue de versements déduits relève du régime des <b>pensions de retraite</b> : imposée au barème après un abattement de ' + pct(P.per_rvtg_abattement) + ' (avec un plancher et un plafond), ' +
+      'et soumise à des prélèvements sociaux de ' + pct(P.per_ps_rente_taux_plein) + ' au taux plein — nettement moins que les ' + pct(P.epargne_ps_taux_general) + ' du capital, parce qu\'une pension n\'est pas un revenu du capital.</p>' +
+      '<p>Elle n\'est pas chiffrable non plus : il manque la tranche marginale, et le taux de conversion en rente, qui dépend de l\'âge et de la table de l\'assureur.</p>' +
+      '<div class="relance"><b>À faire dire au groupe :</b> pourquoi les prélèvements sociaux diffèrent-ils entre le capital et la rente, sur le même PER ? ' +
+      'Et un point à ne pas manquer : la sortie en capital en une seule fois écrase tout sur une seule année d\'imposition, ce qui peut faire monter Michel d\'une tranche.</div>' +
+      '<div class="erreur"><b>Erreur fréquente :</b> appliquer le prélèvement forfaitaire aux 80 000 €. Les versements déduits n\'y sont jamais soumis — ils vont au barème. ' +
+      'Confondre les deux parts multiplie l\'erreur par quatre sur ce dossier.</div>'
+  },
+  {
+    txt: "Le rachat partiel de 50 000 € sur l'assurance vie : chiffrez l'imposition complète et ce que Michel percevra.",
+    corr:
+      '<h4>Étape 1 — isoler les produits contenus dans le rachat</h4>' +
+      '<p>Un rachat partiel ne porte pas que des gains : il prélève du capital et des produits <b>dans la même proportion</b> que le contrat.</p>' +
+      tableau([
+        ["Valeur du contrat", eur0(AV_VALEUR)],
+        ["Versements cumulés", "− " + eur0(AV_VERSE)],
+        ["Produits contenus dans le contrat", eur0(c.produitsTotaux)],
+        ["Part de produits dans la valeur", pct(c.partProduits)],
+        ["Produits contenus dans le rachat : " + eur0(AV_RACHAT) + " × " + pct(c.partProduits), eur(c.produitsRachat), true],
+      ]) +
+      '<h4>Étape 2 — appliquer l\'abattement annuel</h4>' +
+      tableau([
+        ["Contrat de " + AV_ANC + " ans, donc au-delà du seuil de " + P.av_duree_seuil_annees + " ans", "régime favorable"],
+        ["Abattement annuel, couple soumis à imposition commune", "− " + eur0(c.abattement)],
+        ["Assiette soumise à l'impôt sur le revenu", eur(c.assiette), true],
+      ]) +
+      '<h4>Étape 3 — ventiler selon le seuil de versements</h4>' +
+      '<p>Les versements de Michel atteignent ' + eur0(AV_VERSE) + ', au-delà du seuil de ' + eur0(P.av_seuil_versements) + '. ' +
+      'La fraction de l\'assiette correspondant aux versements sous le seuil garde le taux réduit ; le reste passe au taux plein, <b>au prorata</b>.</p>' +
+      tableau([
+        ["Prorata sous le seuil : " + eur0(P.av_seuil_versements) + " / " + eur0(AV_VERSE), pct(c.prorataSous)],
+        ["Fraction au taux réduit : " + eur(c.assiette) + " × " + pct(c.prorataSous), eur(c.partReduite)],
+        ["Impôt : " + eur(c.partReduite) + " × " + pct(P.av_taux_reduit), eur(c.irReduit)],
+        ["Fraction au taux plein", eur(c.partPleine)],
+        ["Impôt : " + eur(c.partPleine) + " × " + pct(P.av_taux_pfu_ir), eur(c.irPlein)],
+        ["Impôt sur le revenu total", eur(c.ir), true],
+      ]) +
+      '<h4>Étape 4 — ajouter les prélèvements sociaux</h4>' +
+      '<p>Ils portent sur <b>la totalité des produits</b>, sans abattement. C\'est le point que l\'abattement fait oublier.</p>' +
+      tableau([
+        ["Prélèvements sociaux : " + eur(c.produitsRachat) + " × " + pct(P.epargne_ps_taux_assurance_vie), eur(c.ps), true],
+        ["Total prélevé", eur(c.totalAv), true],
+        ["Ce que Michel perçoit réellement", eur(c.netPercu), true],
+      ]) +
+      '<p>Le total représente <b>' + pct(c.tauxSurRachat, 2) + ' du rachat</b> et ' + pct(c.tauxSurProduits, 1) + ' des seuls produits. ' +
+      'À comparer aux ' + pct(c.tauxPvPer) + ' qu\'auraient supportés les mêmes produits dans un PER, soit ' + eur(c.siPer) + ' au lieu de ' + eur(c.totalAv) + '.</p>' +
+      '<div class="relance"><b>À faire dire au groupe :</b> l\'impôt sur le revenu ressort à ' + eur(c.ir) + ' et les prélèvements sociaux à ' + eur(c.ps) + '. ' +
+      'Vingt-quatre fois plus. Qu\'est-ce que cela dit de l\'abattement annuel, et de la façon d\'en parler à un client ?</div>' +
+      '<div class="erreur"><b>Erreur fréquente :</b> imposer les 50 000 € du rachat, ou appliquer l\'abattement aux prélèvements sociaux. ' +
+      'La première erreur multiplie l\'imposition par cinq, la seconde la sous-estime de plus de mille cinq cents euros.</div>'
+  },
+  {
+    txt: "La réversion : à quelles conditions Danielle y aurait-elle droit, et qu'est-ce qui diffère entre les deux régimes ?",
+    corr:
+      '<h4>Deux régimes, deux jeux de règles</h4>' +
+      tableau([
+        ["Régime de base — taux", pct(P.reversion_base_taux) + " de la pension du défunt"],
+        ["Régime de base — âge minimal", P.reversion_base_age_min + " ans"],
+        ["Régime de base — condition de ressources", "OUI"],
+        ["Complémentaire — taux", pct(P.reversion_comp_taux) + " des points du défunt"],
+        ["Complémentaire — âge minimal", P.reversion_comp_age_min + " ans"],
+        ["Complémentaire — condition de ressources", "NON", true],
+      ]) +
+      '<p>Danielle a ' + 61 + ' ans : la condition d\'âge est remplie dans les deux régimes.</p>' +
+      '<h4>Ce qui diffère vraiment</h4>' +
+      '<ul>' +
+      '<li><b>La condition de ressources n\'existe qu\'au régime de base.</b> C\'est l\'angle mort du sujet : beaucoup de conjoints survivants renoncent à la complémentaire en se croyant trop aisés, alors qu\'elle ne regarde pas leurs revenus.</li>' +
+      '<li><b>Le remariage</b> met fin au droit à la réversion complémentaire, alors qu\'il est sans effet sur celle du régime de base.</li>' +
+      '<li><b>Deux demandes distinctes</b> doivent être déposées, auprès de deux organismes différents. Rien n\'est automatique, et l\'un ne prévient pas l\'autre.</li>' +
+      '</ul>' +
+      '<p>Danielle n\'ayant jamais travaillé, la réversion constituera <b>l\'essentiel de ses revenus</b> si Michel disparaît. Le sujet n\'est pas accessoire : c\'est le plus lourd des trois.</p>' +
+      '<div class="relance"><b>À faire dire au groupe :</b> que se passerait-il si Danielle avait 53 ans ? Et quel est le lien entre ce sujet et le choix capital ou rente sur le PER ? ' +
+      '(Une rente s\'éteint au décès sauf option de réversion, souvent payante ; un capital, lui, se transmet.)</div>' +
+      '<div class="erreur"><b>Erreur fréquente :</b> répondre « elle aura 54 % » en s\'arrêtant au régime de base. C\'est oublier la moitié de ses droits, ' +
+      'et sur un dossier où elle n\'a aucune pension propre, l\'oubli est grave.</div>'
+  },
+  {
+    txt: "Pour trancher entre capital et rente, une donnée vous manque. Laquelle, pourquoi est-elle déterminante, et comment la demanderiez-vous ?",
+    corr:
+      '<h4>La donnée absente</h4>' +
+      '<p><b>Le niveau de revenus de Michel une fois à la retraite</b>, et donc sa tranche marginale d\'imposition. L\'énoncé ne la donne pas, et elle ne se devine pas.</p>' +
+      '<h4>Pourquoi elle décide de tout</h4>' +
+      '<ul>' +
+      '<li><b>Elle chiffre la part des versements déduits.</b> Sur ' + eur0(PER_VERSE) + ', l\'écart entre une tranche à ' + pct(TMI_BASSE) + ' et une tranche à ' + pct(TMI_HAUTE) + ' représente ' + eur(r2(c.capHaute - c.capBasse)) + '.</li>' +
+      '<li><b>Elle oriente le choix entre capital et rente.</b> Un capital versé en une fois s\'ajoute aux revenus d\'une seule année et peut faire changer Michel de tranche ; une rente étale la charge sur toute la vie.</li>' +
+      '<li><b>Elle décide aussi de l\'option pour le barème</b> plutôt que pour le prélèvement forfaitaire sur les produits d\'assurance vie — utile si sa tranche est basse.</li>' +
+      '</ul>' +
+      '<h4>La question à poser</h4>' +
+      '<p>« Pour vous dire si le capital ou la rente vous coûte le moins cher, il me faut une estimation de vos revenus une fois à la retraite : vos pensions, celles de votre épouse, ' +
+      'et vos éventuels revenus fonciers ou du patrimoine. C\'est ce niveau de revenus qui détermine votre tranche d\'imposition, et donc la réponse. »</p>' +
+      '<div class="relance"><b>À faire dire au groupe :</b> qui a repéré que la donnée manquait ? Qui a donné une réponse quand même ? ' +
+      'Et laquelle des deux attitudes coûte le plus cher au client ?</div>' +
+      '<div class="erreur"><b>Erreur fréquente :</b> reprendre la tranche de ' + pct(TMI_HAUTE) + ' du cas de Thierry parce qu\'elle traîne dans les notes. ' +
+      'Ce n\'est ni le même client, ni la même situation, ni le même moment de la vie.</div>'
+  },
+  {
+    txt: "Répondez à Michel en trois phrases, puis dites dans quel ordre traiter ses trois sujets.",
+    corr:
+      '<h4>Une réponse possible</h4>' +
+      '<p>« Sur votre assurance vie, retirer ' + eur0(AV_RACHAT) + ' vous coûtera ' + eur(c.totalAv) + ', soit ' + pct(c.tauxSurRachat, 2) + ' de la somme retirée — ' +
+      'vos quatorze ans d\'ancienneté vous font économiser beaucoup, et vous pourrez recommencer chaque année. ' +
+      'Pour le PER, je ne peux pas encore vous dire s\'il vaut mieux le capital ou la rente : tout dépend de vos revenus une fois à la retraite, et j\'ai besoin de les estimer avec vous. ' +
+      'Et avant tout cela, il faut regarder ce que percevrait votre épouse s\'il vous arrivait quelque chose — c\'est là que se joue le vrai sujet. »</p>' +
+      '<h4>L\'ordre de traitement</h4>' +
+      '<ol style="margin-left:18px;font-size:14px">' +
+      '<li><b>La situation de Danielle.</b> Elle n\'a aucun droit propre. C\'est le seul des trois sujets qui engage une personne dépendante, et il conditionne le choix capital ou rente.</li>' +
+      '<li><b>Le PER</b>, une fois les revenus futurs estimés. La décision est irréversible et se prend une seule fois.</li>' +
+      '<li><b>Le rachat sur l\'assurance vie</b>, en dernier. Il est calculable tout de suite, réversible dans son principe, et l\'abattement se reconstitue chaque année — rien n\'oblige à tout retirer d\'un coup.</li>' +
+      '</ol>' +
+      '<div class="relance"><b>Ce qu\'on évalue :</b> chiffrer ce qui est chiffrable, assumer ce qui ne l\'est pas, et hiérarchiser. ' +
+      'Un stagiaire qui répond aux trois questions dans l\'ordre où Michel les a posées n\'a pas fait son travail de conseil.</div>' +
+      '<div class="erreur"><b>Erreur fréquente :</b> traiter le rachat en premier parce que c\'est le seul calcul complet possible. ' +
+      'C\'est confondre ce qui est facile avec ce qui est important.</div>'
+  },
+  {
+    txt: "Quelle est la prochaine action dans le dossier, et qui la fait ?",
+    corr: "<h4>La prochaine action : la demande de retraite, et l'estimation des revenus</h4><p>Michel part dans six mois : c'est le moment de déposer sa <b>demande de retraite</b>, une demande unique en ligne pour l'ensemble de ses régimes. <b>Qui la fait :</b> Michel. Ce dépôt lui donnera aussi une estimation de ses pensions — la donnée qui manque pour trancher entre capital et rente sur le PER.</p><p><b>Ce que fait le conseiller :</b> il fixe un rendez-vous avec Michel <b>et Danielle</b>, une fois l'estimation reçue, pour décider de la sortie du PER — choix irréversible, à communiquer à l'assureur au moment du départ — et regarder la protection de Danielle. Il note au dossier la date du départ, la date du rendez-vous et ce que Michel doit apporter.</p><p>Le rachat sur l'assurance vie peut attendre : il ne dépend d'aucune échéance.</p><div class=\"relance\"><b>À faire dire au groupe :</b> pourquoi inviter Danielle ? Parce que le choix capital ou rente la concerne autant que lui.</div><div class=\"erreur\"><b>Erreur fréquente :</b> proposer d'exécuter le rachat comme prochaine action, parce que c'est le seul acte immédiatement possible.</div>"
+  },
+  ];
+}
+
+function renderQuestions(){
+  const qs = questions();
+  el("questions").innerHTML = qs.map(function(q, i){
+    return '<div class="q">' +
+      '<div class="q-head"><div class="q-num">Question ' + (i + 1) + '</div><div class="q-txt">' + q.txt + '</div></div>' +
+      '<button class="q-btn" id="btn' + i + '" onclick="bascule(' + i + ')">Révéler la correction</button>' +
+      '<div class="corr" id="corr' + i + '"><div class="corr-in">' + q.corr + '</div></div>' +
+    '</div>';
+  }).join("");
+}
+function bascule(i){
+  const c = el("corr" + i), b = el("btn" + i);
+  const ouvert = c.classList.toggle("show");
+  b.classList.toggle("open", ouvert);
+  b.textContent = ouvert ? "Masquer la correction" : "Révéler la correction";
+}
+function tout(ouvrir){
+  questions().forEach(function(_, i){
+    const c = el("corr" + i), b = el("btn" + i);
+    c.classList.toggle("show", ouvrir);
+    b.classList.toggle("open", ouvrir);
+    b.textContent = ouvrir ? "Masquer la correction" : "Révéler la correction";
+  });
+}
+
+renderParams();
+renderQuestions();
+chargerParametres();
+
+</script>
+</body>
+</html>

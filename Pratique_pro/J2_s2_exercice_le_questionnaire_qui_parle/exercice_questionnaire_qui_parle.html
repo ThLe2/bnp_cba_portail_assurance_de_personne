@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exercice — Le questionnaire qui parle</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Karla:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#16243B;--bleu:#1F4E79;--bleu-clair:#2E75B6;--or:#B08D57;--creme:#F5F2EB;--card:#FFFFFF;
+  --line:#e3ddd0;--muted:#6B6459;--ok:#2F7A4F;--ko:#B23B3B;--amber:#B5852A;--shadow:0 2px 10px rgba(22,36,59,.07);}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Karla',system-ui,sans-serif;background:var(--creme);color:var(--navy);line-height:1.55;-webkit-user-select:none;user-select:none}
+.wrap{max-width:1000px;margin:0 auto;padding:26px 18px 60px}
+.card-main{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);overflow:hidden}
+.header{padding:26px 34px 0}
+.chapter-tag{font-size:11.5px;font-weight:700;letter-spacing:1.6px;text-transform:uppercase;color:var(--or)}
+.chapter-tag span{opacity:.5}
+h1{font-family:'Fraunces',serif;font-weight:600;font-size:27px;line-height:1.2;margin:8px 0 5px}
+.header p{color:var(--muted);font-size:14.5px}
+.gold-rule{border:none;border-top:2px solid var(--or);width:64px;margin:18px 0 0}
+.body{padding:22px 34px 30px}
+.consigne{background:#FBF7EE;border:1px solid var(--line);border-left:3px solid var(--or);border-radius:8px;padding:14px 17px;font-size:14px;margin-bottom:22px}
+.consigne ol{margin:8px 0 0 20px}
+.meta{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:20px}
+.progress{flex:1;min-width:220px}
+.track{height:8px;background:#e6e0d3;border-radius:99px;overflow:hidden}
+.fill{height:100%;width:0;background:var(--bleu-clair);transition:width .3s}
+.plabel{font-size:12.5px;color:var(--muted);margin-top:6px}
+.scorepill{background:var(--navy);color:#fff;border-radius:99px;padding:6px 15px;font-size:13px;font-weight:600}
+.sit{border:1.5px solid var(--line);border-radius:12px;padding:18px 20px;margin-bottom:16px;background:#fff}
+.sit.done{border-color:#cfc6b4;background:#FDFCF9}
+.sit .num{font-size:10.5px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--or);margin-bottom:8px}
+.client{font-size:14.5px;font-style:italic;color:var(--muted);margin-bottom:10px}
+.client b{font-style:normal;color:var(--navy)}
+.etape{font-size:11px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--bleu);margin:14px 0 7px}
+.phrase{font-size:15.5px;line-height:2.05;background:#F7FAFD;border:1px solid #dbe6f2;border-radius:8px;padding:10px 14px}
+.tok{border-radius:4px;padding:1px 1px;cursor:pointer;transition:background .12s}
+.tok:hover{background:#e7eff8}
+.tok.sel{background:#FDE7C8;border-bottom-color:var(--amber)}
+.tok.trouve{background:#DDEFE3;border-bottom:2px solid var(--ok)}
+.tok.trouve2{background:#EEF7F1;border-bottom:2px solid var(--ok)}
+.tok.oublie{background:#fff;border-bottom:2px solid var(--ko);color:var(--ko)}
+.tok.trop{background:#F7E1E1;border-bottom:2px solid var(--ko);text-decoration:line-through}
+.done .tok{cursor:default}
+.opts{display:flex;flex-direction:column;gap:9px}
+.opts label{display:flex;align-items:flex-start;gap:9px;font-size:14px;border:1.5px solid var(--line);border-radius:8px;padding:10px 12px;cursor:pointer;background:#fff;transition:border-color .15s,background .15s}
+.opts label:hover{border-color:var(--bleu-clair)}
+.opts label.sel{border-color:var(--bleu);background:#F7FAFD}
+.opts label.good{border-color:var(--ok);background:#F2F8F4}
+.opts label.bad{border-color:var(--ko);background:#FBF3F3}
+.opts label.attendu{border-color:var(--ok);background:#F2F8F4}
+.done .opts label{cursor:default}
+.opts input{margin-top:3px;flex-shrink:0}
+textarea{width:100%;min-height:70px;font-family:inherit;font-size:14px;border:1.5px solid var(--line);border-radius:8px;padding:9px 11px;resize:vertical;-webkit-user-select:text;user-select:text;color:var(--navy)}
+textarea:disabled{background:#F5F2EB;color:var(--muted)}
+.hint{font-size:12px;color:var(--muted);margin-top:4px}
+.row-act{display:flex;align-items:center;gap:12px;margin-top:14px;flex-wrap:wrap}
+.btn{border:none;border-radius:9px;padding:11px 20px;font-family:inherit;font-size:14px;font-weight:700;cursor:pointer}
+.btn-primary{background:var(--bleu);color:#fff}.btn-primary:disabled{background:#c9c2b6;cursor:not-allowed}
+.btn-done{background:var(--ok);color:#fff;cursor:default}
+.btn-secondary{background:#fff;color:var(--bleu);border:1.5px solid var(--bleu)}
+.need{font-size:12.5px;color:var(--muted)}
+.corr{font-size:13px;margin-top:14px;display:none;padding-top:12px;border-top:1px solid var(--line)}
+.corr.show{display:block}
+.corr p{margin-bottom:6px}
+.corr .lg{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--muted);margin-bottom:8px}
+.corr .lg span{display:inline-flex;align-items:center;gap:5px}
+.sw{width:12px;height:12px;border-radius:3px;display:inline-block}
+.actions{margin-top:20px;display:flex;gap:12px;flex-wrap:wrap}
+.result{display:none;margin-top:24px;border-radius:12px;padding:20px 22px;border:1px solid var(--line);background:#FBF7EE}
+.result.show{display:block}
+.result h2{font-family:'Fraunces',serif;font-size:21px;font-weight:600;margin-bottom:6px}
+.result .big{font-size:30px;font-weight:700;font-family:'Fraunces',serif}
+.result p{font-size:14px;color:var(--muted);margin-top:4px}
+.recap{margin-top:14px;display:flex;flex-direction:column;gap:7px}
+.recap-row{display:flex;align-items:center;gap:10px;font-size:13.5px}
+.dot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+.recap-row .lab{flex:1}
+.recap-row .sc{font-weight:700}
+.footer{text-align:center;font-size:11.5px;color:var(--muted);padding:16px 34px 24px;border-top:1px solid var(--line)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:1.5px solid var(--line);border-radius:99px;padding:7px 13px;font-size:13px;cursor:pointer;background:#fff;font-family:inherit;color:var(--navy)}
+.chip:hover{border-color:var(--bleu-clair)}
+.chip.sel{border-color:var(--bleu);background:#EAF2FB;font-weight:700}
+.chip.good{border-color:var(--ok);background:#F2F8F4;font-weight:700}
+.chip.bad{border-color:var(--ko);background:#FBF3F3;text-decoration:line-through}
+.chip.attendu{border-color:var(--ok);background:#F2F8F4}
+.done .chip{cursor:default}
+.formelle{font-size:15.5px;background:#F7FAFD;border:1px solid #dbe6f2;border-radius:8px;padding:10px 14px;font-weight:600}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card-main">
+    <div class="header">
+      <div class="chapter-tag">TMK Performances · Pratique pro 2/4 <span>/</span> Séquence 2</div>
+      <h1>Le questionnaire qui parle</h1>
+      <p>10 questions réglementaires · justes et indispensables · personne n'a envie de les entendre telles quelles · exercice d'entraînement, rien n'est enregistré</p>
+      <hr class="gold-rule">
+    </div>
+    <div class="body">
+      <div class="consigne">
+        <b>🎯 Consigne :</b> chaque question ci-dessous est celle d'un questionnaire de conseil. Elle est juste — mais posée telle quelle au téléphone, elle fait fuir le client ou lui fait donner la réponse qu'il croit attendue. Pour chacune :
+        <ol>
+          <li>indiquez laquelle des six choses à savoir elle sert à obtenir ;</li>
+          <li>choisissez la façon de la poser que vous utiliseriez ;</li>
+          <li>si vous le souhaitez, écrivez la vôtre : elle servira à la reprise collective.</li>
+        </ol>
+        Une fois une question validée, vos réponses sont figées. Le bouton « Recommencer » remet tout à zéro.
+      </div>
+      <div class="meta">
+        <div class="progress">
+          <div class="track"><div class="fill" id="fill"></div></div>
+          <div class="plabel" id="plabel">0 / 10 question validée</div>
+        </div>
+        <div class="scorepill">Formulations justes&nbsp;: <b id="score">—</b> / 10</div>
+      </div>
+      <div id="situations"></div>
+      <div class="actions"><button class="btn btn-secondary" onclick="reinitialiser()">↻ Recommencer l'exercice</button></div>
+      <div class="result" id="result">
+        <h2 id="res-title">—</h2>
+        <p><span class="big" id="res-score">0 / 10</span> formulations justes</p>
+        <p id="res-rub"></p>
+        <p id="res-msg"></p>
+        <div class="recap" id="recap"></div>
+      </div>
+    </div>
+    <div class="footer">TMK Performances - N° Siret : 49841924100027 - Code NAF : 8559A</div>
+  </div>
+</div>
+<script>
+const D = {"rub": ["Sa situation", "Son objectif", "Son horizon", "Ses connaissances", "Sa tolérance au risque", "Sa capacité à supporter une perte"], "items": [{"q": "Quelle est votre situation familiale et patrimoniale ?", "r": 0, "bon": 0, "opts": ["Pour bien vous conseiller, parlez-moi un peu de vous : vous vivez seul, en couple, vous avez des enfants ? Et à part cette somme, avez-vous déjà de l'épargne de côté ?", "Pouvez-vous me décrire la composition de votre patrimoine ?", "Vous êtes marié ?"], "x": "La deuxième garde le mot « patrimoine », qui intimide et fait répondre « je n'en ai pas ». La troisième est fermée et ne récolte qu'un oui ou un non. La bonne question annonce pourquoi on la pose, puis ouvre sur la famille et l'épargne existante."}, {"q": "Quels sont vos revenus et vos charges mensuels ?", "r": 0, "bon": 1, "opts": ["Vous gagnez combien par mois ?", "Chaque mois, une fois les dépenses courantes payées, est-ce qu'il vous reste de la marge, ou est-ce plutôt juste ?", "Pouvez-vous me communiquer votre capacité d'épargne mensuelle ?"], "x": "La première est brutale : beaucoup de clients refusent de répondre à un inconnu au téléphone. La troisième suppose qu'il connaît sa « capacité d'épargne ». La bonne question obtient ce qui compte — la marge — sans demander un chiffre que le client n'a pas envie de donner."}, {"q": "Quels sont vos objectifs d'investissement ?", "r": 1, "bon": 2, "opts": ["Vous voulez faire fructifier votre capital, c'est bien ça ?", "Votre objectif est-il la valorisation, la recherche de revenus complémentaires ou la transmission ?", "À quoi aimeriez-vous que cet argent serve, un jour ?"], "x": "La première souffle la réponse : le client dira oui. La deuxième est un menu en vocabulaire de spécialiste. La bonne question laisse le client parler de son projet — une voiture, un enfant, sa retraite — et c'est ce projet qui guidera le conseil."}, {"q": "Quel est votre horizon de placement ?", "r": 2, "bon": 0, "opts": ["Vous pensez en avoir besoin quand — en totalité ou en partie ?", "Vous le placez à long terme, je suppose ?", "Quel horizon de placement envisagez-vous ?"], "x": "« En totalité ou en partie » est ce qui fait la différence : c'est ainsi qu'on découvre qu'une partie de la somme servira l'an prochain. La deuxième oriente la réponse. La troisième garde le mot « horizon », que peu de clients savent traduire en date."}, {"q": "Avez-vous besoin de disponibilité sur ces fonds ?", "r": 2, "bon": 0, "opts": ["Est-ce que vous voulez pouvoir récupérer cet argent rapidement si un imprévu arrive ?", "Souhaitez-vous que ces fonds restent liquides ?", "Vous n'en aurez pas besoin avant longtemps, n'est-ce pas ?"], "x": "« Liquides » est un mot de banquier. La troisième pousse le client vers la réponse qui arrange le conseiller. La bonne question parle d'imprévu : c'est concret, et elle révèle s'il a ou non une épargne de précaution ailleurs."}, {"q": "Quelles sont vos connaissances et votre expérience en matière d'instruments financiers ?", "r": 3, "bon": 1, "opts": ["Vous connaissez les unités de compte ?", "Avez-vous déjà placé de l'argent ailleurs que sur un livret ? Comment cela s'était-il passé ?", "Diriez-vous que vous êtes un investisseur averti ?"], "x": "On ne mesure pas une connaissance en demandant si l'on connaît un mot : le client dira oui par amour-propre. La troisième flatte et fausse la réponse. La bonne question part de l'expérience vécue — et « comment cela s'était-il passé ? » en dit long sur sa réaction à une baisse."}, {"q": "Comprenez-vous que la valeur des unités de compte n'est pas garantie ?", "r": 3, "bon": 1, "opts": ["Vous êtes d'accord que les unités de compte ne sont pas garanties ?", "Si je vous dis qu'une partie de votre placement peut un jour valoir moins que ce que vous avez versé, qu'est-ce que vous en comprenez ?", "Je suppose que vous savez que ça peut baisser ?"], "x": "Les deux mauvaises réponses obtiennent un oui sans rien vérifier. La bonne fait reformuler le client : s'il répond « que je peux perdre de l'argent », il a compris ; s'il répond « que ça rapporte moins », il n'a pas compris, et il faut le savoir avant de lui proposer quoi que ce soit."}, {"q": "Quelle est votre tolérance au risque ?", "r": 4, "bon": 0, "opts": ["Imaginons que dans un an vos 10 000 € ne vaillent plus que 9 000 € pendant quelques mois. Que feriez-vous ?", "Vous êtes plutôt prudent, équilibré ou dynamique ?", "Vous n'avez pas peur du risque, j'imagine ?"], "x": "Face à trois étiquettes, presque tout le monde se dit « équilibré ». La troisième souffle la réponse. La bonne question met le client devant une situation chiffrée : « je retire tout » et « j'attends que ça remonte » ne mènent pas au même conseil."}, {"q": "Quelle part de votre épargne pouvez-vous vous permettre de perdre ?", "r": 5, "bon": 1, "opts": ["Combien êtes-vous prêt à perdre ?", "Si cette somme baissait, est-ce que cela changerait quelque chose à votre quotidien ou à vos projets ?", "Quelle est votre capacité de perte, en pourcentage ?"], "x": "Personne n'est « prêt à perdre » : la première question fait répondre « rien ». La troisième est inutilisable au téléphone. La bonne question distingue ce que le client ressent (sa tolérance) de ce qu'il peut se permettre (sa capacité) : quelqu'un de très calme peut ne pas avoir les moyens de perdre."}, {"q": "Quelle est votre tranche marginale d'imposition ?", "r": 0, "bon": 2, "opts": ["Quelle est votre TMI ?", "Vous payez des impôts ?", "Pour savoir si un avantage fiscal vous servirait vraiment : votre foyer paie-t-il de l'impôt sur le revenu, et pouvez-vous me donner le revenu imposable indiqué sur votre dernier avis ?"], "x": "Peu de clients connaissent leur tranche marginale. La deuxième question est trop vague pour conclure. La bonne explique pourquoi on la pose et demande une donnée que le client peut lire sur son avis : c'est le conseiller qui en déduit la tranche."}]};
+let etat = [];
+function el(id){ return document.getElementById(id); }
+
+function render(){
+  el("situations").innerHTML = D.items.map(function(it, i){
+    const chips = D.rub.map(function(r, k){ return '<button class="chip" id="c_' + i + '_' + k + '">' + r + '</button>'; }).join("");
+    const opts = it.opts.map(function(o, j){
+      return '<label id="lab_' + i + '_' + j + '"><input type="radio" name="q' + i + '" id="r_' + i + '_' + j + '"><span>' + o + '</span></label>';
+    }).join("");
+    return '<div class="sit" id="sit_' + i + '"><div class="num">Question ' + (i + 1) + '</div>' +
+      '<div class="formelle">« ' + it.q + ' »</div>' +
+      '<div class="etape">1 · Elle sert à connaître…</div><div class="chips">' + chips + '</div>' +
+      '<div class="etape">2 · Comment vous la poseriez au téléphone</div><div class="opts">' + opts + '</div>' +
+      '<div class="etape">3 · Votre propre formulation (facultatif)</div>' +
+      '<textarea id="tx_' + i + '" placeholder="Votre question, avec vos mots…"></textarea>' +
+      '<div class="hint">Non noté. Elle servira à la reprise collective.</div>' +
+      '<div class="row-act"><button class="btn btn-primary" id="bv_' + i + '" disabled>Valider la question</button>' +
+      '<span class="need" id="need_' + i + '">Choisissez une rubrique et une formulation.</span></div>' +
+      '<div class="corr" id="corr_' + i + '"></div></div>';
+  }).join("");
+  D.items.forEach(function(it, i){
+    D.rub.forEach(function(_, k){
+      el("c_" + i + "_" + k).addEventListener("click", function(){
+        if(etat[i].valide) return;
+        etat[i].rub = k;
+        D.rub.forEach(function(_, m){ el("c_" + i + "_" + m).classList.toggle("sel", m === k); });
+        maj(i);
+      });
+    });
+    it.opts.forEach(function(_, j){
+      el("r_" + i + "_" + j).addEventListener("change", function(){
+        if(etat[i].valide) return;
+        etat[i].choix = j;
+        it.opts.forEach(function(_, m){ el("lab_" + i + "_" + m).classList.toggle("sel", m === j); });
+        maj(i);
+      });
+    });
+    const tx = el("tx_" + i);
+    ["paste","copy","cut","drop"].forEach(function(ev){ tx.addEventListener(ev, function(e){ e.preventDefault(); }); });
+    el("bv_" + i).addEventListener("click", function(){ valider(i); });
+  });
+  global();
+}
+function maj(i){
+  const ok = etat[i].rub !== null && etat[i].choix !== null;
+  el("bv_" + i).disabled = !ok; el("need_" + i).style.display = ok ? "none" : "";
+}
+function valider(i){
+  const it = D.items[i], e = etat[i];
+  e.valide = true; e.rubOk = e.rub === it.r; e.juste = e.choix === it.bon;
+  D.rub.forEach(function(_, k){
+    const c = el("c_" + i + "_" + k); c.classList.remove("sel");
+    if(k === it.r) c.classList.add(e.rubOk ? "good" : "attendu"); else if(k === e.rub) c.classList.add("bad");
+  });
+  it.opts.forEach(function(_, j){
+    const lab = el("lab_" + i + "_" + j); lab.classList.remove("sel"); el("r_" + i + "_" + j).disabled = true;
+    if(j === it.bon) lab.classList.add(e.juste ? "good" : "attendu"); else if(j === e.choix) lab.classList.add("bad");
+  });
+  el("tx_" + i).disabled = true;
+  const bv = el("bv_" + i); bv.textContent = "✓ Atelier validé"; bv.className = "btn btn-done"; bv.disabled = true;
+  el("sit_" + i).classList.add("done");
+  const corr = el("corr_" + i); corr.className = "corr show";
+  corr.innerHTML = '<p><b>' + (e.rubOk ? '✓ Rubrique juste' : '✗ Rubrique') + ' :</b> ' + D.rub[it.r] + '.</p>' +
+    '<p><b>' + (e.juste ? '✓ Formulation juste.' : '✗ Ce n’est pas celle-là.') + '</b> ' + it.x + '</p>';
+  global();
+}
+function global(){
+  const f = etat.filter(function(e){ return e.valide; }), n = f.length, N = D.items.length;
+  el("fill").style.width = (n / N * 100) + "%";
+  el("plabel").textContent = n + " / " + N + " question" + (n > 1 ? "s validées" : " validée");
+  const sc = f.filter(function(e){ return e.juste; }).length;
+  el("score").textContent = n ? sc : "—";
+  if(n < N){ el("result").classList.remove("show"); return; }
+  const rb = etat.filter(function(e){ return e.rubOk; }).length;
+  el("res-score").textContent = sc + " / " + N;
+  el("res-score").style.color = sc >= 8 ? "var(--ok)" : (sc >= 6 ? "var(--amber)" : "var(--ko)");
+  el("res-rub").textContent = "Rubriques identifiées : " + rb + " sur " + N + ".";
+  let t, m;
+  if(sc === N && rb === N){ t = "Sans faute."; m = "Vous savez ce que chaque question doit faire dire, et comment la poser. Reste à le faire dans l'ordre que le client permet : c'est l'objet des tours."; }
+  else if(sc >= 8){ t = "Presque."; m = "Relisez les questions manquées : la mauvaise formulation choisie est souvent celle qui souffle la réponse au client."; }
+  else if(sc >= 6){ t = "À consolider."; m = "Le piège le plus fréquent : la question fermée qui obtient un oui sans rien vérifier."; }
+  else { t = "À reprendre."; m = "Signalez-le au formateur : les appels de la journée reposent sur ces questions."; }
+  el("res-title").textContent = t; el("res-msg").textContent = m;
+  const par = {};
+  D.items.forEach(function(it, i){ const k = D.rub[it.r]; par[k] = par[k] || {ok:0, tot:0}; par[k].tot++; if(etat[i].juste) par[k].ok++; });
+  el("recap").innerHTML = D.rub.filter(function(k){ return par[k]; }).map(function(k){
+    const v = par[k], c = v.ok === v.tot ? "var(--ok)" : (v.ok === 0 ? "var(--ko)" : "var(--amber)");
+    return '<div class="recap-row"><span class="dot" style="background:' + c + '"></span><span class="lab">' + k + '</span><span class="sc">' + v.ok + ' / ' + v.tot + '</span></div>';
+  }).join("");
+  el("result").classList.add("show");
+}
+function reinitialiser(){
+  etat = D.items.map(function(){ return {rub:null, choix:null, valide:false, rubOk:false, juste:false}; });
+  render(); window.scrollTo({top:0, behavior:"smooth"});
+}
+reinitialiser();
+["copy","cut","contextmenu","dragstart"].forEach(function(ev){ document.addEventListener(ev, function(e){ e.preventDefault(); }); });
+document.addEventListener("keydown", function(e){
+  if((e.ctrlKey || e.metaKey) && ["c","x","v","u","s","p"].indexOf(e.key.toLowerCase()) > -1){ e.preventDefault(); }
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cas 1 — Camille, 32 ans · Corrigé formateur</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Karla:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#16243B; --bleu:#1F4E79; --bleu-clair:#2E75B6; --or:#B08D57;
+  --creme:#F5F2EB; --card:#FFFFFF; --line:#e3ddd0; --muted:#6B6459;
+  --ok:#2F7A4F; --ko:#B23B3B; --amber:#B5852A;
+  --shadow:0 2px 10px rgba(22,36,59,.07);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Karla',system-ui,sans-serif;background:var(--creme);color:var(--navy);line-height:1.55}
+.wrap{max-width:1000px;margin:0 auto;padding:26px 18px 70px}
+.card-main{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);overflow:hidden}
+.header{padding:26px 34px 0}
+.chapter-tag{font-size:11.5px;font-weight:700;letter-spacing:1.6px;text-transform:uppercase;color:var(--or)}
+.chapter-tag span{opacity:.5}
+h1{font-family:'Fraunces',serif;font-weight:600;font-size:27px;line-height:1.2;margin:8px 0 5px}
+.header p{color:var(--muted);font-size:14.5px}
+.gold-rule{border:none;border-top:2px solid var(--or);width:64px;margin:18px 0 0}
+.body{padding:22px 34px 30px}
+
+.warn{background:#FBF1DC;border:1px solid #E6D3A8;border-left:3px solid var(--amber);border-radius:8px;padding:13px 16px;font-size:13.5px;margin-bottom:20px}
+.warn b{color:var(--navy)}
+
+.situation{background:#FBF7EE;border:1px solid var(--line);border-radius:10px;padding:15px 18px;margin-bottom:18px;font-size:14px}
+.situation h2{font-family:'Fraunces',serif;font-size:17px;margin-bottom:7px}
+.situation .don{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:6px 22px;margin-top:11px}
+.don .r{display:flex;justify-content:space-between;gap:12px;border-bottom:1px dotted var(--line);padding-bottom:3px;font-size:13px}
+.don .r b{white-space:nowrap}
+
+.params{background:#FCFAF5;border:1px dashed var(--line);border-radius:10px;padding:14px 16px;margin-bottom:22px}
+.params-title{font-size:11px;font-weight:700;letter-spacing:1.3px;text-transform:uppercase;color:var(--muted);margin-bottom:10px;display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.src{font-weight:600;letter-spacing:0;text-transform:none;font-size:11.5px;padding:2px 9px;border-radius:99px}
+.src.live{background:#E8F2EA;color:var(--ok)}
+.src.local{background:#FBF1DC;color:var(--amber)}
+.plist{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:7px 22px}
+.prow{display:flex;justify-content:space-between;gap:12px;font-size:13px;border-bottom:1px dotted var(--line);padding-bottom:3px}
+.prow span:last-child{font-weight:700;white-space:nowrap}
+
+.tools{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px}
+.btn{border:none;border-radius:9px;padding:11px 20px;font-family:inherit;font-size:14px;font-weight:700;cursor:pointer}
+.btn-primary{background:var(--bleu);color:#fff}
+.btn-secondary{background:#fff;color:var(--bleu);border:1.5px solid var(--bleu)}
+
+.q{border:1.5px solid var(--line);border-radius:12px;margin-bottom:16px;overflow:hidden;background:#fff}
+.q-head{padding:16px 20px}
+.q-num{font-size:10.5px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--or);margin-bottom:5px}
+.q-txt{font-size:15.5px;font-weight:700;line-height:1.45}
+.q-btn{margin:0 20px 16px;background:var(--navy);color:#fff;border:none;border-radius:8px;padding:10px 18px;
+  font-family:inherit;font-size:13.5px;font-weight:700;cursor:pointer}
+.q-btn.open{background:#fff;color:var(--navy);border:1.5px solid var(--line)}
+.corr{max-height:0;overflow:hidden;transition:max-height .35s ease;background:#FBF7EE;border-top:1px solid var(--line)}
+.corr.show{max-height:2600px}
+.corr-in{padding:18px 20px 20px}
+.corr h4{font-size:11px;font-weight:700;letter-spacing:1.3px;text-transform:uppercase;color:var(--bleu);margin:16px 0 7px}
+.corr h4:first-child{margin-top:0}
+.corr p{font-size:14px;margin-bottom:8px}
+.corr ul{margin:0 0 8px 18px;font-size:14px}
+.corr li{margin-bottom:5px}
+.calc{width:100%;border-collapse:collapse;font-size:13.5px;margin:4px 0 10px;background:#fff;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.calc td{padding:7px 11px;border-bottom:1px solid var(--line)}
+.calc tr:last-child td{border-bottom:none}
+.calc td:last-child{text-align:right;font-weight:700;white-space:nowrap;font-variant-numeric:tabular-nums}
+.calc tr.tot td{background:#EEF4F9;color:var(--navy);font-weight:700}
+.calc tr.tot td:first-child{font-weight:700}
+.relance{background:#EEF4F9;border-left:3px solid var(--bleu-clair);border-radius:6px;padding:11px 14px;font-size:13.5px;margin-bottom:9px}
+.erreur{background:#FBF3F3;border-left:3px solid var(--ko);border-radius:6px;padding:11px 14px;font-size:13.5px}
+.erreur b,.relance b{color:var(--navy)}
+.footer{text-align:center;font-size:11.5px;color:var(--muted);padding:16px 34px 24px;border-top:1px solid var(--line)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card-main">
+    <div class="header">
+      <div class="chapter-tag">TMK Performances · Conso des acquis 2/4 <span>/</span> Séquence 4</div>
+      <h1>Cas 1 — Camille, 32 ans</h1>
+      <p>Corrigé formateur · corrections révélables · 60 minutes</p>
+      <hr class="gold-rule">
+    </div>
+
+    <div class="body">
+      <div class="warn">
+        <b>⚠ Document formateur.</b> Ne pas projeter avant la restitution. Brief 5 min · recherche individuelle 25 min ·
+        correction collective 20 min · synthèse 10 min. Interrogez nominativement plutôt que d'attendre les volontaires,
+        et faites expliciter le raisonnement <b>avant</b> de révéler le résultat.
+      </div>
+
+      <div class="situation">
+        <h2>La situation remise aux stagiaires</h2>
+        <p>Camille Berthier, 32 ans, salariée, célibataire, vient de recevoir <b>55 000 €</b> de ses grands-parents.
+        Elle achètera sa résidence principale <b>dans trois ans</b> et cette somme constituera son apport.
+        Sa banque lui propose un livret à <b>2,20 % brut</b>, qu'elle trouve plus attractif que son livret A ;
+        un collègue lui a parlé d'un PER « parce que ça fait baisser les impôts ».</p>
+        <div class="don">
+          <div class="r"><span>Capital à placer</span><b>55 000,00 €</b></div>
+          <div class="r"><span>Horizon du projet</span><b>3 ans</b></div>
+          <div class="r"><span>Livret A</span><b>au plafond</b></div>
+          <div class="r"><span>LDDS</span><b>3 000,00 € déposés</b></div>
+          <div class="r"><span>Tranche marginale</span><b>30 %</b></div>
+          <div class="r"><span>Livret bancaire proposé</span><b>2,20 % brut</b></div>
+          <div class="r"><span>Fonds en euros retenu</span><b>2,50 %</b></div>
+          <div class="r"><span>Base de comparaison</span><b>une année pleine</b></div>
+        </div>
+      </div>
+
+      <div class="params">
+        <div class="params-title">Paramètres utilisés pour le corrigé <span class="src local" id="src-badge">valeurs de secours</span></div>
+        <div class="plist" id="plist"></div>
+      </div>
+
+      <div class="tools">
+        <button class="btn btn-primary" onclick="tout(true)">Tout révéler</button>
+        <button class="btn btn-secondary" onclick="tout(false)">Tout masquer</button>
+      </div>
+
+      <div id="questions"></div>
+    </div>
+
+    <div class="footer">TMK Performances - N° Siret : 49841924100027 - Code NAF : 8559A</div>
+  </div>
+</div>
+
+<script>
+/* ─────────── Paramètres live (épargne), repli local ─────────── */
+const SB_URL = "https://ibkvyjlglwufxvzxnysa.supabase.co";
+const SB_KEY = "sb_publishable_xUfZHSOHf4TnBRRyzU_qJA_TcXIMSKX";
+
+const DEF_EP = {
+  ldds_plafond: 12000,
+  livret_a_plafond: 22950,
+  arbitrage_taux_ldds: 0.017,
+  arbitrage_taux_livret_a: 0.017,
+  av_taux_pfu_ir: 0.128,
+  epargne_ps_taux_assurance_vie: 0.172,
+  epargne_pfu_taux_ir: 0.128,
+  epargne_ps_taux_general: 0.186,
+  av_duree_seuil_annees: 8,
+};
+let P = Object.assign({}, DEF_EP);
+
+const AFFICHE = [
+  ["ldds_plafond", "Plafond du LDDS", "€"],
+  ["arbitrage_taux_ldds", "Taux du LDDS", "%"],
+  ["av_duree_seuil_annees", "Seuil d'ancienneté de l'assurance vie", "a"],
+  ["av_taux_pfu_ir", "Assurance vie — impôt sur le revenu", "%"],
+  ["epargne_ps_taux_assurance_vie", "Assurance vie — prélèvements sociaux", "%"],
+  ["epargne_pfu_taux_ir", "Livret fiscalisé — impôt sur le revenu", "%"],
+  ["epargne_ps_taux_general", "Livret fiscalisé — prélèvements sociaux", "%"],
+];
+
+function el(id){ return document.getElementById(id); }
+function eur(n){ return n.toLocaleString("fr-FR",{minimumFractionDigits:2,maximumFractionDigits:2}) + " €"; }
+function eur0(n){ return n.toLocaleString("fr-FR",{minimumFractionDigits:0,maximumFractionDigits:0}) + " €"; }
+function pct(n, d){ return (Math.round(n*10000)/100).toLocaleString("fr-FR", d ? {minimumFractionDigits:d, maximumFractionDigits:d} : {}) + " %"; }
+function r2(n){ return Math.round(n*100)/100; }
+
+function renderParams(){
+  el("plist").innerHTML = AFFICHE.map(function(a){
+    const v = P[a[0]];
+    const aff = a[2] === "%" ? pct(v) : (a[2] === "a" ? v + " ans" : eur0(v));
+    return '<div class="prow"><span>' + a[1] + '</span><span>' + aff + '</span></div>';
+  }).join("");
+}
+
+async function chargerParametres(){
+  let ok = 0;
+  try{
+    const r = await fetch(SB_URL + "/rest/v1/parametres_epargne?select=cle,valeur&cle=in.(" + Object.keys(DEF_EP).join(",") + ")&apikey=" + SB_KEY);
+    if(!r.ok) throw new Error(r.status);
+    const rows = await r.json();
+    if(!rows.length) throw new Error("vide");
+    rows.forEach(function(row){ if(row.valeur !== null) P[row.cle] = Number(row.valeur); });
+    ok = 1;
+  }catch(e){}
+  const b = el("src-badge");
+  if(ok){ b.className = "src live"; b.textContent = "valeurs à jour"; }
+  else { b.className = "src local"; b.textContent = "valeurs de secours"; }
+  renderParams(); renderQuestions();
+}
+
+/* ─────────── Le corrigé ─────────── */
+const CAP = 55000, LDDS_DEJA = 3000, HORIZON = 3;
+const TAUX_LIVRET_BQ = 0.022, TAUX_FONDS_EUROS = 0.025;
+
+function calculs(){
+  const marge   = Math.max(0, P.ldds_plafond - LDDS_DEJA);
+  const solde   = CAP - marge;
+
+  // LDDS : exonéré
+  const gainLdds = r2(marge * P.arbitrage_taux_ldds);
+  // La même somme laissée sur le livret bancaire fiscalisé
+  const tauxFisc = P.epargne_pfu_taux_ir + P.epargne_ps_taux_general;
+  const bqSurMarge      = r2(marge * TAUX_LIVRET_BQ);
+  const bqSurMargeNet   = r2(bqSurMarge * (1 - tauxFisc));
+  const ecartLdds       = r2(gainLdds - bqSurMargeNet);
+
+  // Solde : livret bancaire fiscalisé
+  const bqBrut = r2(solde * TAUX_LIVRET_BQ);
+  const bqImp  = r2(bqBrut * tauxFisc);
+  const bqNet  = r2(bqBrut - bqImp);
+  const bqTaux = bqNet / solde;
+
+  // Solde : fonds en euros
+  const tauxAv = P.av_taux_pfu_ir + P.epargne_ps_taux_assurance_vie;
+  const avBrut = r2(solde * TAUX_FONDS_EUROS);
+  const avImp  = r2(avBrut * tauxAv);
+  const avNet  = r2(avBrut - avImp);
+  const avTaux = avNet / solde;
+
+  const ecart = r2(avNet - bqNet);
+
+  return {marge, solde, gainLdds, bqSurMarge, bqSurMargeNet, ecartLdds,
+          tauxFisc, bqBrut, bqImp, bqNet, bqTaux,
+          tauxAv, avBrut, avImp, avNet, avTaux, ecart};
+}
+
+function tableau(rows){
+  return '<table class="calc">' + rows.map(function(r){
+    return '<tr' + (r[2] ? ' class="tot"' : '') + '><td>' + r[0] + '</td><td>' + r[1] + '</td></tr>';
+  }).join("") + '</table>';
+}
+
+function questions(){
+  const c = calculs();
+  return [
+  {
+    txt: "Parmi les supports envisageables, lesquels écartez-vous d'emblée, et pourquoi ? Traitez explicitement le cas du PER.",
+    corr:
+      '<h4>Ce qu\'on attend</h4>' +
+      '<p>Un seul critère suffit à trancher : <b>l\'horizon de trois ans</b>. Il élimine avant même qu\'on parle de rendement.</p>' +
+      '<ul>' +
+      '<li><b>Le PER est à écarter, et fermement.</b> Il est bloqué jusqu\'à la retraite. Camille a 32 ans : son argent y serait immobilisé une trentaine d\'années, alors qu\'elle en a besoin dans trois. ' +
+      'Le déblocage anticipé pour l\'achat de la résidence principale existe, mais le capital déduit serait alors imposé au barème — à sa tranche de 30 %, l\'avantage obtenu à l\'entrée est repris à la sortie. On ne construit pas un apport sur un PER.</li>' +
+      '<li><b>Les supports en unités de compte et le PEA sont à écarter</b> : le capital n\'y est pas garanti, et trois ans sont trop courts pour absorber une baisse. Un apport immobilier ne se place pas sur un support risqué.</li>' +
+      '<li><b>Restent en lice</b> : les livrets réglementés encore disponibles, un livret bancaire fiscalisé, et un contrat d\'assurance vie en fonds en euros — disponible à tout moment, capital garanti.</li>' +
+      '</ul>' +
+      '<div class="relance"><b>À faire dire au groupe :</b> le collègue de Camille n\'a pas complètement tort — le PER fait bien baisser l\'impôt. Où est l\'erreur, exactement ? ' +
+      'Et si le projet était à quinze ans plutôt qu\'à trois, la réponse changerait-elle ?</div>' +
+      '<div class="erreur"><b>Erreur fréquente :</b> écarter le PER en disant « c\'est bloqué », sans mentionner le déblocage pour la résidence principale. Un client informé le sortira, et le conseiller perdra sa crédibilité. Il faut connaître l\'exception ET savoir pourquoi elle ne sauve pas l\'opération.</div>'
+  },
+  {
+    txt: "Avant tout arbitrage, une opération simple s'impose. Laquelle, pour quel montant, et pourquoi passe-t-elle avant le reste ?",
+    corr:
+      '<h4>Remplir le LDDS</h4>' +
+      tableau([
+        ["Plafond du LDDS", eur0(P.ldds_plafond)],
+        ["Déjà déposé", "− " + eur0(LDDS_DEJA)],
+        ["Versement possible", eur0(c.marge), true],
+        ["Solde restant à placer ailleurs", eur0(c.solde)],
+      ]) +
+      '<h4>Pourquoi c\'est prioritaire, et non accessoire</h4>' +
+      '<p>Le LDDS est <b>exonéré d\'impôt sur le revenu et de prélèvements sociaux</b>. C\'est le seul cas de la liste. Comparons ce que rapportent ces ' + eur0(c.marge) + ' selon l\'endroit où on les place :</p>' +
+      tableau([
+        ["Sur le LDDS : " + eur0(c.marge) + " × " + pct(P.arbitrage_taux_ldds) + ", net d'impôt", eur(c.gainLdds), true],
+        ["Sur le livret bancaire : " + eur0(c.marge) + " × " + pct(TAUX_LIVRET_BQ), eur(c.bqSurMarge)],
+        ["moins " + pct(c.tauxFisc) + " de prélèvement forfaitaire", eur(c.bqSurMargeNet), true],
+        ["Écart en faveur du LDDS", eur(c.ecartLdds)],
+      ]) +
+      '<p><b>Un taux affiché de ' + pct(P.arbitrage_taux_ldds) + ' bat un taux affiché de ' + pct(TAUX_LIVRET_BQ) + '.</b> ' +
+      'C\'est le premier réflexe de la journée : ne jamais comparer deux taux bruts.</p>' +
+      '<div class="relance"><b>À faire dire au groupe :</b> à partir de quel taux brut le livret bancaire deviendrait-il aussi intéressant que le LDDS ? ' +
+      '(Réponse : il faudrait ' + pct(P.arbitrage_taux_ldds / (1 - c.tauxFisc), 2) + ' brut pour égaler ' + pct(P.arbitrage_taux_ldds) + ' net.)</div>' +
+      '<div class="erreur"><b>Erreur fréquente :</b> oublier cette étape et arbitrer directement sur les 55 000 €. Le conseiller propose alors un produit là où une simple opération de guichet aurait rapporté davantage.</div>'
+  },
+  {
+    txt: "Sur le solde, comparez le rendement net du livret bancaire à 2,20 % et celui du fonds en euros à 2,50 %.",
+    corr:
+      '<h4>Le livret bancaire fiscalisé</h4>' +
+      tableau([
+        ["Intérêts bruts : " + eur0(c.solde) + " × " + pct(TAUX_LIVRET_BQ), eur(c.bqBrut)],
+        ["Prélèvement forfaitaire : " + pct(P.epargne_pfu_taux_ir) + " d'impôt + " + pct(P.epargne_ps_taux_general) + " de prélèvements sociaux", "− " + eur(c.bqImp)],
+        ["Gain net sur un an", eur(c.bqNet), true],
+        ["Taux net", pct(c.bqTaux, 2)],
+      ]) +
+      '<h4>Le fonds en euros</h4>' +
+      tableau([
+        ["Intérêts bruts : " + eur0(c.solde) + " × " + pct(TAUX_FONDS_EUROS), eur(c.avBrut)],
+        ["Contrat de moins de " + P.av_duree_seuil_annees + " ans : " + pct(P.av_taux_pfu_ir) + " d'impôt + " + pct(P.epargne_ps_taux_assurance_vie) + " de prélèvements sociaux", "− " + eur(c.avImp)],
+        ["Gain net sur un an", eur(c.avNet), true],
+        ["Taux net", pct(c.avTaux, 2)],
+      ]) +
+      '<h4>La comparaison</h4>' +
+      tableau([
+        ["Écart annuel en faveur du fonds en euros", eur(c.ecart), true],
+        ["Écart de taux net", pct(c.avTaux - c.bqTaux, 2)],
+      ]) +
+      '<p>Deux causes se cumulent : un rendement brut supérieur de 0,30 point, et surtout <b>un taux de prélèvements sociaux plus faible</b>. ' +
+      'L\'assurance vie a été exclue de la hausse de cette année, pas le livret bancaire.</p>' +
+      '<div class="relance"><b>À faire dire au groupe :</b> le taux net du fonds en euros ressort à ' + pct(c.avTaux, 2) + '. ' +
+      'Comparez-le au taux du livret A, exonéré. Que faut-il en conclure sur l\'ordre des opérations ?</div>' +
+      '<div class="erreur"><b>Erreur fréquente :</b> appliquer 30 % aux deux supports. Depuis cette année, le livret bancaire subit ' + pct(c.tauxFisc) + ' et l\'assurance vie ' + pct(c.tauxAv) + '. ' +
+      'Un même calcul appliqué aux deux fausse la comparaison — et toujours au détriment de l\'assurance vie.</div>'
+  },
+  {
+    txt: "« Donc je mets tout sur le livret à 2,20 %, c'est le plus rentable ? » — répondez en trois phrases.",
+    corr:
+      '<h4>Une réponse possible</h4>' +
+      '<p>« Le taux affiché ne dit pas ce que vous toucherez : sur ce livret, l\'État prend ' + pct(c.tauxFisc) + ' des intérêts, ' +
+      'ce qui ramène vos ' + pct(TAUX_LIVRET_BQ) + ' à ' + pct(c.bqTaux, 2) + ' réels. Commençons par compléter votre LDDS de ' + eur0(c.marge) + ' : ' +
+      'là, vous ne payez rien du tout, et ' + pct(P.arbitrage_taux_ldds) + ' exonérés valent mieux que ' + pct(TAUX_LIVRET_BQ) + ' imposés. ' +
+      'Pour le reste, un contrat d\'assurance vie en fonds en euros vous laisse l\'argent disponible pour votre achat et vous rapporte ' +
+      'environ ' + eur(c.ecart) + ' de plus par an que le livret de votre banque. »</p>' +
+      '<div class="relance"><b>Ce qu\'on évalue :</b> corriger sans donner tort, chiffrer, puis ordonner les opérations. ' +
+      'La réponse doit dire quoi faire en premier, pas seulement quel produit est meilleur.</div>' +
+      '<div class="erreur"><b>Erreur fréquente :</b> répondre « non, c\'est l\'assurance vie qui est plus rentable » et s\'arrêter là. ' +
+      'On a alors vendu un contrat sans avoir rempli le LDDS — c\'est-à-dire en laissant de côté le meilleur rendement net disponible.</div>'
+  },
+  ];
+}
+
+function renderQuestions(){
+  const qs = questions();
+  el("questions").innerHTML = qs.map(function(q, i){
+    return '<div class="q">' +
+      '<div class="q-head"><div class="q-num">Question ' + (i + 1) + '</div><div class="q-txt">' + q.txt + '</div></div>' +
+      '<button class="q-btn" id="btn' + i + '" onclick="bascule(' + i + ')">Révéler la correction</button>' +
+      '<div class="corr" id="corr' + i + '"><div class="corr-in">' + q.corr + '</div></div>' +
+    '</div>';
+  }).join("");
+}
+function bascule(i){
+  const c = el("corr" + i), b = el("btn" + i);
+  const ouvert = c.classList.toggle("show");
+  b.classList.toggle("open", ouvert);
+  b.textContent = ouvert ? "Masquer la correction" : "Révéler la correction";
+}
+function tout(ouvrir){
+  questions().forEach(function(_, i){
+    const c = el("corr" + i), b = el("btn" + i);
+    c.classList.toggle("show", ouvrir);
+    b.classList.toggle("open", ouvrir);
+    b.textContent = ouvrir ? "Masquer la correction" : "Révéler la correction";
+  });
+}
+
+renderParams();
+renderQuestions();
+chargerParametres();
+
+</script>
+</body>
+</html>

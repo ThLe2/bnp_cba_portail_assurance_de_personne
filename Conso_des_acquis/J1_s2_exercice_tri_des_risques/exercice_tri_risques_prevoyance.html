@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exercice de tri — Les quatre risques de la prévoyance</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Karla:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#16243B; --bleu:#1F4E79; --bleu-clair:#2E75B6; --or:#B08D57;
+  --creme:#F5F2EB; --card:#FFFFFF; --line:#e3ddd0; --muted:#6B6459;
+  --ok:#2F7A4F; --ko:#B23B3B; --amber:#B5852A;
+  --shadow:0 2px 10px rgba(22,36,59,.07);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Karla',system-ui,sans-serif;background:var(--creme);color:var(--navy);line-height:1.55;
+  -webkit-user-select:none;user-select:none}
+.wrap{max-width:1120px;margin:0 auto;padding:26px 18px 60px}
+.card-main{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);overflow:hidden}
+.header{padding:26px 34px 0}
+.chapter-tag{font-size:11.5px;font-weight:700;letter-spacing:1.6px;text-transform:uppercase;color:var(--or)}
+.chapter-tag span{opacity:.5}
+h1{font-family:'Fraunces',serif;font-weight:600;font-size:27px;line-height:1.2;margin:8px 0 5px;color:var(--navy)}
+.header p{color:var(--muted);font-size:14.5px}
+.gold-rule{border:none;border-top:2px solid var(--or);width:64px;margin:18px 0 0}
+.body{padding:22px 34px 30px}
+.consigne{background:#FBF7EE;border:1px solid var(--line);border-left:3px solid var(--or);border-radius:8px;padding:14px 17px;font-size:14px;margin-bottom:22px}
+.consigne b{color:var(--navy)}
+
+.meta{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:16px}
+.progress{flex:1;min-width:220px}
+.track{height:8px;background:#e6e0d3;border-radius:99px;overflow:hidden}
+.fill{height:100%;width:0;background:var(--bleu-clair);transition:width .3s}
+.plabel{font-size:12.5px;color:var(--muted);margin-top:6px}
+.scorepill{background:var(--navy);color:#fff;border-radius:99px;padding:6px 15px;font-size:13px;font-weight:600}
+
+.pool{border:1px dashed var(--line);border-radius:12px;padding:14px;background:#FCFAF5;margin-bottom:22px;min-height:86px}
+.pool-title{font-size:11px;font-weight:700;letter-spacing:1.3px;text-transform:uppercase;color:var(--muted);margin-bottom:11px}
+.chips{display:flex;flex-wrap:wrap;gap:9px}
+.chip{background:#fff;border:1.5px solid var(--line);border-radius:9px;padding:9px 13px;font-size:13.5px;cursor:pointer;
+  max-width:340px;transition:border-color .15s,box-shadow .15s,transform .12s;text-align:left}
+.chip:hover{border-color:var(--bleu-clair)}
+.chip.sel{border-color:var(--bleu);box-shadow:0 0 0 3px rgba(31,78,121,.14);transform:translateY(-1px)}
+.chip .tag{display:block;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--or);margin-bottom:3px}
+.chip.done{cursor:default}
+.chip.good{border-color:var(--ok);background:#F2F8F4}
+.chip.bad{border-color:var(--ko);background:#FBF3F3}
+.chip .fix{display:block;font-size:12px;color:var(--muted);margin-top:6px;padding-top:6px;border-top:1px solid var(--line)}
+.chip .fix b{color:var(--navy)}
+
+.cols{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+@media(max-width:900px){.cols{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.cols{grid-template-columns:1fr}.chip{max-width:100%}}
+.col{border:1.5px solid var(--line);border-radius:12px;background:#fff;padding:13px;min-height:210px;transition:border-color .15s,background .15s}
+.col.armed{border-color:var(--bleu-clair);background:#F7FAFD;cursor:pointer}
+.col h3{font-family:'Fraunces',serif;font-size:16.5px;font-weight:600;margin-bottom:3px}
+.col .sub{font-size:11.5px;color:var(--muted);margin-bottom:12px}
+.col .slots{display:flex;flex-direction:column;gap:8px}
+.col .empty{font-size:12px;color:#a89f92;font-style:italic;padding:8px 0}
+
+.actions{margin-top:26px;display:flex;gap:12px;flex-wrap:wrap}
+.btn{border:none;border-radius:9px;padding:13px 24px;font-family:inherit;font-size:14.5px;font-weight:700;cursor:pointer}
+.btn-primary{background:var(--bleu);color:#fff}
+.btn-primary:disabled{background:#c9c2b6;cursor:not-allowed}
+.btn-secondary{background:#fff;color:var(--bleu);border:1.5px solid var(--bleu)}
+
+.result{display:none;margin-top:24px;border-radius:12px;padding:20px 22px;border:1px solid var(--line);background:#FBF7EE}
+.result.show{display:block}
+.result h2{font-family:'Fraunces',serif;font-size:21px;font-weight:600;margin-bottom:6px}
+.result p{font-size:14px;color:var(--muted)}
+.result .big{font-size:34px;font-weight:700;color:var(--navy);font-family:'Fraunces',serif}
+.recap{margin-top:16px;display:flex;flex-direction:column;gap:7px}
+.recap-row{display:flex;align-items:center;gap:10px;font-size:13.5px}
+.dot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+.recap-row .lab{flex:1}
+.recap-row .sc{font-weight:700}
+.footer{text-align:center;font-size:11.5px;color:var(--muted);padding:16px 34px 24px;border-top:1px solid var(--line);margin-top:6px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card-main">
+    <div class="header">
+      <div class="chapter-tag">TMK Performances · Conso des acquis 1/4 <span>/</span> Séquence 2</div>
+      <h1>À chaque risque sa prestation, sa base et sa limite</h1>
+      <p>12 étiquettes · 4 risques · exercice d'entraînement, sans note</p>
+      <hr class="gold-rule">
+    </div>
+
+    <div class="body">
+      <div class="consigne">
+        <b>🎯 Consigne :</b> chacun des quatre risques de la prévoyance se lit toujours de la même façon —
+        <b>ce que verse le régime de base</b>, <b>sur quoi il le calcule</b>, et <b>où il s'arrête</b>.
+        Cliquez une étiquette, puis la colonne où elle doit aller. Pour la retirer, cliquez-la de nouveau.
+        Rien n'est enregistré : ce qui compte, ce sont les étiquettes qui vous font hésiter.
+      </div>
+
+      <div class="meta">
+        <div class="progress">
+          <div class="track"><div class="fill" id="fill"></div></div>
+          <div class="plabel" id="plabel">0 / 12 étiquette placée</div>
+        </div>
+        <div class="scorepill">Score&nbsp;: <b id="score">—</b> / 12</div>
+      </div>
+
+      <div class="pool">
+        <div class="pool-title">Étiquettes à placer</div>
+        <div class="chips" id="pool"></div>
+      </div>
+
+      <div class="cols" id="cols"></div>
+
+      <div class="actions">
+        <button class="btn btn-primary" id="btn-validate" disabled onclick="valider()">Valider mon classement</button>
+        <button class="btn btn-secondary" id="btn-reset" onclick="reinitialiser()">↻ Recommencer</button>
+      </div>
+
+      <div class="result" id="result">
+        <h2 id="res-title">—</h2>
+        <p><span class="big" id="res-score">0 / 12</span></p>
+        <p id="res-msg"></p>
+        <div class="recap" id="recap"></div>
+      </div>
+    </div>
+
+    <div class="footer">TMK Performances - N° Siret : 49841924100027 - Code NAF : 8559A</div>
+  </div>
+</div>
+
+<script>
+const RISQUES = [
+  {id:"AT",  nom:"Arrêt de travail",  sub:"Le revenu s'interrompt"},
+  {id:"INV", nom:"Invalidité",        sub:"La capacité de travail est réduite"},
+  {id:"DEC", nom:"Décès",             sub:"Capital décès du régime général"},
+  {id:"DEP", nom:"Dépendance",        sub:"Perte d'autonomie liée à l'âge"},
+];
+
+const ETIQUETTES = [
+  // --- Arrêt de travail
+  {id:1,  r:"AT",  type:"La prestation",
+   txt:"Des indemnités journalières, complétées le cas échéant par un maintien de salaire de l'employeur",
+   expl:"Deux étages : la Sécurité sociale d'abord, l'employeur ensuite au titre de la loi de mensualisation — sous condition d'ancienneté."},
+  {id:2,  r:"AT",  type:"La base de calcul",
+   txt:"La moyenne des salaires bruts des trois derniers mois",
+   expl:"C'est le salaire journalier de base. Trois mois, pas dix ans : c'est la confusion la plus fréquente avec l'invalidité."},
+  {id:3,  r:"AT",  type:"La limite",
+   txt:"Rien pendant les trois premiers jours d'arrêt",
+   expl:"Le délai de carence. Il ne s'applique pas en accident du travail ou maladie professionnelle, où l'indemnisation démarre dès le lendemain."},
+
+  // --- Invalidité
+  {id:4,  r:"INV", type:"La prestation",
+   txt:"Une pension dont le taux dépend de la catégorie reconnue",
+   expl:"Catégorie 1 : une activité reste possible. Catégorie 2 : non. Catégorie 3 : l'assistance d'une tierce personne s'y ajoute."},
+  {id:5,  r:"INV", type:"La base de calcul",
+   txt:"Le salaire annuel moyen des dix meilleures années",
+   expl:"Dix meilleures années, chacune plafonnée. À ne pas confondre avec les vingt-cinq meilleures années de la retraite de base."},
+  {id:6,  r:"INV", type:"La limite",
+   txt:"Un plancher et un plafond mensuels, quel que soit l'ancien salaire",
+   expl:"Au-delà d'un certain niveau de revenu, la pension ne suit plus : c'est là que se creuse l'écart que le client ne voit pas venir."},
+
+  // --- Décès
+  {id:7,  r:"DEC", type:"La prestation",
+   txt:"Un capital versé aux proches, identique pour tous",
+   expl:"Il ne dépend ni du salaire du défunt, ni du nombre d'enfants. Il est par ailleurs exonéré d'impôt comme de cotisations."},
+  {id:8,  r:"DEC", type:"La base de calcul",
+   txt:"Aucune : c'est un forfait, revalorisé chaque année",
+   expl:"Seule prestation du parcours sans assiette de calcul. Chercher un pourcentage d'un salaire n'a ici aucun sens."},
+  {id:9,  r:"DEC", type:"La limite",
+   txt:"Rien n'est versé sans demande des bénéficiaires",
+   expl:"Le capital ne se déclenche jamais tout seul. Passé les délais, il est perdu — l'angle mort le plus coûteux du régime de base."},
+
+  // --- Dépendance
+  {id:10, r:"DEP", type:"La prestation",
+   txt:"L'allocation personnalisée d'autonomie, à partir de 60 ans",
+   expl:"Deux conditions cumulatives : l'âge, et un classement en GIR 1 à 4 après évaluation par la grille AGGIR."},
+  {id:11, r:"DEP", type:"La base de calcul",
+   txt:"Le plan d'aide, plafonné selon le GIR",
+   expl:"On part du plan d'aide plafonné par GIR, dont on retire une participation calculée d'après les ressources de la personne."},
+  {id:12, r:"DEP", type:"La limite",
+   txt:"L'hébergement en établissement n'est jamais couvert",
+   expl:"En EHPAD, l'allocation prend le tarif dépendance et lui seul. L'hébergement — la dépense principale — reste entièrement à la charge de la famille."},
+];
+
+let place = {};      // id étiquette -> id risque
+let selection = null;
+let valide = false;
+
+function el(id){ return document.getElementById(id); }
+
+function render(){
+  // pool
+  const pool = el("pool");
+  pool.innerHTML = "";
+  const libres = ETIQUETTES.filter(e => !place[e.id]);
+  if(!libres.length && !valide){
+    pool.innerHTML = '<div class="empty" style="font-size:12.5px;color:#a89f92;font-style:italic">Toutes les étiquettes sont placées. Vous pouvez valider.</div>';
+  }
+  libres.forEach(e => pool.appendChild(chip(e)));
+
+  // colonnes
+  const cols = el("cols");
+  cols.innerHTML = "";
+  RISQUES.forEach(r => {
+    const d = document.createElement("div");
+    d.className = "col" + (selection && !valide ? " armed" : "");
+    d.innerHTML = '<h3>' + r.nom + '</h3><div class="sub">' + r.sub + '</div>';
+    const slots = document.createElement("div");
+    slots.className = "slots";
+    const dedans = ETIQUETTES.filter(e => place[e.id] === r.id);
+    if(!dedans.length) slots.innerHTML = '<div class="empty">Aucune étiquette</div>';
+    dedans.forEach(e => slots.appendChild(chip(e)));
+    d.appendChild(slots);
+    if(!valide) d.onclick = function(ev){ if(ev.target.closest(".chip")) return; deposer(r.id); };
+    cols.appendChild(d);
+  });
+  majProgression();
+}
+
+function chip(e){
+  const b = document.createElement("button");
+  b.type = "button";
+  b.className = "chip" + (selection === e.id ? " sel" : "");
+  let html = '<span class="tag">' + e.type + '</span>' + e.txt;
+  if(valide){
+    const bon = place[e.id] === e.r;
+    b.className = "chip done " + (bon ? "good" : "bad");
+    const nomAttendu = RISQUES.find(r => r.id === e.r).nom;
+    html += '<span class="fix">' + (bon ? '✓ ' : '✗ à classer en <b>' + nomAttendu + '</b> — ') + e.expl + '</span>';
+  } else {
+    b.onclick = function(ev){ ev.stopPropagation(); cliquer(e.id); };
+  }
+  b.innerHTML = html;
+  return b;
+}
+
+function cliquer(id){
+  if(valide) return;
+  if(place[id]){ delete place[id]; selection = null; render(); return; }
+  selection = (selection === id) ? null : id;
+  render();
+}
+
+function deposer(rid){
+  if(valide || !selection) return;
+  place[selection] = rid;
+  selection = null;
+  render();
+}
+
+function majProgression(){
+  const n = Object.keys(place).length;
+  el("fill").style.width = (n / ETIQUETTES.length * 100) + "%";
+  el("plabel").textContent = n + " / " + ETIQUETTES.length + " étiquette" + (n > 1 ? "s placées" : " placée");
+  el("btn-validate").disabled = valide || n !== ETIQUETTES.length;
+}
+
+function valider(){
+  valide = true;
+  let score = 0;
+  const parRisque = {};
+  RISQUES.forEach(r => parRisque[r.id] = {ok:0, total:0});
+  ETIQUETTES.forEach(e => {
+    parRisque[e.r].total++;
+    if(place[e.id] === e.r){ score++; parRisque[e.r].ok++; }
+  });
+  el("score").textContent = score;
+  el("res-score").textContent = score + " / " + ETIQUETTES.length;
+
+  let titre, msg;
+  if(score === 12){ titre = "Sans faute."; msg = "Les quatre mécaniques sont en place. Vous pouvez aborder les cas sans filet."; }
+  else if(score >= 9){ titre = "Presque."; msg = "L'essentiel tient. Regardez les étiquettes en rouge : ce sont elles qui vous coûteront un cas."; }
+  else if(score >= 6){ titre = "À consolider."; msg = "Les risques se mélangent encore. Reprenez les corrections ci-dessous avant le premier cas."; }
+  else { titre = "À reprendre."; msg = "Les quatre mécaniques ne sont pas encore distinctes. Signalez-le au formateur avant de démarrer les cas."; }
+  el("res-title").textContent = titre;
+  el("res-msg").textContent = msg;
+
+  let html = "";
+  RISQUES.forEach(r => {
+    const s = parRisque[r.id];
+    const couleur = s.ok === s.total ? "var(--ok)" : (s.ok === 0 ? "var(--ko)" : "var(--amber)");
+    html += '<div class="recap-row"><span class="dot" style="background:' + couleur + '"></span>' +
+            '<span class="lab">' + r.nom + '</span><span class="sc">' + s.ok + ' / ' + s.total + '</span></div>';
+  });
+  el("recap").innerHTML = html;
+  el("result").classList.add("show");
+  el("btn-validate").disabled = true;
+  render();
+  el("result").scrollIntoView({behavior:"smooth", block:"nearest"});
+}
+
+function reinitialiser(){
+  place = {}; selection = null; valide = false;
+  el("score").textContent = "—";
+  el("result").classList.remove("show");
+  render();
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+
+/* mélange initial des étiquettes */
+for(let i = ETIQUETTES.length - 1; i > 0; i--){
+  const j = Math.floor(Math.random() * (i + 1));
+  [ETIQUETTES[i], ETIQUETTES[j]] = [ETIQUETTES[j], ETIQUETTES[i]];
+}
+render();
+
+/* Copier-coller neutralisé (standard TMK) */
+["copy","cut","paste","contextmenu","dragstart"].forEach(function(ev){
+  document.addEventListener(ev, function(e){ e.preventDefault(); });
+});
+document.addEventListener("keydown", function(e){
+  if((e.ctrlKey || e.metaKey) && ["c","x","v","u","s","p"].indexOf(e.key.toLowerCase()) > -1){ e.preventDefault(); }
+});
+</script>
+</body>
+</html>

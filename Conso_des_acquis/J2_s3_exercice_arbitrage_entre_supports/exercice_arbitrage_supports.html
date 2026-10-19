@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exercice — Classer les supports, chiffrer un rachat</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Karla:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#16243B;--bleu:#1F4E79;--bleu-clair:#2E75B6;--or:#B08D57;--creme:#F5F2EB;--card:#FFFFFF;
+  --line:#e3ddd0;--muted:#6B6459;--ok:#2F7A4F;--ko:#B23B3B;--amber:#B5852A;--shadow:0 2px 10px rgba(22,36,59,.07);}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Karla',system-ui,sans-serif;background:var(--creme);color:var(--navy);line-height:1.55;-webkit-user-select:none;user-select:none}
+.wrap{max-width:1120px;margin:0 auto;padding:26px 18px 60px}
+.card-main{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);overflow:hidden}
+.header{padding:26px 34px 0}
+.chapter-tag{font-size:11.5px;font-weight:700;letter-spacing:1.6px;text-transform:uppercase;color:var(--or)}
+.chapter-tag span{opacity:.5}
+h1{font-family:'Fraunces',serif;font-weight:600;font-size:27px;line-height:1.2;margin:8px 0 5px}
+.header p{color:var(--muted);font-size:14.5px}
+.gold-rule{border:none;border-top:2px solid var(--or);width:64px;margin:18px 0 0}
+.body{padding:22px 34px 30px}
+.consigne{background:#FBF7EE;border:1px solid var(--line);border-left:3px solid var(--or);border-radius:8px;padding:14px 17px;font-size:14px;margin-bottom:22px}
+.meta{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:18px}
+.progress{flex:1;min-width:220px}
+.track{height:8px;background:#e6e0d3;border-radius:99px;overflow:hidden}
+.fill{height:100%;width:0;background:var(--bleu-clair);transition:width .3s}
+.plabel{font-size:12.5px;color:var(--muted);margin-top:6px}
+.scorepill{background:var(--navy);color:#fff;border-radius:99px;padding:6px 15px;font-size:13px;font-weight:600}
+.part{margin-bottom:30px}
+.part-head{display:flex;align-items:baseline;gap:11px;margin-bottom:6px}
+.part-num{background:var(--navy);color:#fff;border-radius:99px;width:25px;height:25px;display:inline-flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0}
+.part-head h2{font-family:'Fraunces',serif;font-size:20px;font-weight:600}
+.part-sub{font-size:13.5px;color:var(--muted);margin:0 0 15px 36px}
+.pool{border:1px dashed var(--line);border-radius:12px;padding:14px;background:#FCFAF5;margin-bottom:20px;min-height:80px}
+.pool-title{font-size:11px;font-weight:700;letter-spacing:1.3px;text-transform:uppercase;color:var(--muted);margin-bottom:11px}
+.chips{display:flex;flex-wrap:wrap;gap:9px}
+.chip{background:#fff;border:1.5px solid var(--line);border-radius:9px;padding:9px 13px;font-size:13.5px;cursor:pointer;max-width:330px;text-align:left;transition:border-color .15s,box-shadow .15s,transform .12s}
+.chip:hover{border-color:var(--bleu-clair)}
+.chip.sel{border-color:var(--bleu);box-shadow:0 0 0 3px rgba(31,78,121,.14);transform:translateY(-1px)}
+.chip.done{cursor:default}
+.chip.good{border-color:var(--ok);background:#F2F8F4}
+.chip.bad{border-color:var(--ko);background:#FBF3F3}
+.chip .fix{display:block;font-size:12px;color:var(--muted);margin-top:6px;padding-top:6px;border-top:1px solid var(--line)}
+.chip .fix b{color:var(--navy)}
+.cols{display:grid;grid-template-columns:repeat(4,1fr);gap:13px}
+@media(max-width:980px){.cols{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.cols{grid-template-columns:1fr}.chip{max-width:100%}}
+.col{border:1.5px solid var(--line);border-radius:12px;background:#fff;padding:13px;min-height:200px;transition:border-color .15s,background .15s}
+.col.armed{border-color:var(--bleu-clair);background:#F7FAFD;cursor:pointer}
+.col h3{font-family:'Fraunces',serif;font-size:15px;font-weight:600;line-height:1.3;margin-bottom:4px}
+.col .sub{font-size:11.5px;color:var(--muted);margin-bottom:12px}
+.col .slots{display:flex;flex-direction:column;gap:8px}
+.col .empty{font-size:12px;color:#a89f92;font-style:italic;padding:8px 0}
+.params{background:#FCFAF5;border:1px dashed var(--line);border-radius:10px;padding:14px 16px;margin-bottom:18px}
+.params-title{font-size:11px;font-weight:700;letter-spacing:1.3px;text-transform:uppercase;color:var(--muted);margin-bottom:10px;display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.src{font-weight:600;letter-spacing:0;text-transform:none;font-size:11.5px;padding:2px 9px;border-radius:99px}
+.src.live{background:#E8F2EA;color:var(--ok)}.src.local{background:#FBF1DC;color:var(--amber)}
+.plist{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:8px 20px}
+.prow{display:flex;justify-content:space-between;gap:12px;font-size:13.5px;border-bottom:1px dotted var(--line);padding-bottom:4px}
+.prow span:last-child{font-weight:700;white-space:nowrap}
+.dossier{background:#EEF4F9;border:1px solid #cddced;border-radius:10px;padding:14px 17px;margin-bottom:18px}
+.dossier h3{font-family:'Fraunces',serif;font-size:16px;margin-bottom:9px}
+.dossier .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:6px 20px}
+.dossier .r{display:flex;justify-content:space-between;gap:12px;font-size:13.5px;border-bottom:1px dotted #cddced;padding-bottom:3px}
+.dossier .r b{white-space:nowrap}
+.cas{border:1.5px solid var(--line);border-radius:12px;padding:16px 18px;background:#fff}
+.champ{margin-bottom:14px}
+.champ label{display:block;font-size:12px;font-weight:600;color:var(--muted);margin-bottom:5px}
+.champ .inrow{display:flex;align-items:center;gap:8px}
+.champ input{width:140px;padding:9px 11px;border:1.5px solid var(--line);border-radius:7px;font-family:inherit;font-size:14.5px;font-variant-numeric:tabular-nums;text-align:right;background:#fff;color:var(--navy);-webkit-user-select:text;user-select:text}
+.champ input:focus{outline:none;border-color:var(--bleu);box-shadow:0 0 0 3px rgba(31,78,121,.12)}
+.champ input.good{border-color:var(--ok);background:#F2F8F4}
+.champ input.bad{border-color:var(--ko);background:#FBF3F3}
+.champ .unit{font-size:14px;color:var(--muted)}
+.champ .corr{font-size:12.5px;margin-top:7px;display:none}
+.champ .corr.show{display:block}
+.champ .corr b{color:var(--navy)}
+.actions{margin-top:8px;display:flex;gap:12px;flex-wrap:wrap}
+.btn{border:none;border-radius:9px;padding:13px 24px;font-family:inherit;font-size:14.5px;font-weight:700;cursor:pointer}
+.btn-primary{background:var(--bleu);color:#fff}.btn-primary:disabled{background:#c9c2b6;cursor:not-allowed}
+.btn-secondary{background:#fff;color:var(--bleu);border:1.5px solid var(--bleu)}
+.result{display:none;margin-top:24px;border-radius:12px;padding:20px 22px;border:1px solid var(--line);background:#FBF7EE}
+.result.show{display:block}
+.result h2{font-family:'Fraunces',serif;font-size:21px;font-weight:600;margin-bottom:6px}
+.result .big{font-size:34px;font-weight:700;font-family:'Fraunces',serif}
+.result p{font-size:14px;color:var(--muted)}
+.footer{text-align:center;font-size:11.5px;color:var(--muted);padding:16px 34px 24px;border-top:1px solid var(--line)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card-main">
+    <div class="header">
+      <div class="chapter-tag">TMK Performances · Conso des acquis 2/4 <span>/</span> Séquence 3</div>
+      <h1>Classer les supports, chiffrer un rachat</h1>
+      <p>8 supports à ranger · 5 montants à calculer · exercice d'entraînement, sans note</p>
+      <hr class="gold-rule">
+    </div>
+    <div class="body">
+      <div class="consigne">
+        <b>🎯 Consigne :</b> chaque support échange quelque chose contre autre chose — de la disponibilité,
+        de la fiscalité, ou du blocage. Rangez-les d'abord selon ce qu'ils échangent. Chiffrez ensuite le rachat
+        de Camille, puis comparez avec ce que le même gain aurait coûté sur un compte-titres.
+        Rien n'est enregistré : ce qui compte, c'est <b>ce qui vous fait hésiter</b>.
+      </div>
+
+      <div class="meta">
+        <div class="progress">
+          <div class="track"><div class="fill" id="fill"></div></div>
+          <div class="plabel" id="plabel">0 / 13 réponse donnée</div>
+        </div>
+        <div class="scorepill">Score&nbsp;: <b id="score">—</b> / 13</div>
+      </div>
+
+      <div class="part">
+        <div class="part-head"><span class="part-num">1</span><h2>Ranger les huit supports</h2></div>
+        <p class="part-sub">Cliquez une étiquette, puis la colonne où elle doit aller. Pour la retirer, cliquez-la de nouveau.</p>
+        <div class="pool"><div class="pool-title">Supports à placer</div><div class="chips" id="pool"></div></div>
+        <div class="cols" id="cols"></div>
+      </div>
+
+      <div class="part">
+        <div class="part-head"><span class="part-num">2</span><h2>Chiffrer le rachat</h2></div>
+        <p class="part-sub">Arrondissez à l'euro le plus proche.</p>
+        <div class="params">
+          <div class="params-title">Paramètres de l'année <span class="src local" id="src-badge">valeurs de secours</span></div>
+          <div class="plist" id="plist"></div>
+        </div>
+        <div class="dossier"><h3>Le dossier de Camille</h3><div class="grid" id="dossier"></div></div>
+        <div id="cas"></div>
+      </div>
+
+      <div class="actions">
+        <button class="btn btn-primary" id="btn-validate" disabled onclick="valider()">Valider mes réponses</button>
+        <button class="btn btn-secondary" id="btn-reset" onclick="reinitialiser()">↻ Recommencer</button>
+      </div>
+
+      <div class="result" id="result">
+        <h2 id="res-title">—</h2>
+        <p><span class="big" id="res-score">0 / 13</span></p>
+        <p id="res-msg"></p>
+      </div>
+    </div>
+    <div class="footer">TMK Performances - N° Siret : 49841924100027 - Code NAF : 8559A</div>
+  </div>
+</div>
+
+<script>
+const SB_URL = "https://ibkvyjlglwufxvzxnysa.supabase.co";
+const SB_KEY = "sb_publishable_xUfZHSOHf4TnBRRyzU_qJA_TcXIMSKX";
+
+const DEFAUT = {
+  av_taux_pfu_ir: 0.128,
+  epargne_ps_taux_assurance_vie: 0.172,
+  epargne_pfu_taux_ir: 0.128,
+  epargne_ps_taux_general: 0.186,
+  av_duree_seuil_annees: 8,
+};
+let P = Object.assign({}, DEFAUT);
+
+const AFFICHE = [
+  ["av_duree_seuil_annees",        "Seuil d'ancienneté du régime favorable", "a"],
+  ["av_taux_pfu_ir",               "Assurance vie — impôt sur le revenu",    "%"],
+  ["epargne_ps_taux_assurance_vie","Assurance vie — prélèvements sociaux",   "%"],
+  ["epargne_pfu_taux_ir",          "Compte-titres — impôt sur le revenu",    "%"],
+  ["epargne_ps_taux_general",      "Compte-titres — prélèvements sociaux",   "%"],
+];
+
+const D = { verses: 40000, valeur: 44000, anciennete: 3 };
+
+function el(id){ return document.getElementById(id); }
+function eur(n){ return n.toLocaleString("fr-FR",{minimumFractionDigits:0,maximumFractionDigits:0}) + " €"; }
+function pct(n){ return (Math.round(n*10000)/100).toLocaleString("fr-FR") + " %"; }
+function r0(n){ return Math.round(n); }
+
+function renderParams(){
+  el("plist").innerHTML = AFFICHE.map(function(a){
+    const v = P[a[0]];
+    return '<div class="prow"><span>' + a[1] + '</span><span>' + (a[2] === "a" ? v + " ans" : pct(v)) + '</span></div>';
+  }).join("");
+  el("dossier").innerHTML = [
+    ["Total des versements", eur(D.verses)],
+    ["Valeur du contrat au rachat", eur(D.valeur)],
+    ["Ancienneté du contrat", D.anciennete + " ans"],
+    ["Nature du rachat", "Rachat total"],
+  ].map(function(r){ return '<div class="r"><span>' + r[0] + '</span><b>' + r[1] + '</b></div>'; }).join("");
+}
+
+async function chargerParametres(){
+  try{
+    const cles = Object.keys(DEFAUT).join(",");
+    const r = await fetch(SB_URL + "/rest/v1/parametres_epargne?select=cle,valeur&cle=in.(" + cles + ")&apikey=" + SB_KEY);
+    if(!r.ok) throw new Error(r.status);
+    const rows = await r.json();
+    if(!rows.length) throw new Error("vide");
+    rows.forEach(function(row){ if(row.valeur !== null) P[row.cle] = Number(row.valeur); });
+    const b = el("src-badge"); b.className = "src live"; b.textContent = "valeurs à jour";
+  }catch(e){
+    const b = el("src-badge"); b.className = "src local"; b.textContent = "valeurs de secours";
+  }
+  renderParams(); renderCas();
+}
+
+/* ─────────── Partie 1 : le classement ─────────── */
+const COLONNES = [
+  {id:"A", nom:"Disponible, intérêts non fiscalisés", sub:"Ni impôt ni prélèvements sociaux"},
+  {id:"B", nom:"Disponible, fiscalisé dès le premier euro", sub:"Prélèvement forfaitaire de droit commun"},
+  {id:"C", nom:"Disponible, fiscalité qui s'allège", sub:"Le temps améliore le traitement du rachat"},
+  {id:"D", nom:"Bloqué jusqu'à la retraite", sub:"Sauf cas de déblocage anticipé"},
+];
+const SUPPORTS = [
+  {id:1, c:"A", txt:"Livret A", expl:"Exonéré d'impôt sur le revenu et de prélèvements sociaux. En contrepartie : un plafond bas et un taux fixé par les pouvoirs publics."},
+  {id:2, c:"A", txt:"LDDS", expl:"Même régime et même taux que le livret A, par corrélation de droit. Seul le plafond diffère."},
+  {id:3, c:"A", txt:"LEP", expl:"Même exonération, un taux plus élevé, mais soumis à condition de ressources vérifiée à l'ouverture."},
+  {id:4, c:"B", txt:"Compte-titres ordinaire", expl:"Aucune contrainte de montant ni de durée, mais imposition au prélèvement forfaitaire dès le premier euro de gain — et au taux social relevé depuis cette année."},
+  {id:5, c:"B", txt:"Livret bancaire fiscalisé", expl:"Souvent affiché avec un taux de lancement attractif. Fiscalisé au prélèvement forfaitaire : comparer le net, jamais le brut."},
+  {id:6, c:"C", txt:"Assurance vie — fonds en euros", expl:"L'argent reste disponible à tout moment. C'est la fiscalité du rachat, et non l'accès, qui s'améliore avec l'ancienneté du contrat."},
+  {id:7, c:"C", txt:"Assurance vie — unités de compte", expl:"Même enveloppe et même fiscalité que le fonds en euros. Ce qui change, c'est le risque : le capital n'est pas garanti."},
+  {id:8, c:"D", txt:"PER individuel", expl:"Seul support de la liste dont la sortie est bloquée jusqu'à la retraite. C'est le prix de la déduction obtenue à l'entrée."},
+];
+let place = {}, selection = null, valide = false;
+
+function chip(e){
+  const b = document.createElement("button");
+  b.type = "button";
+  b.className = "chip" + (selection === e.id ? " sel" : "");
+  let html = e.txt;
+  if(valide){
+    const bon = place[e.id] === e.c;
+    b.className = "chip done " + (bon ? "good" : "bad");
+    const attendu = COLONNES.find(function(c){ return c.id === e.c; }).nom;
+    html += '<span class="fix">' + (bon ? "✓ " : '✗ à ranger en « ' + attendu + ' » — ') + e.expl + '</span>';
+  } else {
+    b.onclick = function(ev){ ev.stopPropagation(); cliquer(e.id); };
+  }
+  b.innerHTML = html;
+  return b;
+}
+function renderCols(){
+  const pool = el("pool"); pool.innerHTML = "";
+  const libres = SUPPORTS.filter(function(e){ return !place[e.id]; });
+  if(!libres.length && !valide) pool.innerHTML = '<div style="font-size:12.5px;color:#a89f92;font-style:italic">Tous les supports sont placés.</div>';
+  libres.forEach(function(e){ pool.appendChild(chip(e)); });
+  const cols = el("cols"); cols.innerHTML = "";
+  COLONNES.forEach(function(r){
+    const d = document.createElement("div");
+    d.className = "col" + (selection && !valide ? " armed" : "");
+    d.innerHTML = '<h3>' + r.nom + '</h3><div class="sub">' + r.sub + '</div>';
+    const slots = document.createElement("div"); slots.className = "slots";
+    const dedans = SUPPORTS.filter(function(e){ return place[e.id] === r.id; });
+    if(!dedans.length) slots.innerHTML = '<div class="empty">Aucun support</div>';
+    dedans.forEach(function(e){ slots.appendChild(chip(e)); });
+    d.appendChild(slots);
+    if(!valide) d.onclick = function(ev){ if(ev.target.closest(".chip")) return; deposer(r.id); };
+    cols.appendChild(d);
+  });
+  majProgression();
+}
+function cliquer(id){
+  if(valide) return;
+  if(place[id]){ delete place[id]; selection = null; renderCols(); return; }
+  selection = (selection === id) ? null : id;
+  renderCols();
+}
+function deposer(cid){ if(valide || !selection) return; place[selection] = cid; selection = null; renderCols(); }
+
+/* ─────────── Partie 2 : la chaîne fiscale ─────────── */
+function calc(){
+  const produits = D.valeur - D.verses;
+  const ir  = produits * P.av_taux_pfu_ir;
+  const ps  = produits * P.epargne_ps_taux_assurance_vie;
+  const tot = ir + ps;
+  const ct  = produits * (P.epargne_pfu_taux_ir + P.epargne_ps_taux_general);
+  return {produits, ir, ps, tot, ct, ecart: ct - tot,
+          tauxAv: P.av_taux_pfu_ir + P.epargne_ps_taux_assurance_vie,
+          tauxCt: P.epargne_pfu_taux_ir + P.epargne_ps_taux_general};
+}
+const CHAMPS = [
+  {id:"p", lab:"Montant des produits imposables", val:function(c){ return r0(c.produits); },
+   det:function(c){ return "Un rachat total porte capital et gains : " + eur(D.valeur) + " − " + eur(D.verses) + " = " + eur(c.produits) + ". Seuls les gains sont imposables. Sur un rachat partiel, on n'en retiendrait qu'une fraction au prorata."; }},
+  {id:"i", lab:"Impôt sur le revenu (prélèvement forfaitaire)", val:function(c){ return r0(c.ir); },
+   det:function(c){ return eur(c.produits) + " × " + pct(P.av_taux_pfu_ir) + " = " + eur(c.ir) + ". Le contrat a " + D.anciennete + " ans : sous le seuil de " + P.av_duree_seuil_annees + " ans, ni abattement annuel ni taux réduit."; }},
+  {id:"s", lab:"Prélèvements sociaux", val:function(c){ return r0(c.ps); },
+   det:function(c){ return eur(c.produits) + " × " + pct(P.epargne_ps_taux_assurance_vie) + " = " + eur(c.ps) + ". L'assurance vie a été exclue de la hausse de cette année : elle reste au taux ancien, contrairement au compte-titres."; }},
+  {id:"t", lab:"Total prélevé sur le rachat", val:function(c){ return r0(c.tot); },
+   det:function(c){ return eur(c.ir) + " + " + eur(c.ps) + " = " + eur(c.tot) + ", soit " + pct(c.tauxAv) + " des produits. Camille perçoit donc " + eur(D.valeur - c.tot) + "."; }},
+  {id:"c", lab:"Ce que le même gain aurait coûté sur un compte-titres", val:function(c){ return r0(c.ct); },
+   det:function(c){ return eur(c.produits) + " × " + pct(c.tauxCt) + " = " + eur(c.ct) + ", soit " + eur(c.ecart) + " de plus. L'écart tient entièrement aux prélèvements sociaux, et il est nouveau cette année. Même avant huit ans, l'assurance vie est désormais moins taxée."; }},
+];
+function renderCas(){
+  el("cas").innerHTML = '<div class="cas">' + CHAMPS.map(function(ch){
+    return '<div class="champ"><label>' + ch.lab + '</label>' +
+      '<div class="inrow"><input type="number" step="1" inputmode="decimal" id="f_' + ch.id + '" placeholder="0"><span class="unit">€</span></div>' +
+      '<div class="corr" id="corr_' + ch.id + '"></div></div>';
+  }).join("") + '</div>';
+  CHAMPS.forEach(function(ch){ el("f_" + ch.id).addEventListener("input", majProgression); });
+  majProgression();
+}
+
+const TOTAL = 8 + 5;
+function nbRepondu(){
+  let n = Object.keys(place).length;
+  CHAMPS.forEach(function(ch){ const v = el("f_" + ch.id); if(v && v.value.trim() !== "") n++; });
+  return n;
+}
+function majProgression(){
+  const n = nbRepondu();
+  el("fill").style.width = (n / TOTAL * 100) + "%";
+  el("plabel").textContent = n + " / " + TOTAL + " réponse" + (n > 1 ? "s données" : " donnée");
+  el("btn-validate").disabled = valide || n !== TOTAL;
+}
+
+function valider(){
+  valide = true;
+  const c = calc();
+  let score = 0;
+  SUPPORTS.forEach(function(e){ if(place[e.id] === e.c) score++; });
+  renderCols();
+  CHAMPS.forEach(function(ch){
+    const inp = el("f_" + ch.id), corr = el("corr_" + ch.id);
+    const attendu = ch.val(c);
+    const donne = parseFloat(String(inp.value).replace(",", "."));
+    const bon = !isNaN(donne) && Math.abs(donne - attendu) <= 1;
+    if(bon) score++;
+    inp.classList.add(bon ? "good" : "bad");
+    inp.readOnly = true;
+    corr.className = "corr show";
+    corr.innerHTML = (bon ? "✓ " : "✗ ") + "<b>" + eur(attendu) + "</b> — " + ch.det(c);
+  });
+  el("score").textContent = score;
+  el("res-score").textContent = score + " / " + TOTAL;
+  let t, m;
+  if(score === TOTAL){ t = "Sans faute."; m = "La grille d'arbitrage et la chaîne fiscale sont acquises. Vous pouvez attaquer les cas."; }
+  else if(score >= 10){ t = "Presque."; m = "L'essentiel tient. Regardez les réponses en rouge : ce sont elles qui feront la différence sur les cas."; }
+  else if(score >= 6){ t = "À consolider."; m = "Les supports se mélangent encore, ou la chaîne fiscale n'est pas automatique. Reprenez les corrections."; }
+  else { t = "À reprendre."; m = "Signalez-le au formateur avant de démarrer les cas."; }
+  el("res-title").textContent = t;
+  el("res-score").style.color = score >= 10 ? "var(--ok)" : (score >= 6 ? "var(--amber)" : "var(--ko)");
+  el("res-msg").textContent = m;
+  el("result").classList.add("show");
+  el("btn-validate").disabled = true;
+  el("result").scrollIntoView({behavior:"smooth", block:"nearest"});
+}
+function reinitialiser(){
+  valide = false; place = {}; selection = null;
+  el("score").textContent = "—";
+  el("result").classList.remove("show");
+  renderCols(); renderCas();
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+
+for(let i = SUPPORTS.length - 1; i > 0; i--){
+  const j = Math.floor(Math.random() * (i + 1));
+  const tmp = SUPPORTS[i]; SUPPORTS[i] = SUPPORTS[j]; SUPPORTS[j] = tmp;
+}
+renderParams(); renderCols(); renderCas(); chargerParametres();
+
+["copy","cut","contextmenu","dragstart"].forEach(function(ev){ document.addEventListener(ev, function(e){ e.preventDefault(); }); });
+document.addEventListener("keydown", function(e){
+  if((e.ctrlKey || e.metaKey) && ["c","x","u","s","p"].indexOf(e.key.toLowerCase()) > -1){ e.preventDefault(); }
+});
+</script>
+</body>
+</html>

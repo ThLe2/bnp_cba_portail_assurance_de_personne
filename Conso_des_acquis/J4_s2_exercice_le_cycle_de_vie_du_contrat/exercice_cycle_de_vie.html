@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exercice — Le cycle de vie du contrat</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Karla:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#16243B;--bleu:#1F4E79;--bleu-clair:#2E75B6;--or:#B08D57;--creme:#F5F2EB;--card:#FFFFFF;
+  --line:#e3ddd0;--muted:#6B6459;--ok:#2F7A4F;--ko:#B23B3B;--amber:#B5852A;--shadow:0 2px 10px rgba(22,36,59,.07);}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Karla',system-ui,sans-serif;background:var(--creme);color:var(--navy);line-height:1.55;-webkit-user-select:none;user-select:none}
+.wrap{max-width:1120px;margin:0 auto;padding:26px 18px 60px}
+.card-main{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);overflow:hidden}
+.header{padding:26px 34px 0}
+.chapter-tag{font-size:11.5px;font-weight:700;letter-spacing:1.6px;text-transform:uppercase;color:var(--or)}
+.chapter-tag span{opacity:.5}
+h1{font-family:'Fraunces',serif;font-weight:600;font-size:27px;line-height:1.2;margin:8px 0 5px}
+.header p{color:var(--muted);font-size:14.5px}
+.gold-rule{border:none;border-top:2px solid var(--or);width:64px;margin:18px 0 0}
+.body{padding:22px 34px 30px}
+.consigne{background:#FBF7EE;border:1px solid var(--line);border-left:3px solid var(--or);border-radius:8px;padding:14px 17px;font-size:14px;margin-bottom:22px}
+.meta{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:18px}
+.progress{flex:1;min-width:220px}
+.track{height:8px;background:#e6e0d3;border-radius:99px;overflow:hidden}
+.fill{height:100%;width:0;background:var(--bleu-clair);transition:width .3s}
+.plabel{font-size:12.5px;color:var(--muted);margin-top:6px}
+.scorepill{background:var(--navy);color:#fff;border-radius:99px;padding:6px 15px;font-size:13px;font-weight:600}
+.part{margin-bottom:30px}
+.part-head{display:flex;align-items:baseline;gap:11px;margin-bottom:6px}
+.part-num{background:var(--navy);color:#fff;border-radius:99px;width:25px;height:25px;display:inline-flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0}
+.part-head h2{font-family:'Fraunces',serif;font-size:20px;font-weight:600}
+.part-sub{font-size:13.5px;color:var(--muted);margin:0 0 15px 36px}
+.pool{border:1px dashed var(--line);border-radius:12px;padding:14px;background:#FCFAF5;margin-bottom:20px;min-height:80px}
+.pool-title{font-size:11px;font-weight:700;letter-spacing:1.3px;text-transform:uppercase;color:var(--muted);margin-bottom:11px}
+.chips{display:flex;flex-wrap:wrap;gap:9px}
+.chip{background:#fff;border:1.5px solid var(--line);border-radius:9px;padding:9px 13px;font-size:13.5px;cursor:pointer;max-width:330px;text-align:left;transition:border-color .15s,box-shadow .15s,transform .12s}
+.chip:hover{border-color:var(--bleu-clair)}
+.chip.sel{border-color:var(--bleu);box-shadow:0 0 0 3px rgba(31,78,121,.14);transform:translateY(-1px)}
+.chip.done{cursor:default}
+.chip.good{border-color:var(--ok);background:#F2F8F4}
+.chip.bad{border-color:var(--ko);background:#FBF3F3}
+.chip .fix{display:block;font-size:12px;color:var(--muted);margin-top:6px;padding-top:6px;border-top:1px solid var(--line)}
+.chip .fix b{color:var(--navy)}
+.cols{display:grid;grid-template-columns:repeat(3,1fr);gap:13px}
+@media(max-width:980px){.cols{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.cols{grid-template-columns:1fr}.chip{max-width:100%}}
+.col{border:1.5px solid var(--line);border-radius:12px;background:#fff;padding:13px;min-height:200px;transition:border-color .15s,background .15s}
+.col.armed{border-color:var(--bleu-clair);background:#F7FAFD;cursor:pointer}
+.col h3{font-family:'Fraunces',serif;font-size:15px;font-weight:600;line-height:1.3;margin-bottom:4px}
+.col .sub{font-size:11.5px;color:var(--muted);margin-bottom:12px}
+.col .slots{display:flex;flex-direction:column;gap:8px}
+.col .empty{font-size:12px;color:#a89f92;font-style:italic;padding:8px 0}
+.params{background:#FCFAF5;border:1px dashed var(--line);border-radius:10px;padding:14px 16px;margin-bottom:18px}
+.params-title{font-size:11px;font-weight:700;letter-spacing:1.3px;text-transform:uppercase;color:var(--muted);margin-bottom:10px;display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.src{font-weight:600;letter-spacing:0;text-transform:none;font-size:11.5px;padding:2px 9px;border-radius:99px}
+.src.live{background:#E8F2EA;color:var(--ok)}.src.local{background:#FBF1DC;color:var(--amber)}
+.plist{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:8px 20px}
+.prow{display:flex;justify-content:space-between;gap:12px;font-size:13.5px;border-bottom:1px dotted var(--line);padding-bottom:4px}
+.prow span:last-child{font-weight:700;white-space:nowrap}
+.dossier{background:#EEF4F9;border:1px solid #cddced;border-radius:10px;padding:14px 17px;margin-bottom:18px}
+.dossier h3{font-family:'Fraunces',serif;font-size:16px;margin-bottom:9px}
+.dossier .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:6px 20px}
+.dossier .r{display:flex;justify-content:space-between;gap:12px;font-size:13.5px;border-bottom:1px dotted #cddced;padding-bottom:3px}
+.dossier .r b{white-space:nowrap}
+.cas{border:1.5px solid var(--line);border-radius:12px;padding:16px 18px;background:#fff}
+.champ{margin-bottom:14px}
+.champ label{display:block;font-size:12px;font-weight:600;color:var(--muted);margin-bottom:5px}
+.champ .inrow{display:flex;align-items:center;gap:8px}
+.champ input{width:140px;padding:9px 11px;border:1.5px solid var(--line);border-radius:7px;font-family:inherit;font-size:14.5px;font-variant-numeric:tabular-nums;text-align:right;background:#fff;color:var(--navy);-webkit-user-select:text;user-select:text}
+.champ input:focus{outline:none;border-color:var(--bleu);box-shadow:0 0 0 3px rgba(31,78,121,.12)}
+.champ input.good{border-color:var(--ok);background:#F2F8F4}
+.champ input.bad{border-color:var(--ko);background:#FBF3F3}
+.champ .unit{font-size:14px;color:var(--muted)}
+.champ .corr{font-size:12.5px;margin-top:7px;display:none}
+.champ .corr.show{display:block}
+.champ .corr b{color:var(--navy)}
+.actions{margin-top:8px;display:flex;gap:12px;flex-wrap:wrap}
+.btn{border:none;border-radius:9px;padding:13px 24px;font-family:inherit;font-size:14.5px;font-weight:700;cursor:pointer}
+.btn-primary{background:var(--bleu);color:#fff}.btn-primary:disabled{background:#c9c2b6;cursor:not-allowed}
+.btn-secondary{background:#fff;color:var(--bleu);border:1.5px solid var(--bleu)}
+.result{display:none;margin-top:24px;border-radius:12px;padding:20px 22px;border:1px solid var(--line);background:#FBF7EE}
+.result.show{display:block}
+.result h2{font-family:'Fraunces',serif;font-size:21px;font-weight:600;margin-bottom:6px}
+.result .big{font-size:34px;font-weight:700;font-family:'Fraunces',serif}
+.result p{font-size:14px;color:var(--muted)}
+.footer{text-align:center;font-size:11.5px;color:var(--muted);padding:16px 34px 24px;border-top:1px solid var(--line)}
+.dbl{border:1.5px solid var(--line);border-radius:12px;padding:15px 17px;margin-bottom:13px;background:#fff}
+.dbl .phrase{font-size:15px;font-style:italic;font-weight:700;color:var(--navy);margin-bottom:11px}
+.dbl .opts{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}
+@media(max-width:760px){.dbl .opts{grid-template-columns:repeat(2,1fr)}}
+.dbl label{display:flex;align-items:center;gap:8px;font-size:13.5px;border:1.5px solid var(--line);border-radius:8px;padding:9px 11px;cursor:pointer;background:#fff}
+.dbl label:hover{border-color:var(--bleu-clair)}
+.dbl label.sel{border-color:var(--bleu);background:#F7FAFD}
+.dbl label.good{border-color:var(--ok);background:#F2F8F4}
+.dbl label.bad{border-color:var(--ko);background:#FBF3F3}
+.dbl label.manque{border-color:var(--amber);background:#FFF8E8}
+.dbl .corr{font-size:12.5px;margin-top:10px;display:none}
+.dbl .corr.show{display:block}
+.dbl .corr b{color:var(--navy)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card-main">
+    <div class="header">
+      <div class="chapter-tag">TMK Performances · Conso des acquis 4/4 <span>/</span> Séquence 2</div>
+      <h1>Le cycle de vie du contrat</h1>
+      <p>15 étiquettes · 3 temps du dossier · aucun calcul</p>
+      <hr class="gold-rule">
+    </div>
+    <div class="body">
+      <div class="consigne">
+        <b>🎯 Consigne :</b> chaque étiquette porte un acte, un document ou un délai. Rangez-la dans le temps du dossier où il se produit :
+        <b>commercialiser</b>, <b>souscrire</b>, ou <b>gérer et suivre</b>. Deux repères : la signature sépare les deux premiers temps ;
+        la fin du délai de renonciation ouvre le troisième. Une fois validées, vos réponses sont figées.
+      </div>
+
+      <div class="meta">
+        <div class="progress">
+          <div class="track"><div class="fill" id="fill"></div></div>
+          <div class="plabel" id="plabel">0 / 15 réponse donnée</div>
+        </div>
+        <div class="scorepill">Score&nbsp;: <b id="score">—</b> / 15</div>
+      </div>
+
+      <div class="part">
+        <div class="part-head"><span class="part-num">1</span><h2>Ranger les quinze étiquettes</h2></div>
+        <p class="part-sub">Cliquez une étiquette, puis la colonne où elle doit aller. Pour la retirer, cliquez-la de nouveau.</p>
+        <div class="pool"><div class="pool-title">Étiquettes à placer</div><div class="chips" id="pool"></div></div>
+        <div class="cols" id="cols"></div>
+      </div>
+
+      <div id="cas" style="display:none"></div>
+
+      <div class="actions">
+        <button class="btn btn-primary" id="btn-validate" disabled onclick="valider()">Valider mes réponses</button>
+        <button class="btn btn-secondary" id="btn-reset" onclick="reinitialiser()">↻ Recommencer</button>
+      </div>
+
+      <div class="result" id="result">
+        <h2 id="res-title">—</h2>
+        <p><span class="big" id="res-score">0 / 15</span></p>
+        <p id="res-msg"></p>
+      </div>
+    </div>
+    <div class="footer">TMK Performances - N° Siret : 49841924100027 - Code NAF : 8559A</div>
+  </div>
+</div>
+
+<script>
+/* ─────────── Partie 1 : ranger les demandes par entrée principale ─────────── */
+const COLONNES = [
+  {id:"A", nom:"1 · Commercialiser", sub:"Comprendre et proposer"},
+  {id:"B", nom:"2 · Souscrire", sub:"Faire entrer sans défaut"},
+  {id:"C", nom:"3 · Gérer et suivre", sub:"Faire vivre le contrat"}
+];
+
+const DEMANDES = [
+  {id:1, c:"A", txt:"Recueil écrit des exigences et des besoins",
+   expl:"Il précède toute proposition : c'est la première pièce du dossier, et la base sur laquelle la recommandation sera jugée."},
+  {id:2, c:"A", txt:"Questions sur les connaissances, l'expérience et la capacité à subir des pertes",
+   expl:"Le profil se construit avant de proposer un contrat en unités de compte : c'est lui qui rend l'allocation défendable."},
+  {id:3, c:"A", txt:"Information sur votre statut et la nature de votre rémunération",
+   expl:"Elle se donne avant la conclusion du contrat, au moment où le client choisit encore."},
+  {id:4, c:"A", txt:"Remise de la notice avec son encadré et du document d'informations clés",
+   expl:"L'information précontractuelle se remet avant la signature. Remise après, elle ne remplit pas son rôle — et un défaut de remise prolonge le délai de renonciation."},
+  {id:5, c:"A", txt:"Proposition motivée par écrit, avec ce qui est déconseillé",
+   expl:"C'est l'aboutissement de la commercialisation : la preuve que le conseil a été donné, et pourquoi."},
+  {id:6, c:"B", txt:"Justificatif de l'origine des fonds",
+   expl:"Il se demande avant l'encaissement. Faute de justificatif, l'opération ne s'exécute pas. C'est l'étiquette qui fait le plus hésiter : la vigilance commence dès l'entrée en relation, mais c'est à l'entrée des fonds qu'elle se prouve."},
+  {id:7, c:"B", txt:"Questionnaire de santé rempli et signé par l'assuré",
+   expl:"Il fait partie de la souscription d'un contrat qui couvre un risque sur la personne. Il est rempli par l'assuré lui-même : c'est sa déclaration."},
+  {id:8, c:"B", txt:"Rédaction de la clause bénéficiaire",
+   expl:"Elle se rédige à la souscription. Elle pourra être modifiée ensuite — c'est alors un acte de gestion."},
+  {id:9, c:"B", txt:"Signature du bulletin et premier versement",
+   expl:"C'est la frontière : avant, on commercialise ; à partir d'ici, le contrat se forme."},
+  {id:10, c:"B", txt:"30 jours calendaires pour renoncer",
+   expl:"Le délai court à partir du moment où le souscripteur est informé de la conclusion du contrat : il appartient encore à la souscription. Sa fin ouvre la gestion."},
+  {id:11, c:"C", txt:"Rachat partiel et calcul de sa fiscalité",
+   expl:"Un acte de gestion demandé par le client. Seule la part de gains est imposée ; l'ancienneté du contrat fixe le régime."},
+  {id:12, c:"C", txt:"Mise à jour de la clause bénéficiaire après une naissance",
+   expl:"L'acte que personne ne demande : c'est au conseiller qui tient le dossier d'y penser."},
+  {id:13, c:"C", txt:"Relevé de situation annuel",
+   expl:"L'assureur informe chaque année le souscripteur de la valeur de son contrat. C'est aussi l'occasion de faire le point."},
+  {id:14, c:"C", txt:"Réclamation : accusé de réception sous 10 jours ouvrables",
+   expl:"Une réclamation se traite dans des délais : accusé de réception sous 10 jours ouvrables, réponse sous 2 mois au plus."},
+  {id:15, c:"C", txt:"Actualisation du profil après un changement de situation",
+   expl:"Un profil se vieillit : un changement de revenus, de famille ou d'horizon le rend faux. Le mettre à jour, c'est garder un conseil défendable."}
+];
+
+let place = {}, selection = null, valide = false;
+
+function chip(e){
+  const b = document.createElement("button");
+  b.type = "button";
+  b.className = "chip" + (selection === e.id ? " sel" : "");
+  let html = e.txt;
+  if(valide){
+    const bon = place[e.id] === e.c;
+    b.className = "chip done " + (bon ? "good" : "bad");
+    const attendu = COLONNES.find(function(c){ return c.id === e.c; });
+    html += '<span class="fix">' + (bon ? "✓ " : '✗ à ranger dans « ' + attendu.nom + ' » — ') + e.expl + '</span>';
+  } else {
+    b.onclick = function(ev){ ev.stopPropagation(); cliquer(e.id); };
+  }
+  b.innerHTML = html;
+  return b;
+}
+function renderCols(){
+  const pool = el("pool"); pool.innerHTML = "";
+  const libres = DEMANDES.filter(function(e){ return !place[e.id]; });
+  if(!libres.length && !valide) pool.innerHTML = '<div style="font-size:12.5px;color:#a89f92;font-style:italic">Toutes les étiquettes sont placées.</div>';
+  libres.forEach(function(e){ pool.appendChild(chip(e)); });
+  const cols = el("cols"); cols.innerHTML = "";
+  COLONNES.forEach(function(r){
+    const d = document.createElement("div");
+    d.className = "col" + (selection && !valide ? " armed" : "");
+    d.innerHTML = '<h3>' + r.nom + '</h3><div class="sub">' + r.sub + '</div>';
+    const slots = document.createElement("div"); slots.className = "slots";
+    const dedans = DEMANDES.filter(function(e){ return place[e.id] === r.id; });
+    if(!dedans.length) slots.innerHTML = '<div class="empty">Aucune étiquette</div>';
+    dedans.forEach(function(e){ slots.appendChild(chip(e)); });
+    d.appendChild(slots);
+    if(!valide) d.onclick = function(ev){ if(ev.target.closest(".chip")) return; deposer(r.id); };
+    cols.appendChild(d);
+  });
+  majProgression();
+}
+function cliquer(id){
+  if(valide) return;
+  if(place[id]){ delete place[id]; selection = null; renderCols(); return; }
+  selection = (selection === id) ? null : id;
+  renderCols();
+}
+function deposer(cid){ if(valide || !selection) return; place[selection] = cid; selection = null; renderCols(); }
+
+/* ─────────── Partie 2 : les doubles entrées ─────────── */
+const DOMAINES = [
+  {id:"PREV", lab:"Prévoyance"},
+  {id:"SANTE", lab:"Santé"},
+  {id:"RETR", lab:"Retraite"},
+  {id:"EPAR", lab:"Épargne"},
+];
+const DOUBLES = [];
+let coches = {};
+
+function renderCas(){
+  el("cas").innerHTML = DOUBLES.map(function(d){
+    const opts = DOMAINES.map(function(dom){
+      return '<label id="lab_' + d.id + '_' + dom.id + '" data-d="' + d.id + '" data-dom="' + dom.id + '">' +
+             '<input type="checkbox" id="cb_' + d.id + '_' + dom.id + '"><span>' + dom.lab + '</span></label>';
+    }).join("");
+    return '<div class="dbl"><div class="phrase">' + d.phrase + '</div><div class="opts">' + opts + '</div>' +
+           '<div class="corr" id="corrd_' + d.id + '"></div></div>';
+  }).join("");
+  DOUBLES.forEach(function(d){
+    DOMAINES.forEach(function(dom){
+      const cb = el("cb_" + d.id + "_" + dom.id), lab = el("lab_" + d.id + "_" + dom.id);
+      cb.addEventListener("change", function(){
+        if(valide){ cb.checked = !cb.checked; return; }
+        const i = coches[d.id].indexOf(dom.id);
+        if(cb.checked && i < 0) coches[d.id].push(dom.id);
+        if(!cb.checked && i > -1) coches[d.id].splice(i, 1);
+        lab.classList.toggle("sel", cb.checked);
+        majProgression();
+      });
+    });
+  });
+  majProgression();
+}
+
+const TOTAL = DEMANDES.length;
+function nbRepondu(){
+  let n = Object.keys(place).length;
+  DOUBLES.forEach(function(d){ if(coches[d.id].length === 2) n++; });
+  return n;
+}
+function majProgression(){
+  const n = nbRepondu();
+  el("fill").style.width = (n / TOTAL * 100) + "%";
+  el("plabel").textContent = n + " / " + TOTAL + " réponse" + (n > 1 ? "s données" : " donnée");
+  el("btn-validate").disabled = valide || n !== TOTAL;
+}
+
+function valider(){
+  valide = true;
+  let score = 0;
+  DEMANDES.forEach(function(e){ if(place[e.id] === e.c) score++; });
+  renderCols();
+  DOUBLES.forEach(function(d){
+    const choisis = coches[d.id].slice().sort().join(",");
+    const attendus = d.bons.slice().sort().join(",");
+    const bon = choisis === attendus;
+    if(bon) score++;
+    DOMAINES.forEach(function(dom){
+      const lab = el("lab_" + d.id + "_" + dom.id);
+      const coche = coches[d.id].indexOf(dom.id) > -1;
+      const attendu = d.bons.indexOf(dom.id) > -1;
+      lab.classList.remove("sel");
+      if(coche && attendu) lab.classList.add("good");
+      else if(coche && !attendu) lab.classList.add("bad");
+      else if(!coche && attendu) lab.classList.add("manque");
+    });
+    const corr = el("corrd_" + d.id);
+    corr.className = "corr show";
+    const noms = d.bons.map(function(b){ return DOMAINES.find(function(x){ return x.id === b; }).lab; }).join(" + ");
+    corr.innerHTML = (bon ? "✓ " : "✗ ") + "<b>" + noms + "</b> — " + d.expl;
+  });
+  el("score").textContent = score;
+  el("res-score").textContent = score + " / " + TOTAL;
+  let t, m;
+  if(score === TOTAL){ t = "Sans faute."; m = "Vous situez chaque pièce dans la vie du contrat. C'est ce qui vous permettra de contrôler un dossier au cas 2."; }
+  else if(score >= 12){ t = "Presque."; m = "Le cycle est acquis. Relisez les étiquettes mal placées : ce sont souvent les frontières entre deux temps."; }
+  else if(score >= 8){ t = "À consolider."; m = "Certaines pièces vous échappent encore. Reprenez les corrections avant les cas."; }
+  else { t = "À reprendre."; m = "Signalez-le au formateur : les trois cas de la journée suivent ce cycle."; }
+  el("res-title").textContent = t;
+  el("res-score").style.color = score >= 12 ? "var(--ok)" : (score >= 8 ? "var(--amber)" : "var(--ko)");
+  el("res-msg").textContent = m;
+  el("result").classList.add("show");
+  el("btn-validate").disabled = true;
+  el("result").scrollIntoView({behavior:"smooth", block:"nearest"});
+}
+function reinitialiser(){
+  valide = false; place = {}; selection = null; coches = {};
+  el("score").textContent = "—";
+  el("result").classList.remove("show");
+  renderCols(); renderCas();
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+function el(id){ return document.getElementById(id); }
+
+for(let i = DEMANDES.length - 1; i > 0; i--){
+  const j = Math.floor(Math.random() * (i + 1));
+  const tmp = DEMANDES[i]; DEMANDES[i] = DEMANDES[j]; DEMANDES[j] = tmp;
+}
+renderCols(); renderCas();
+
+["copy","cut","contextmenu","dragstart"].forEach(function(ev){ document.addEventListener(ev, function(e){ e.preventDefault(); }); });
+document.addEventListener("keydown", function(e){
+  if((e.ctrlKey || e.metaKey) && ["c","x","u","s","p"].indexOf(e.key.toLowerCase()) > -1){ e.preventDefault(); }
+});
+
+</script>
+</body>
+</html>

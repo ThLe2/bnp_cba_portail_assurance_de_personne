@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cas 3 — Gérer et suivre : une semaine dans le dossier Delcourt · Corrigé formateur</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Karla:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#16243B; --bleu:#1F4E79; --bleu-clair:#2E75B6; --or:#B08D57;
+  --creme:#F5F2EB; --card:#FFFFFF; --line:#e3ddd0; --muted:#6B6459;
+  --ok:#2F7A4F; --ko:#B23B3B; --amber:#B5852A;
+  --shadow:0 2px 10px rgba(22,36,59,.07);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Karla',system-ui,sans-serif;background:var(--creme);color:var(--navy);line-height:1.55}
+.wrap{max-width:1000px;margin:0 auto;padding:26px 18px 70px}
+.card-main{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);overflow:hidden}
+.header{padding:26px 34px 0}
+.chapter-tag{font-size:11.5px;font-weight:700;letter-spacing:1.6px;text-transform:uppercase;color:var(--or)}
+.chapter-tag span{opacity:.5}
+h1{font-family:'Fraunces',serif;font-weight:600;font-size:27px;line-height:1.2;margin:8px 0 5px}
+.header p{color:var(--muted);font-size:14.5px}
+.gold-rule{border:none;border-top:2px solid var(--or);width:64px;margin:18px 0 0}
+.body{padding:22px 34px 30px}
+
+.warn{background:#FBF1DC;border:1px solid #E6D3A8;border-left:3px solid var(--amber);border-radius:8px;padding:13px 16px;font-size:13.5px;margin-bottom:20px}
+.warn b{color:var(--navy)}
+
+.situation{background:#FBF7EE;border:1px solid var(--line);border-radius:10px;padding:15px 18px;margin-bottom:18px;font-size:14px}
+.situation h2{font-family:'Fraunces',serif;font-size:17px;margin-bottom:7px}
+.situation .don{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:6px 22px;margin-top:11px}
+.don .r{display:flex;justify-content:space-between;gap:12px;border-bottom:1px dotted var(--line);padding-bottom:3px;font-size:13px}
+.don .r b{white-space:nowrap}
+
+.params{background:#FCFAF5;border:1px dashed var(--line);border-radius:10px;padding:14px 16px;margin-bottom:22px}
+.params-title{font-size:11px;font-weight:700;letter-spacing:1.3px;text-transform:uppercase;color:var(--muted);margin-bottom:10px;display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.src{font-weight:600;letter-spacing:0;text-transform:none;font-size:11.5px;padding:2px 9px;border-radius:99px}
+.src.live{background:#E8F2EA;color:var(--ok)}
+.src.local{background:#FBF1DC;color:var(--amber)}
+.plist{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:7px 22px}
+.prow{display:flex;justify-content:space-between;gap:12px;font-size:13px;border-bottom:1px dotted var(--line);padding-bottom:3px}
+.prow span:last-child{font-weight:700;white-space:nowrap}
+
+.tools{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px}
+.btn{border:none;border-radius:9px;padding:11px 20px;font-family:inherit;font-size:14px;font-weight:700;cursor:pointer}
+.btn-primary{background:var(--bleu);color:#fff}
+.btn-secondary{background:#fff;color:var(--bleu);border:1.5px solid var(--bleu)}
+
+.q{border:1.5px solid var(--line);border-radius:12px;margin-bottom:16px;overflow:hidden;background:#fff}
+.q-head{padding:16px 20px}
+.q-num{font-size:10.5px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--or);margin-bottom:5px}
+.q-txt{font-size:15.5px;font-weight:700;line-height:1.45}
+.q-btn{margin:0 20px 16px;background:var(--navy);color:#fff;border:none;border-radius:8px;padding:10px 18px;
+  font-family:inherit;font-size:13.5px;font-weight:700;cursor:pointer}
+.q-btn.open{background:#fff;color:var(--navy);border:1.5px solid var(--line)}
+.corr{max-height:0;overflow:hidden;transition:max-height .35s ease;background:#FBF7EE;border-top:1px solid var(--line)}
+.corr.show{max-height:9000px}
+.corr-in{padding:18px 20px 20px}
+.corr h4{font-size:11px;font-weight:700;letter-spacing:1.3px;text-transform:uppercase;color:var(--bleu);margin:16px 0 7px}
+.corr h4:first-child{margin-top:0}
+.corr p{font-size:14px;margin-bottom:8px}
+.corr ul{margin:0 0 8px 18px;font-size:14px}
+.corr li{margin-bottom:5px}
+.calc{width:100%;border-collapse:collapse;font-size:13.5px;margin:4px 0 10px;background:#fff;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.calc td{padding:7px 11px;border-bottom:1px solid var(--line)}
+.calc tr:last-child td{border-bottom:none}
+.calc td:last-child{text-align:right;font-weight:700;white-space:nowrap;font-variant-numeric:tabular-nums}
+.calc tr.tot td{background:#EEF4F9;color:var(--navy);font-weight:700}
+.calc tr.tot td:first-child{font-weight:700}
+.relance{background:#EEF4F9;border-left:3px solid var(--bleu-clair);border-radius:6px;padding:11px 14px;font-size:13.5px;margin-bottom:9px}
+.erreur{background:#FBF3F3;border-left:3px solid var(--ko);border-radius:6px;padding:11px 14px;font-size:13.5px}
+.erreur b,.relance b{color:var(--navy)}
+.footer{text-align:center;font-size:11.5px;color:var(--muted);padding:16px 34px 24px;border-top:1px solid var(--line)}
+.pieces{font-size:13px;margin-top:10px}.pieces b{color:var(--navy)}
+.modele{background:#fff;border:1px solid var(--line);border-radius:8px;padding:12px 15px;font-size:13.5px;margin:6px 0 10px}
+.modele p{margin-bottom:6px}
+.g4{width:100%;border-collapse:collapse;font-size:13px;margin:4px 0 12px;background:#fff}
+.g4 th{background:#EEF4F9;text-align:left;padding:7px 9px;border:1px solid var(--line);font-size:12px}
+.g4 td{padding:7px 9px;border:1px solid var(--line);vertical-align:top}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card-main">
+    <div class="header">
+      <div class="chapter-tag">TMK Performances · Conso des acquis 4/4 <span>/</span> Séquence 6</div>
+      <h1>Cas 3 — Gérer et suivre : une semaine dans le dossier Delcourt</h1>
+      <p>Corrigé formateur · corrections révélables · 105 minutes</p>
+      <hr class="gold-rule">
+    </div>
+    <div class="body">
+      <div class="warn"><b>⚠ Document formateur.</b> Ne pas projeter avant la restitution. Brief 10 min · recherche individuelle 40 min · correction collective 40 min · synthèse 15 min. Calculateur de la journée autorisé pour les questions 2 et 3.<br><br><b>Le cas se joue sur la question 5.</b> Tout le monde ajoutera Tom à la mutuelle. Peu iront relire la note de 2027 qui promettait un bilan de protection « si la famille s'agrandit » — et le chiffrer.<br><br><span style="font-size:12.5px;color:var(--muted)">Paramètres utilisés : indemnité journalière maximale 42,97 €, maintien 90 % puis 66,66 % sur 30 + 30 jours, carence employeur 7 jours (table des paramètres prévoyance, lue le 19/10/2026) ; assurance vie de moins de 8 ans : 12,8 % + 17,2 %.</span></div>
+      <div class="situation">
+        <h2>La situation remise aux stagiaires</h2>
+        <p>Mars 2030, trois ans après la souscription. Tom est né le 8 octobre 2029. Cinq éléments arrivent dans la semaine : une réclamation optique, un arrêt de travail de Sophie, la demande d'affiliation de Tom, une demande de rachat de 8 000 €, et Marc qui veut ouvrir un PER.</p>
+        <div class="don"><div class="r"><span>Sophie</span><b>3 100 € brut · ancienneté 4 ans</b></div><div class="r"><span>Arrêt</span><b>maladie · 60 jours depuis le 4 mars</b></div><div class="r"><span>Marc</span><b>2 600 € net · TMI 11 %</b></div><div class="r"><span>Charges fixes</span><b>3 200 € / mois</b></div><div class="r"><span>Réserve</span><b>9 000 € + 2 000 €</b></div><div class="r"><span>Opale Vie</span><b>26 800 € versés · valeur 28 900 €</b></div><div class="r"><span>Optique</span><b>600 € · reste 210 €</b></div><div class="r"><span>Réclamation reçue</span><b>lundi 11 mars 2030</b></div></div>
+        
+      </div>
+      <div class="tools">
+        <button class="btn btn-primary" onclick="tout(true)">Tout révéler</button>
+        <button class="btn btn-secondary" onclick="tout(false)">Tout masquer</button>
+      </div>
+      <div id="questions"></div>
+    </div>
+    <div class="footer">TMK Performances - N° Siret : 49841924100027 - Code NAF : 8559A</div>
+  </div>
+</div>
+<script>
+const QS = [{"txt": "Classez les cinq éléments par ordre de priorité. Justifiez l'ordre en une ligne par élément.", "corr": "<h4>Un ordre défendable</h4><table class=\"g4\"><tr><th>Rang</th><th>Élément</th><th>Pourquoi à ce rang</th></tr><tr><td>1</td><td>Affiliation de Tom à la complémentaire santé</td><td>Tom n'est pas couvert. Demande reçue avant le 31 mars : couvert au 1er avril ; reçue en avril : au 1er mai. Chaque jour compte, et c'est la seule demande où le retard du conseiller coûte directement au client.</td></tr><tr><td>2</td><td>Réclamation optique</td><td>Délai imposé à l'établissement : accusé de réception au plus tard le <b>vendredi 22 mars 2030</b> (10 jours ouvrables après le 11 mars), réponse au plus tard le <b>11 mai 2030</b>.</td></tr><tr><td>3</td><td>Arrêt de travail</td><td>Sophie attend une réponse chiffrée ; rien n'est à déclarer à la prévoyance avant le 90e jour, mais l'échéance doit être notée.</td></tr><tr><td>4</td><td>Rachat de 8 000 €</td><td>Demande signée et complète : elle s'exécute. Un conseil à donner, pas d'urgence réglementaire.</td></tr><tr><td>5</td><td>PER de Marc</td><td>Aucune échéance. Ce n'est pas un ordre à exécuter : c'est un besoin à recueillir, en rendez-vous.</td></tr></table><div class=\"relance\"><b>À faire dire au groupe :</b> l'ordre importe moins que sa justification. Les rangs 2 à 4 peuvent s'échanger. Deux points ne se discutent pas : Tom avant le reste, le PER en dernier.</div><div class=\"erreur\"><b>Erreur fréquente :</b> traiter dans l'ordre d'arrivée, ou commencer par le rachat parce que c'est « l'acte » le plus concret.</div>"}, {"txt": "Sophie demande combien elle va perdre. Chiffrez ce qu'elle percevra sur ses 60 jours d'arrêt et l'écart avec son salaire. Que se passerait-il si l'arrêt dépassait 90 jours ?", "corr": "<h4>Sécurité sociale : l'indemnité est plafonnée</h4><table class=\"calc\"><tr><td>Salaire journalier de base : 3 100 € × 3 ÷ 91,25</td><td>101,92 €</td></tr><tr><td>50 % de ce salaire</td><td>50,96 €</td></tr><tr><td>Indemnité maximale (plafond de 1,4 SMIC)</td><td>42,97 €</td></tr><tr><td>Jours indemnisés : 60 − 3 de carence</td><td>57 jours</td></tr><tr class=\"tot\"><td>Total Sécurité sociale</td><td>2 449,29 €</td></tr></table><h4>Maintien de salaire de l'employeur (ancienneté 4 ans)</h4><table class=\"calc\"><tr><td>Salaire journalier de référence : 3 100 € ÷ 30</td><td>103,33 €</td></tr><tr><td>Jours 8 à 37 : 90 % = 93,00 €, soit 50,03 € de complément par jour × 30</td><td>1 500,90 €</td></tr><tr><td>Jours 38 à 60 : 66,66 % = 68,88 €, soit 25,91 € par jour × 23</td><td>595,93 €</td></tr><tr class=\"tot\"><td>Total employeur</td><td>2 096,83 €</td></tr></table><table class=\"calc\"><tr class=\"tot\"><td>Total perçu sur 60 jours</td><td>4 546,12 €</td></tr><tr><td>Salaire habituel sur deux mois</td><td>6 200 €</td></tr><tr class=\"tot\"><td>Perte de revenu, en brut</td><td>1 653,88 €</td></tr></table><h4>Au-delà de 90 jours</h4><ul><li>Le maintien de salaire s'arrête au <b>67e jour</b> (7 de carence + 30 + 30). Du 68e au 90e jour, Sophie ne percevrait que <b>42,97 € par jour</b>.</li><li>À partir du 91e jour, la prévoyance collective porte le total à 75 % du brut : 77,50 € par jour, soit <b>34,53 €</b> versés par Opale Prévoyance en plus des indemnités journalières.</li><li>Acte à prévoir : noter au dossier la date du 90e jour (<b>1er juin 2030</b>) et rappeler à Sophie de déclarer la prolongation à l'employeur, qui déclare l'arrêt à l'assureur.</li></ul><div class=\"relance\"><b>À faire dire au groupe :</b> avec 3 100 € de salaire, Sophie dépasse le plafond. Le calcul « 50 % du salaire journalier » donne 50,96 € : c'est faux.</div><div class=\"erreur\"><b>Erreurs fréquentes :</b> oublier le plafond ; compter 60 jours d'indemnités ; croire que la prévoyance prend le relais dès la fin du maintien de salaire.</div>"}, {"txt": "Traitez la demande de rachat : fiscalité, montant net, pièces à vérifier. Lui donnez-vous un conseil ?", "corr": "<h4>Le chiffrage</h4><table class=\"calc\"><tr><td>Gains du contrat : 28 900 € − 26 800 €</td><td>2 100,00 €</td></tr><tr><td>Part de gains dans le rachat : 8 000 × 2 100 ÷ 28 900</td><td>581,31 €</td></tr><tr><td>Prélèvement forfaitaire : 12,8 % (contrat de moins de 8 ans)</td><td>74,41 €</td></tr><tr><td>Prélèvements sociaux : 17,2 %</td><td>99,99 €</td></tr><tr class=\"tot\"><td>Total prélevé</td><td>174,40 €</td></tr><tr class=\"tot\"><td>Montant net versé</td><td>7 825,60 €</td></tr></table><h4>Les pièces</h4><ul><li>Demande datée et signée par la souscriptrice, pièce d'identité : au dossier.</li><li>Bénéficiaire acceptant : aucun — pas d'accord à recueillir.</li><li>RIB du compte à créditer.</li></ul><h4>Le conseil</h4><ul><li><b>Le rachat est la bonne source</b> : Sophie perd environ 1 654 € sur deux mois ; sa réserve de 9 000 € (moins de trois mois de charges) doit rester intacte.</li><li>Lui rappeler que le contrat était destiné aux études de Léa : la décision lui appartient, elle est notée au dossier.</li><li>Les versements programmés de 50 € continuent ; ils peuvent être suspendus pendant l'arrêt si elle le souhaite.</li></ul><div class=\"erreur\"><b>Erreur fréquente :</b> taxer les 8 000 € ; ou conseiller de puiser dans le livret A « pour ne pas toucher au contrat », au moment où le revenu baisse.</div>"}, {"txt": "Pour la réclamation et pour le PER de Marc : quel acte, quel délai, et quelle réponse sur le fond ?", "corr": "<h4>La réclamation</h4><ul><li><b>Acte :</b> accusé de réception au plus tard le 22 mars 2030 ; réponse écrite au plus tard le 11 mai 2030, avec la mention du médiateur si la réponse ne la satisfait pas.</li><li><b>Fond :</b> le décompte est conforme. Elle a choisi un équipement hors offre 100 % santé ; la garantie de 390 €, dont 100 € pour la monture, a été appliquée. L'offre 100 % santé lui a été proposée : le devis signé le mentionne. La réclamation n'est pas fondée.</li><li><b>Ce qu'on ajoute :</b> pour le prochain renouvellement, elle peut choisir un équipement sans reste à charge.</li></ul><h4>Le PER de Marc</h4><ul><li><b>Acte :</b> aucune ouverture sur message. Un rendez-vous avec Marc pour recueillir ses exigences et ses besoins.</li><li><b>Fond :</b> avec une tranche à 11 %, 3 000 € versés font économiser 330 € d'impôt, imposés à nouveau à la sortie, et l'argent est bloqué jusqu'à la retraite. On ne sait rien de sa propre prévoyance depuis 2027.</li><li>Le rendez-vous peut être commun avec le bilan de protection (question 5).</li></ul><div class=\"erreur\"><b>Erreurs fréquentes :</b> répondre à la réclamation par téléphone sans écrit ; ne pas accuser réception parce qu'elle est infondée ; ouvrir le PER parce que le client l'a demandé.</div>"}, {"txt": "Sophie vous demande seulement d'ajouter Tom à la mutuelle. Qu'est-ce que la naissance de Tom déclenche d'autre dans le dossier ?", "corr": "<h4>Ce qu'elle a demandé</h4><p>L'affiliation de Tom à la complémentaire santé collective. Délai de 3 mois dépassé : il sera couvert à compter du 1er du mois suivant la réception de la demande. Les frais engagés depuis sa naissance ne seront pas pris en charge par la complémentaire : il faut le lui dire.</p><h4>Ce qu'elle n'a pas demandé</h4><table class=\"g4\"><tr><th>Déclenché par la naissance</th><th>Ce qu'on fait</th></tr><tr><td>Tom n'est pas déclaré à l'employeur comme enfant à charge</td><td>Le déclarer : le capital décès passe de 65 100 € (175 %) à 74 400 € (200 % de 37 200 €).</td></tr><tr><td>La clause d'Opale Vie</td><td>La vérifier : « mes enfants, nés ou à naître » couvre Tom. <b>Rien à modifier</b> — c'est la correction du cas 2 qui paie aujourd'hui.</td></tr><tr><td>La désignation particulière sur le contrat collectif</td><td>« Marc Ferrand, à défaut ses enfants » : Tom y est. Rien à modifier.</td></tr><tr><td>La note de 2027 : « à revoir si la famille s'agrandit »</td><td><b>Proposer le bilan de protection promis.</b> Si Sophie décédait : charges de 3 200 € − 460 € de mensualité prise en charge = 2 740 € pour 2 600 € de revenu de Marc, soit <b>−140 € par mois</b>, avec deux enfants. La marge de 2027 est devenue un déficit.</td></tr><tr><td>La situation du foyer</td><td>Mettre à jour la connaissance client : deux enfants, charges de 3 200 €, profil à revoir au prochain rendez-vous.</td></tr></table><div class=\"relance\"><b>À faire dire au groupe :</b> personne n'a demandé ce bilan. Il est pourtant écrit dans le dossier depuis trois ans. C'est la définition même du suivi : relire ce qu'on s'était engagé à revoir.</div><div class=\"erreur\"><b>Erreur fréquente :</b> traiter l'affiliation et refermer le dossier. Deuxième erreur : vouloir modifier la clause d'Opale Vie, qui couvre déjà Tom.</div>"}, {"txt": "Quelle est la prochaine action dans le dossier, et qui la fait ? Rédigez la note de suivi de la semaine.", "corr": "<h4>La prochaine action</h4><p><b>Aujourd'hui, par le conseiller :</b> transmettre la demande d'affiliation de Tom et sa déclaration comme enfant à charge — Sophie signe le formulaire, le conseiller le transmet avant le 31 mars.</p><h4>Un exemple de note</h4><div class=\"modele\"><p><b>Dossier Delcourt — semaine du 11 mars 2030 — [conseiller]</b></p><p><b>Fait le 15/03 :</b> accusé de réception de la réclamation optique (reçue le 11/03). Formulaire d'affiliation de Tom et déclaration d'enfant à charge envoyés à Sophie pour signature. Rachat partiel de 8 000 € transmis (net estimé 7 825,60 €), Sophie informée de la fiscalité. Sophie informée de la perte liée à son arrêt (environ 1 654 € brut sur 60 jours).</p><p><b>À faire :</b> retour du formulaire signé et envoi avant le 31/03 (conseiller). Réponse écrite à la réclamation avant le 11/05 (conseiller). Si l'arrêt est prolongé : 90e jour le 01/06/2030, prolongation à déclarer par l'employeur à Opale Prévoyance. Rendez-vous Sophie et Marc avant fin avril : bilan de protection prévu dans la note du 01/02/2027, et recueil des besoins de Marc avant tout PER.</p><p><b>Vérifié, rien à modifier :</b> clause d'Opale Vie et désignation particulière, qui couvrent Tom.</p></div><div class=\"relance\"><b>Transition vers la S7 :</b> c'est cette note que chacun réécrit en S7, pour un seul événement, sur la fiche « note au dossier ».</div><div class=\"erreur\"><b>Erreur fréquente :</b> une note sans dates ni noms (« voir avec la cliente »). Elle ne permet à personne de reprendre lundi.</div>"}];
+function el(id){ return document.getElementById(id); }
+el("questions").innerHTML = QS.map(function(q, i){
+  return '<div class="q"><div class="q-head"><div class="q-num">Question ' + (i + 1) + '</div><div class="q-txt">' + q.txt + '</div></div>' +
+    '<button class="q-btn" id="btn' + i + '" onclick="bascule(' + i + ')">Révéler la correction</button>' +
+    '<div class="corr" id="corr' + i + '"><div class="corr-in">' + q.corr + '</div></div></div>';
+}).join("");
+function regle(i, ouvrir){
+  const c = el("corr" + i), b = el("btn" + i);
+  c.classList.toggle("show", ouvrir); b.classList.toggle("open", ouvrir);
+  b.textContent = ouvrir ? "Masquer la correction" : "Révéler la correction";
+}
+function bascule(i){ regle(i, !el("corr" + i).classList.contains("show")); }
+function tout(ouvrir){ QS.forEach(function(_, i){ regle(i, ouvrir); }); }
+</script>
+</body>
+</html>

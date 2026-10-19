@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cas 3 — Le parent âgé · Corrigé formateur</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Karla:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#16243B; --bleu:#1F4E79; --bleu-clair:#2E75B6; --or:#B08D57;
+  --creme:#F5F2EB; --card:#FFFFFF; --line:#e3ddd0; --muted:#6B6459;
+  --ok:#2F7A4F; --ko:#B23B3B; --amber:#B5852A;
+  --shadow:0 2px 10px rgba(22,36,59,.07);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Karla',system-ui,sans-serif;background:var(--creme);color:var(--navy);line-height:1.55}
+.wrap{max-width:1000px;margin:0 auto;padding:26px 18px 70px}
+.card-main{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);overflow:hidden}
+.header{padding:26px 34px 0}
+.chapter-tag{font-size:11.5px;font-weight:700;letter-spacing:1.6px;text-transform:uppercase;color:var(--or)}
+.chapter-tag span{opacity:.5}
+h1{font-family:'Fraunces',serif;font-weight:600;font-size:27px;line-height:1.2;margin:8px 0 5px}
+.header p{color:var(--muted);font-size:14.5px}
+.gold-rule{border:none;border-top:2px solid var(--or);width:64px;margin:18px 0 0}
+.body{padding:22px 34px 30px}
+
+.warn{background:#FBF1DC;border:1px solid #E6D3A8;border-left:3px solid var(--amber);border-radius:8px;padding:13px 16px;font-size:13.5px;margin-bottom:20px}
+.warn b{color:var(--navy)}
+
+.situation{background:#FBF7EE;border:1px solid var(--line);border-radius:10px;padding:15px 18px;margin-bottom:18px;font-size:14px}
+.situation h2{font-family:'Fraunces',serif;font-size:17px;margin-bottom:7px}
+.situation .don{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:6px 22px;margin-top:11px}
+.don .r{display:flex;justify-content:space-between;gap:12px;border-bottom:1px dotted var(--line);padding-bottom:3px;font-size:13px}
+.don .r b{white-space:nowrap}
+
+.params{background:#FCFAF5;border:1px dashed var(--line);border-radius:10px;padding:14px 16px;margin-bottom:22px}
+.params-title{font-size:11px;font-weight:700;letter-spacing:1.3px;text-transform:uppercase;color:var(--muted);margin-bottom:10px;display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.src{font-weight:600;letter-spacing:0;text-transform:none;font-size:11.5px;padding:2px 9px;border-radius:99px}
+.src.live{background:#E8F2EA;color:var(--ok)}
+.src.local{background:#FBF1DC;color:var(--amber)}
+.plist{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:7px 22px}
+.prow{display:flex;justify-content:space-between;gap:12px;font-size:13px;border-bottom:1px dotted var(--line);padding-bottom:3px}
+.prow span:last-child{font-weight:700;white-space:nowrap}
+
+.tools{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px}
+.btn{border:none;border-radius:9px;padding:11px 20px;font-family:inherit;font-size:14px;font-weight:700;cursor:pointer}
+.btn-primary{background:var(--bleu);color:#fff}
+.btn-secondary{background:#fff;color:var(--bleu);border:1.5px solid var(--bleu)}
+
+.q{border:1.5px solid var(--line);border-radius:12px;margin-bottom:16px;overflow:hidden;background:#fff}
+.q-head{padding:16px 20px}
+.q-num{font-size:10.5px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--or);margin-bottom:5px}
+.q-txt{font-size:15.5px;font-weight:700;line-height:1.45}
+.q-btn{margin:0 20px 16px;background:var(--navy);color:#fff;border:none;border-radius:8px;padding:10px 18px;
+  font-family:inherit;font-size:13.5px;font-weight:700;cursor:pointer}
+.q-btn.open{background:#fff;color:var(--navy);border:1.5px solid var(--line)}
+.corr{max-height:0;overflow:hidden;transition:max-height .35s ease;background:#FBF7EE;border-top:1px solid var(--line)}
+.corr.show{max-height:2600px}
+.corr-in{padding:18px 20px 20px}
+.corr h4{font-size:11px;font-weight:700;letter-spacing:1.3px;text-transform:uppercase;color:var(--bleu);margin:16px 0 7px}
+.corr h4:first-child{margin-top:0}
+.corr p{font-size:14px;margin-bottom:8px}
+.corr ul{margin:0 0 8px 18px;font-size:14px}
+.corr li{margin-bottom:5px}
+.calc{width:100%;border-collapse:collapse;font-size:13.5px;margin:4px 0 10px;background:#fff;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.calc td{padding:7px 11px;border-bottom:1px solid var(--line)}
+.calc tr:last-child td{border-bottom:none}
+.calc td:last-child{text-align:right;font-weight:700;white-space:nowrap;font-variant-numeric:tabular-nums}
+.calc tr.tot td{background:#EEF4F9;color:var(--navy);font-weight:700}
+.calc tr.tot td:first-child{font-weight:700}
+.relance{background:#EEF4F9;border-left:3px solid var(--bleu-clair);border-radius:6px;padding:11px 14px;font-size:13.5px;margin-bottom:9px}
+.erreur{background:#FBF3F3;border-left:3px solid var(--ko);border-radius:6px;padding:11px 14px;font-size:13.5px}
+.erreur b,.relance b{color:var(--navy)}
+.footer{text-align:center;font-size:11.5px;color:var(--muted);padding:16px 34px 24px;border-top:1px solid var(--line)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card-main">
+    <div class="header">
+      <div class="chapter-tag">TMK Performances · Conso des acquis 1/4 <span>/</span> Séquence 6</div>
+      <h1>Cas 3 — Le parent âgé</h1>
+      <p>Corrigé formateur · corrections révélables · 105 minutes</p>
+      <hr class="gold-rule">
+    </div>
+
+    <div class="body">
+      <div class="warn">
+        <b>⚠ Document formateur.</b> Ne pas projeter avant la restitution. Brief 10 min · recherche individuelle 40 min ·
+        correction collective 40 min · synthèse 15 min. Interrogez nominativement plutôt que d'attendre les volontaires,
+        et faites expliciter le raisonnement <b>avant</b> de révéler le résultat. <br><br><b>Ce cas contient une donnée volontairement absente</b> — les ressources de Suzanne. Ne la donnez sous aucun prétexte, même si le groupe la réclame : repérer le manque est l'objectif de la question 4.
+      </div>
+
+      <div class="situation">
+        <h2>La situation remise aux stagiaires</h2>
+        <p><b>Suzanne Berthier, 82 ans</b>, mère de Nadia, vit chez elle et perd en autonomie. Elle vient d'être
+        classée en <b>GIR 3</b>, avec un plan d'aide de 980,00 €. Trois sujets arrivent en même temps : un
+        <b>capital décès jamais demandé</b> au décès de son mari il y a quatorze mois, un <b>appareillage auditif</b>
+        à financer, et l'hypothèse d'une <b>entrée en établissement</b>.</p>
+        <div class="don">
+          <div class="r"><span>Âge de Suzanne</span><b>82 ans</b></div>
+          <div class="r"><span>Classement AGGIR</span><b>GIR 3</b></div>
+          <div class="r"><span>Plan d'aide établi</span><b>980,00 €</b></div>
+          <div class="r"><span>Ressources de Suzanne</span><b>non communiquées</b></div>
+          <div class="r"><span>Décès du mari</span><b>il y a 14 mois</b></div>
+          <div class="r"><span>Situation du mari au décès</span><b>pension d'invalidité cat. 2</b></div>
+          <div class="r"><span>Devis auditif classe II</span><b>1 400,00 € par oreille</b></div>
+          <div class="r"><span>Tarif de l'établissement</span><b>2 350,00 € dont 1 730,00 € d'hébergement</b></div>
+        </div>
+      </div>
+
+      <div class="params">
+        <div class="params-title">Paramètres utilisés pour le corrigé <span class="src local" id="src-badge">valeurs de secours</span></div>
+        <div class="plist" id="plist"></div>
+      </div>
+
+      <div class="tools">
+        <button class="btn btn-primary" onclick="tout(true)">Tout révéler</button>
+        <button class="btn btn-secondary" onclick="tout(false)">Tout masquer</button>
+      </div>
+
+      <div id="questions"></div>
+    </div>
+
+    <div class="footer">TMK Performances - N° Siret : 49841924100027 - Code NAF : 8559A</div>
+  </div>
+</div>
+
+<script>
+/* ─────────── Paramètres live (prévoyance + santé), repli local ─────────── */
+const SB_URL = "https://ibkvyjlglwufxvzxnysa.supabase.co";
+const SB_KEY = "sb_publishable_xUfZHSOHf4TnBRRyzU_qJA_TcXIMSKX";
+
+const DEF_PREV = {
+  deces_capital_forfait: 4009,
+  apa_plafond_gir3: 1215.99,
+  apa_seuil_versement: 36.06,
+  apa_age_min: 60,
+};
+const DEF_SANTE = {
+  sante_audio_plv_classe1_20ans_plus: 950,
+  sante_audio_br_classe1_2_20ans_plus: 400,
+  sante_taux_aide_auditive: 0.60,
+};
+let P = Object.assign({}, DEF_PREV, DEF_SANTE);
+
+const AFFICHE = [
+  ["deces_capital_forfait", "Capital décès forfaitaire", "€"],
+  ["apa_plafond_gir3", "Plafond du plan d'aide, GIR 3", "€"],
+  ["apa_seuil_versement", "Seuil de non-versement de l'APA", "€"],
+  ["apa_age_min", "Âge minimal pour l'APA", "a"],
+  ["sante_audio_plv_classe1_20ans_plus", "Prix limite — aide auditive classe I", "€"],
+  ["sante_audio_br_classe1_2_20ans_plus", "Base — aide auditive classe I et II", "€"],
+  ["sante_taux_aide_auditive", "Taux de remboursement, aides auditives", "%"],
+];
+
+function el(id){ return document.getElementById(id); }
+function eur(n){ return n.toLocaleString("fr-FR",{minimumFractionDigits:2,maximumFractionDigits:2}) + " €"; }
+function r2(n){ return Math.round(n * 100) / 100; }
+
+function renderParams(){
+  el("plist").innerHTML = AFFICHE.map(function(a){
+    const v = P[a[0]];
+    let aff;
+    if(a[2] === "%") aff = Math.round(v * 100) + " %";
+    else if(a[2] === "€") aff = eur(v);
+    else if(a[2] === "a") aff = v + " ans";
+    else aff = String(v).replace(".", ",");
+    return '<div class="prow"><span>' + a[1] + '</span><span>' + aff + '</span></div>';
+  }).join("");
+}
+
+async function lire(table, cles){
+  const url = SB_URL + "/rest/v1/" + table + "?select=cle,valeur&cle=in.(" + cles.join(",") + ")&apikey=" + SB_KEY;
+  const r = await fetch(url);
+  if(!r.ok) throw new Error(r.status);
+  const rows = await r.json();
+  if(!rows.length) throw new Error("vide");
+  rows.forEach(function(row){ if(row.valeur !== null) P[row.cle] = Number(row.valeur); });
+}
+
+async function chargerParametres(){
+  let ok = 0;
+  try{ await lire("parametres_prevoyance", Object.keys(DEF_PREV)); ok++; }catch(e){}
+  try{ await lire("parametres_sante", Object.keys(DEF_SANTE)); ok++; }catch(e){}
+  const b = el("src-badge");
+  if(ok === 2){ b.className = "src live"; b.textContent = "valeurs à jour"; }
+  else if(ok === 1){ b.className = "src local"; b.textContent = "valeurs partiellement à jour"; }
+  else { b.className = "src local"; b.textContent = "valeurs de secours"; }
+  renderParams(); renderQuestions();
+}
+
+/* ─────────── Le corrigé ─────────── */
+const MOIS_DECES = 14, PLAN_AIDE = 980, NB_OREILLES = 2;
+const PRIX_CLASSE2 = 1400, EHPAD_TOTAL = 2350, EHPAD_DEP = 620, EHPAD_HEB = 1730;
+
+function calculs(){
+  // capital décès : délai prioritaire 1 mois, délai global 2 ans
+  const moisRestants = 24 - MOIS_DECES;
+
+  // aides auditives
+  const br      = P.sante_audio_br_classe1_2_20ans_plus;
+  const amOreille = r2(br * P.sante_taux_aide_auditive);
+  const am2     = r2(amOreille * NB_OREILLES);
+  const plv1    = P.sante_audio_plv_classe1_20ans_plus;
+  const total1  = r2(plv1 * NB_OREILLES);
+  const solde1  = r2(total1 - am2);
+  const total2  = r2(PRIX_CLASSE2 * NB_OREILLES);
+  const solde2  = r2(total2 - am2);
+  const ecart   = r2(total2 - total1);
+
+  // APA : plan d'aide retenu dans la limite du plafond GIR 3
+  const plafGir3 = P.apa_plafond_gir3;
+  const retenu   = Math.min(PLAN_AIDE, plafGir3);
+  const marge    = r2(plafGir3 - PLAN_AIDE);
+  const apaMax   = retenu;                    // participation nulle
+  const apaMin   = r2(retenu * 0.10);         // participation maximale de 90 %
+
+  // EHPAD
+  const resteHeb = EHPAD_HEB;
+
+  return {moisRestants, br, amOreille, am2, plv1, total1, solde1, total2, solde2, ecart,
+          plafGir3, retenu, marge, apaMax, apaMin, resteHeb};
+}
+
+function tableau(rows){
+  return '<table class="calc">' + rows.map(function(r){
+    return '<tr' + (r[2] ? ' class="tot"' : '') + '><td>' + r[0] + '</td><td>' + r[1] + '</td></tr>';
+  }).join("") + '</table>';
+}
+
+function questions(){
+  const c = calculs();
+  return [
+  {
+    txt: "Sur les trois sujets, qu'est-ce que le régime obligatoire peut apporter ? Et lequel traiteriez-vous en premier ?",
+    corr:
+      '<h4>Ce que chaque sujet mobilise</h4>' +
+      '<ul>' +
+      '<li><b>Le capital décès</b> — assurance maladie, droit commun. Un forfait, versé aux proches, mais <b>uniquement sur demande</b>.</li>' +
+      '<li><b>L\'appareillage auditif</b> — remboursement des aides auditives et dispositif 100 % santé.</li>' +
+      '<li><b>La perte d\'autonomie</b> — cinquième branche : évaluation par la grille AGGIR, puis allocation d\'autonomie.</li>' +
+      '</ul>' +
+      '<h4>L\'ordre de traitement</h4>' +
+      '<p><b>Le capital décès passe d\'abord</b>, et c\'est la réponse attendue. Les deux autres sujets peuvent attendre une semaine ; ' +
+      'celui-ci est le seul qui soit <b>sous délai de forclusion</b>. Le décès remonte à ' + MOIS_DECES + ' mois : ' +
+      'il reste environ <b>' + c.moisRestants + ' mois</b> avant que le droit ne s\'éteigne définitivement.</p>' +
+      '<div class="relance"><b>À faire dire au groupe :</b> qu\'est-ce qui distingue une prestation qu\'on peut demander plus tard ' +
+      'd\'une prestation qui se perd ? Combien de dossiers de ce type dorment dans les familles de vos clients ?</div>' +
+      '<div class="erreur"><b>Erreur fréquente :</b> commencer par la dépendance parce que c\'est le sujet le plus visible et le plus émotionnel. ' +
+      'Le réflexe professionnel, c\'est de traiter d\'abord ce qui expire.</div>'
+  },
+  {
+    txt: "Le capital décès : Suzanne peut-elle encore l'obtenir ? À quelles conditions, dans quel délai, et par quelle démarche ?",
+    corr:
+      '<h4>La condition du côté du défunt</h4>' +
+      '<p>Le capital décès du régime général suppose que le défunt, dans la période précédant son décès, ait été salarié, ' +
+      'indemnisé, ou <b>titulaire d\'une pension d\'invalidité</b>. Roger était titulaire d\'une pension de catégorie 2 : ' +
+      '<b>la condition est remplie</b>. Elle ne l\'aurait pas été s\'il avait été retraité.</p>' +
+      '<h4>Le montant</h4>' +
+      tableau([
+        ["Capital décès, montant forfaitaire", eur(P.deces_capital_forfait), true],
+        ["Proportionnel au salaire du défunt ?", "non"],
+        ["Imposable ou soumis à cotisations ?", "non"],
+      ]) +
+      '<h4>Le délai — le cœur de la question</h4>' +
+      '<p>Suzanne était à la charge effective, totale et permanente de Roger : elle était <b>bénéficiaire prioritaire</b>, ' +
+      'et disposait à ce titre d\'un délai d\'un mois. Ce délai est passé depuis longtemps : <b>elle a perdu son rang de priorité</b>.</p>' +
+      '<p>Mais le droit lui-même n\'est pas éteint. Au-delà du rang prioritaire, la demande reste recevable pendant <b>deux ans</b>. ' +
+      'Le décès datant de ' + MOIS_DECES + ' mois, il reste environ <b>' + c.moisRestants + ' mois</b>. ' +
+      'La réponse attendue est donc : <b>oui, mais il faut déposer la demande maintenant</b>.</p>' +
+      '<h4>La démarche</h4>' +
+      '<p>Un formulaire de demande de capital décès, adressé à la caisse d\'assurance maladie, accompagné des pièces justifiant ' +
+      'la qualité de bénéficiaire. Rien ne se déclenche automatiquement, et aucune caisse ne prévient les familles.</p>' +
+      '<div class="relance"><b>À faire dire au groupe :</b> et si le décès remontait à vingt-huit mois ? Et si Roger avait été retraité ?</div>' +
+      '<div class="erreur"><b>Erreur fréquente :</b> conclure que le droit est perdu parce que le délai d\'un mois est dépassé. ' +
+      'Le dépassement fait perdre la priorité, pas le droit. C\'est exactement l\'erreur qui coûte ' + eur(P.deces_capital_forfait) + ' à une famille.</div>'
+  },
+  {
+    txt: "L'appareillage auditif : chiffrez le reste à charge selon que Suzanne retient le devis de classe I ou celui de classe II.",
+    corr:
+      '<h4>Le calcul de l\'Assurance Maladie — identique dans les deux cas</h4>' +
+      '<p>La base de remboursement est <b>la même en classe I et en classe II</b>. Ce qui change, c\'est le prix : plafonné en classe I, libre en classe II.</p>' +
+      tableau([
+        ["Base de remboursement, par oreille", eur(c.br)],
+        ["Remboursement : " + eur(c.br) + " × " + Math.round(P.sante_taux_aide_auditive * 100) + " %", eur(c.amOreille)],
+        ["Pour les deux oreilles", eur(c.am2), true],
+      ]) +
+      '<h4>Devis de classe I — le panier 100 % santé</h4>' +
+      tableau([
+        ["Prix limite de vente, par oreille", eur(c.plv1)],
+        ["Facturé pour deux oreilles", eur(c.total1)],
+        ["Assurance Maladie", "− " + eur(c.am2)],
+        ["Solde pris par la complémentaire responsable", eur(c.solde1)],
+        ["Reste à charge de Suzanne", eur(0), true],
+      ]) +
+      '<h4>Devis de classe II — prix libre</h4>' +
+      tableau([
+        ["Prix pratiqué, par oreille", eur(PRIX_CLASSE2)],
+        ["Facturé pour deux oreilles", eur(c.total2)],
+        ["Assurance Maladie — inchangée", "− " + eur(c.am2)],
+        ["Solde à répartir entre la complémentaire et Suzanne", eur(c.solde2), true],
+      ]) +
+      '<p>En classe II, l\'Assurance Maladie ne verse pas un euro de plus. Le supplément de <b>' + eur(c.ecart) + '</b> par rapport ' +
+      'à la classe I repose entièrement sur le contrat de Suzanne, dans la limite du plafond que celui-ci prévoit — ' +
+      'et au-delà, sur elle.</p>' +
+      '<div class="relance"><b>À faire dire au groupe :</b> pourquoi la base est-elle identique dans les deux classes ? ' +
+      'Que faut-il vérifier dans le contrat de Suzanne avant de l\'orienter vers la classe II ?</div>' +
+      '<div class="erreur"><b>Erreur fréquente :</b> croire que « 100 % santé » veut dire « remboursé à 100 % par la Sécurité sociale ». ' +
+      'L\'Assurance Maladie verse ' + eur(c.am2) + ' sur ' + eur(c.total1) + '. Le reste à charge nul vient du contrat responsable, pas du régime obligatoire.</div>'
+  },
+  {
+    txt: "L'allocation d'autonomie : chiffrez ce que Suzanne percevra. Si vous ne le pouvez pas, dites ce qui vous manque et formulez la question.",
+    corr:
+      '<h4>Ce qu\'on peut établir</h4>' +
+      '<ul>' +
+      '<li>Suzanne a plus de ' + P.apa_age_min + ' ans et elle est classée en <b>GIR 3</b> : elle est <b>éligible</b>. ' +
+      'Les GIR 5 et 6 ne le seraient pas.</li>' +
+      '<li>Le plan d\'aide s\'élève à ' + eur(PLAN_AIDE) + '. Le plafond applicable au GIR 3 est de ' + eur(c.plafGir3) + ' : ' +
+      'le plan d\'aide est donc <b>retenu en totalité</b>, avec une marge de ' + eur(c.marge) + '.</li>' +
+      '</ul>' +
+      '<h4>Ce qu\'on ne peut pas établir — et c\'est le point du cas</h4>' +
+      '<p>L\'allocation versée est égale au plan d\'aide <b>diminué d\'une participation calculée d\'après les ressources</b> du bénéficiaire. ' +
+      '<b>Les ressources de Suzanne ne figurent pas dans l\'énoncé.</b> Le montant ne peut donc pas être chiffré.</p>' +
+      tableau([
+        ["Plan d'aide retenu", eur(c.retenu)],
+        ["Si la participation est nulle (ressources modestes)", eur(c.apaMax)],
+        ["Si la participation est maximale", eur(c.apaMin)],
+        ["Fourchette possible", eur(c.apaMin) + " à " + eur(c.apaMax), true],
+      ]) +
+      '<p>Un rapport de un à dix : donner un chiffre au hasard n\'aurait aucun sens. À noter aussi que si l\'allocation calculée ' +
+      'tombait sous le seuil de ' + eur(P.apa_seuil_versement) + ', elle ne serait pas versée du tout.</p>' +
+      '<h4>La question à poser</h4>' +
+      '<p>« Pour vous dire ce que votre mère touchera, il me faut ses revenus : le montant de sa pension de retraite, ' +
+      'et le cas échéant ses revenus du patrimoine. C\'est ce qui détermine la part qui restera à sa charge dans le plan d\'aide. »</p>' +
+      '<div class="relance"><b>À faire dire au groupe :</b> qui a repéré que la donnée manquait ? Qui a donné un chiffre quand même ? ' +
+      'Devant un client, laquelle des deux attitudes fait le plus de dégâts ?</div>' +
+      '<div class="erreur"><b>Erreur fréquente :</b> annoncer ' + eur(PLAN_AIDE) + ' d\'allocation en confondant le plan d\'aide ' +
+      'avec le montant versé. Le plan d\'aide est le besoin évalué, pas le chèque.</div>'
+  },
+  {
+    txt: "Si Suzanne entre en établissement : que couvrira l'allocation d'autonomie, et que restera-t-il à la famille ?",
+    corr:
+      '<h4>Le partage du tarif</h4>' +
+      tableau([
+        ["Tarif mensuel de l'établissement", eur(EHPAD_TOTAL)],
+        ["dont tarif dépendance — l'allocation peut intervenir", eur(EHPAD_DEP)],
+        ["dont hébergement — l'allocation n'intervient jamais", eur(EHPAD_HEB), true],
+      ]) +
+      '<p>En établissement, l\'allocation d\'autonomie ne prend en charge qu\'une <b>partie du tarif dépendance</b> : ' +
+      'le résident conserve toujours à sa charge la part correspondant aux GIR les moins dépendants, à laquelle s\'ajoute ' +
+      'sa participation selon ses ressources.</p>' +
+      '<p><b>L\'hébergement, soit ' + eur(c.resteHeb) + ' par mois, reste intégralement à la charge de Suzanne et de sa famille.</b> ' +
+      'C\'est de loin la dépense principale, et c\'est précisément celle sur laquelle le régime obligatoire n\'apporte rien.</p>' +
+      '<h4>Une réponse possible à Nadia</h4>' +
+      '<p>« L\'aide à l\'autonomie couvrira une partie des ' + eur(EHPAD_DEP) + ' liés à la dépendance, mais pas l\'hébergement : ' +
+      'les ' + eur(c.resteHeb) + ' par mois resteront à la charge de votre mère, et de vous si ses ressources n\'y suffisent pas. ' +
+      'C\'est la vraie question à anticiper, bien avant celle de l\'appareillage. Commençons quand même par le capital décès, ' +
+      'parce que celui-là, dans ' + c.moisRestants + ' mois, il sera perdu. »</p>' +
+      '<div class="relance"><b>À faire dire au groupe :</b> quelles autres aides existent sur l\'hébergement, et qui les porte ? ' +
+      '(Aide sociale départementale, récupérable sur succession, et obligation alimentaire des enfants — ' +
+      'c\'est là que la conversation devient difficile.)</div>' +
+      '<div class="erreur"><b>Erreur fréquente :</b> laisser croire que « la dépendance est prise en charge ». ' +
+      'Ce qui est pris en charge, c\'est le tarif dépendance, pas le coût de l\'établissement.</div>'
+  },
+  {
+    txt: "Quelle est la prochaine action dans le dossier, et qui la fait ?",
+    corr: "<h4>La prochaine action : la demande de capital décès</h4><p>C'est le seul des trois sujets qui a une échéance : la demande reste recevable pendant deux ans après le décès, et il reste environ dix mois. <b>Qui la fait :</b> Suzanne, bénéficiaire — ou Nadia pour elle, avec sa procuration. <b>Ce que fait le conseiller :</b> il lui indique le formulaire de demande de capital décès à adresser à la caisse d'assurance maladie de Roger, la liste des pièces (acte de décès, pièce d'identité, justificatif de sa qualité de personne à charge, RIB), et note au dossier la date limite et une date de rappel.</p><h4>Ensuite</h4><ul><li><b>L'allocation d'autonomie :</b> Nadia transmet au département les ressources de Suzanne (dernier avis d'imposition) — c'est la donnée qui manquait au calcul.</li><li><b>L'appareillage :</b> Suzanne choisit son devis ; aucun délai, mais le panier sans reste à charge doit lui avoir été présenté.</li></ul><div class=\"relance\"><b>À faire dire au groupe :</b> une action, un nom, une date. « Voir avec Nadia » n'est pas une prochaine action.</div><div class=\"erreur\"><b>Erreur fréquente :</b> désigner le conseiller comme celui qui dépose la demande. Il prépare et relance ; c'est la bénéficiaire qui demande.</div>"
+  },
+  ];
+}
+
+function renderQuestions(){
+  const qs = questions();
+  el("questions").innerHTML = qs.map(function(q, i){
+    return '<div class="q">' +
+      '<div class="q-head"><div class="q-num">Question ' + (i + 1) + '</div><div class="q-txt">' + q.txt + '</div></div>' +
+      '<button class="q-btn" id="btn' + i + '" onclick="bascule(' + i + ')">Révéler la correction</button>' +
+      '<div class="corr" id="corr' + i + '"><div class="corr-in">' + q.corr + '</div></div>' +
+    '</div>';
+  }).join("");
+}
+
+function bascule(i){
+  const c = el("corr" + i), b = el("btn" + i);
+  const ouvert = c.classList.toggle("show");
+  b.classList.toggle("open", ouvert);
+  b.textContent = ouvert ? "Masquer la correction" : "Révéler la correction";
+}
+function tout(ouvrir){
+  questions().forEach(function(_, i){
+    const c = el("corr" + i), b = el("btn" + i);
+    c.classList.toggle("show", ouvrir);
+    b.classList.toggle("open", ouvrir);
+    b.textContent = ouvrir ? "Masquer la correction" : "Révéler la correction";
+  });
+}
+
+renderParams();
+renderQuestions();
+chargerParametres();
+
+</script>
+</body>
+</html>

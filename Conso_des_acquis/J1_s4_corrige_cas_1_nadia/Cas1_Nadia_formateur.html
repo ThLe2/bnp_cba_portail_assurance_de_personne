@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cas 1 — L'arrêt de travail · Corrigé formateur</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Karla:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#16243B; --bleu:#1F4E79; --bleu-clair:#2E75B6; --or:#B08D57;
+  --creme:#F5F2EB; --card:#FFFFFF; --line:#e3ddd0; --muted:#6B6459;
+  --ok:#2F7A4F; --ko:#B23B3B; --amber:#B5852A;
+  --shadow:0 2px 10px rgba(22,36,59,.07);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Karla',system-ui,sans-serif;background:var(--creme);color:var(--navy);line-height:1.55}
+.wrap{max-width:1000px;margin:0 auto;padding:26px 18px 70px}
+.card-main{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);overflow:hidden}
+.header{padding:26px 34px 0}
+.chapter-tag{font-size:11.5px;font-weight:700;letter-spacing:1.6px;text-transform:uppercase;color:var(--or)}
+.chapter-tag span{opacity:.5}
+h1{font-family:'Fraunces',serif;font-weight:600;font-size:27px;line-height:1.2;margin:8px 0 5px}
+.header p{color:var(--muted);font-size:14.5px}
+.gold-rule{border:none;border-top:2px solid var(--or);width:64px;margin:18px 0 0}
+.body{padding:22px 34px 30px}
+
+.warn{background:#FBF1DC;border:1px solid #E6D3A8;border-left:3px solid var(--amber);border-radius:8px;padding:13px 16px;font-size:13.5px;margin-bottom:20px}
+.warn b{color:var(--navy)}
+
+.situation{background:#FBF7EE;border:1px solid var(--line);border-radius:10px;padding:15px 18px;margin-bottom:18px;font-size:14px}
+.situation h2{font-family:'Fraunces',serif;font-size:17px;margin-bottom:7px}
+.situation .don{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:6px 22px;margin-top:11px}
+.don .r{display:flex;justify-content:space-between;gap:12px;border-bottom:1px dotted var(--line);padding-bottom:3px;font-size:13px}
+.don .r b{white-space:nowrap}
+
+.params{background:#FCFAF5;border:1px dashed var(--line);border-radius:10px;padding:14px 16px;margin-bottom:22px}
+.params-title{font-size:11px;font-weight:700;letter-spacing:1.3px;text-transform:uppercase;color:var(--muted);margin-bottom:10px;display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.src{font-weight:600;letter-spacing:0;text-transform:none;font-size:11.5px;padding:2px 9px;border-radius:99px}
+.src.live{background:#E8F2EA;color:var(--ok)}
+.src.local{background:#FBF1DC;color:var(--amber)}
+.plist{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:7px 22px}
+.prow{display:flex;justify-content:space-between;gap:12px;font-size:13px;border-bottom:1px dotted var(--line);padding-bottom:3px}
+.prow span:last-child{font-weight:700;white-space:nowrap}
+
+.tools{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px}
+.btn{border:none;border-radius:9px;padding:11px 20px;font-family:inherit;font-size:14px;font-weight:700;cursor:pointer}
+.btn-primary{background:var(--bleu);color:#fff}
+.btn-secondary{background:#fff;color:var(--bleu);border:1.5px solid var(--bleu)}
+
+.q{border:1.5px solid var(--line);border-radius:12px;margin-bottom:16px;overflow:hidden;background:#fff}
+.q-head{padding:16px 20px}
+.q-num{font-size:10.5px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--or);margin-bottom:5px}
+.q-txt{font-size:15.5px;font-weight:700;line-height:1.45}
+.q-btn{margin:0 20px 16px;background:var(--navy);color:#fff;border:none;border-radius:8px;padding:10px 18px;
+  font-family:inherit;font-size:13.5px;font-weight:700;cursor:pointer}
+.q-btn.open{background:#fff;color:var(--navy);border:1.5px solid var(--line)}
+.corr{max-height:0;overflow:hidden;transition:max-height .35s ease;background:#FBF7EE;border-top:1px solid var(--line)}
+.corr.show{max-height:2600px}
+.corr-in{padding:18px 20px 20px}
+.corr h4{font-size:11px;font-weight:700;letter-spacing:1.3px;text-transform:uppercase;color:var(--bleu);margin:16px 0 7px}
+.corr h4:first-child{margin-top:0}
+.corr p{font-size:14px;margin-bottom:8px}
+.corr ul{margin:0 0 8px 18px;font-size:14px}
+.corr li{margin-bottom:5px}
+.calc{width:100%;border-collapse:collapse;font-size:13.5px;margin:4px 0 10px;background:#fff;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.calc td{padding:7px 11px;border-bottom:1px solid var(--line)}
+.calc tr:last-child td{border-bottom:none}
+.calc td:last-child{text-align:right;font-weight:700;white-space:nowrap;font-variant-numeric:tabular-nums}
+.calc tr.tot td{background:#EEF4F9;color:var(--navy);font-weight:700}
+.calc tr.tot td:first-child{font-weight:700}
+.relance{background:#EEF4F9;border-left:3px solid var(--bleu-clair);border-radius:6px;padding:11px 14px;font-size:13.5px;margin-bottom:9px}
+.erreur{background:#FBF3F3;border-left:3px solid var(--ko);border-radius:6px;padding:11px 14px;font-size:13.5px}
+.erreur b,.relance b{color:var(--navy)}
+.footer{text-align:center;font-size:11.5px;color:var(--muted);padding:16px 34px 24px;border-top:1px solid var(--line)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card-main">
+    <div class="header">
+      <div class="chapter-tag">TMK Performances · Conso des acquis 1/4 <span>/</span> Séquence 4</div>
+      <h1>Cas 1 — L'arrêt de travail</h1>
+      <p>Corrigé formateur · corrections révélables · 60 minutes</p>
+      <hr class="gold-rule">
+    </div>
+
+    <div class="body">
+      <div class="warn">
+        <b>⚠ Document formateur.</b> Ne pas projeter avant la restitution. Brief 5 min · recherche individuelle 25 min ·
+        correction collective 20 min · synthèse 10 min. Interrogez nominativement plutôt que d'attendre les volontaires,
+        et faites expliciter le raisonnement <b>avant</b> de révéler le résultat.
+      </div>
+
+      <div class="situation">
+        <h2>La situation remise aux stagiaires</h2>
+        <p>Nadia Berthier, 34 ans, assistante commerciale, trois ans d'ancienneté. Arrêt de travail de 21 jours prescrit
+        pour une entorse survenue chez elle. Convention collective sans disposition plus favorable. Pendant l'arrêt,
+        elle consulte directement un rhumatologue de secteur 1, sans repasser par son médecin traitant.</p>
+        <div class="don">
+          <div class="r"><span>Salaire mensuel brut</span><b>2 300,00 €</b></div>
+          <div class="r"><span>Ancienneté</span><b>3 ans</b></div>
+          <div class="r"><span>Durée de l'arrêt</span><b>21 jours</b></div>
+          <div class="r"><span>Nature</span><b>Maladie, vie privée</b></div>
+          <div class="r"><span>Médecin traitant déclaré</span><b>Oui</b></div>
+          <div class="r"><span>Base mensuelle retenue</span><b>30 jours</b></div>
+        </div>
+      </div>
+
+      <div class="params">
+        <div class="params-title">Paramètres utilisés pour le corrigé <span class="src local" id="src-badge">valeurs de secours</span></div>
+        <div class="plist" id="plist"></div>
+      </div>
+
+      <div class="tools">
+        <button class="btn btn-primary" onclick="tout(true)">Tout révéler</button>
+        <button class="btn btn-secondary" onclick="tout(false)">Tout masquer</button>
+      </div>
+
+      <div id="questions"></div>
+    </div>
+
+    <div class="footer">TMK Performances - N° Siret : 49841924100027 - Code NAF : 8559A</div>
+  </div>
+</div>
+
+<script>
+/* ─────────── Paramètres live (prévoyance + santé), repli local ─────────── */
+const SB_URL = "https://ibkvyjlglwufxvzxnysa.supabase.co";
+const SB_KEY = "sb_publishable_xUfZHSOHf4TnBRRyzU_qJA_TcXIMSKX";
+
+const DEF_PREV = {
+  ij_mal_taux: 0.50, ij_mal_diviseur: 91.25, ij_mal_carence: 3,
+  mens_taux1: 0.90, mens_carence_maladie: 7, mens_anciennete_min: 1,
+};
+const DEF_SANTE = {
+  sante_br_specialiste_s1: 31.50,
+  sante_taux_consultation_parcours: 0.70,
+  sante_majoration_tm_hors_parcours: 10.60,
+  sante_participation_forfaitaire: 2,
+};
+let P = Object.assign({}, DEF_PREV, DEF_SANTE);
+
+const AFFICHE = [
+  ["ij_mal_taux", "Taux des indemnités journalières", "%"],
+  ["ij_mal_diviseur", "Diviseur du salaire journalier de base", "n"],
+  ["ij_mal_carence", "Carence Sécurité sociale", "j"],
+  ["mens_taux1", "Maintien de salaire, 1re période", "%"],
+  ["mens_carence_maladie", "Carence employeur, maladie", "j"],
+  ["mens_anciennete_min", "Ancienneté minimale exigée", "a"],
+  ["sante_br_specialiste_s1", "Base — spécialiste secteur 1", "€"],
+  ["sante_taux_consultation_parcours", "Taux de remboursement", "%"],
+  ["sante_majoration_tm_hors_parcours", "Majoration hors parcours", "€"],
+  ["sante_participation_forfaitaire", "Participation forfaitaire", "€"],
+];
+
+function el(id){ return document.getElementById(id); }
+function eur(n){ return n.toLocaleString("fr-FR",{minimumFractionDigits:2,maximumFractionDigits:2}) + " €"; }
+function r2(n){ return Math.round(n * 100) / 100; }
+
+function renderParams(){
+  el("plist").innerHTML = AFFICHE.map(function(a){
+    const v = P[a[0]];
+    let aff;
+    if(a[2] === "%") aff = Math.round(v * 100) + " %";
+    else if(a[2] === "€") aff = eur(v);
+    else if(a[2] === "j") aff = v + (v > 1 ? " jours" : " jour");
+    else if(a[2] === "a") aff = v + (v > 1 ? " ans" : " an");
+    else aff = String(v).replace(".", ",");
+    return '<div class="prow"><span>' + a[1] + '</span><span>' + aff + '</span></div>';
+  }).join("");
+}
+
+async function lire(table, cles){
+  const url = SB_URL + "/rest/v1/" + table + "?select=cle,valeur&cle=in.(" + cles.join(",") + ")&apikey=" + SB_KEY;
+  const r = await fetch(url);
+  if(!r.ok) throw new Error(r.status);
+  const rows = await r.json();
+  if(!rows.length) throw new Error("vide");
+  rows.forEach(function(row){ if(row.valeur !== null) P[row.cle] = Number(row.valeur); });
+}
+
+async function chargerParametres(){
+  let ok = 0;
+  try{ await lire("parametres_prevoyance", Object.keys(DEF_PREV)); ok++; }catch(e){}
+  try{ await lire("parametres_sante", Object.keys(DEF_SANTE)); ok++; }catch(e){}
+  const b = el("src-badge");
+  if(ok === 2){ b.className = "src live"; b.textContent = "valeurs à jour"; }
+  else if(ok === 1){ b.className = "src local"; b.textContent = "valeurs partiellement à jour"; }
+  else { b.className = "src local"; b.textContent = "valeurs de secours"; }
+  renderParams(); renderQuestions();
+}
+
+/* ─────────── Le corrigé, recalculé à partir des paramètres ─────────── */
+const SAL = 2300, JOURS = 21, BASE_MOIS = 30;
+
+function calculs(){
+  const sjb   = r2(SAL * 3 / P.ij_mal_diviseur);
+  const ij    = r2(sjb * P.ij_mal_taux);
+  const jSecu = JOURS - P.ij_mal_carence;
+  const ijss  = r2(ij * jSecu);
+
+  const salJour = r2(SAL / BASE_MOIS);
+  const garanti = r2(salJour * P.mens_taux1);
+  const jEmp    = JOURS - P.mens_carence_maladie;
+  const compJ   = r2(garanti - ij);
+  const comp    = r2(compJ * jEmp);
+
+  const total   = r2(ijss + comp);
+  const habituel= r2(SAL * JOURS / BASE_MOIS);
+  const perte   = r2(habituel - total);
+  const pct     = Math.round(perte / habituel * 1000) / 10;
+
+  const br    = P.sante_br_specialiste_s1;
+  const brute = r2(br * P.sante_taux_consultation_parcours);
+  const rbt   = r2(brute - P.sante_majoration_tm_hors_parcours - P.sante_participation_forfaitaire);
+  const tm    = r2(br - brute);
+  const nonRb = r2(P.sante_majoration_tm_hors_parcours + P.sante_participation_forfaitaire);
+
+  return {sjb, ij, jSecu, ijss, salJour, garanti, jEmp, compJ, comp, total, habituel, perte, pct,
+          br, brute, rbt, tm, nonRb};
+}
+
+function tableau(rows){
+  return '<table class="calc">' + rows.map(function(r){
+    return '<tr' + (r[2] ? ' class="tot"' : '') + '><td>' + r[0] + '</td><td>' + r[1] + '</td></tr>';
+  }).join("") + '</table>';
+}
+
+function questions(){
+  const c = calculs();
+  const tauxPct = Math.round(P.sante_taux_consultation_parcours * 100);
+  return [
+  {
+    txt: "Quels dispositifs vont intervenir pour compenser la perte de revenu de Nadia ? Qui verse quoi, et à quelles conditions ?",
+    corr:
+      '<h4>Ce qu\'on attend</h4>' +
+      '<p><b>Deux étages, jamais un seul.</b></p>' +
+      '<ul>' +
+      '<li><b>La Sécurité sociale</b> verse des indemnités journalières, après un délai de carence de ' + P.ij_mal_carence + ' jours. ' +
+      'Elles remplacent environ la moitié du salaire journalier de base.</li>' +
+      '<li><b>L\'employeur</b> complète, au titre de la loi de mensualisation : Nadia a ' + P.mens_anciennete_min + ' an d\'ancienneté au moins, ' +
+      'la condition est remplie. Mais la carence de l\'employeur est différente de celle de la Sécurité sociale — ' + P.mens_carence_maladie + ' jours ici, ' +
+      'parce que l\'arrêt relève de la vie privée et non d\'un accident du travail.</li>' +
+      '</ul>' +
+      '<p>Le complément employeur porte la rémunération à un pourcentage du brut habituel, indemnités journalières comprises : ' +
+      'l\'employeur ne verse que la différence, pas la totalité.</p>' +
+      '<div class="relance"><b>À faire dire au groupe :</b> pourquoi deux carences différentes ? Et que se passerait-il si Nadia avait huit mois d\'ancienneté ?</div>' +
+      '<div class="erreur"><b>Erreur fréquente :</b> croire que l\'employeur verse 90 % <i>en plus</i> des indemnités journalières. Il garantit un niveau global, il ne cumule pas.</div>'
+  },
+  {
+    txt: "Chiffrez ce que Nadia percevra au total pour ces 21 jours, puis mesurez l'écart avec son salaire habituel.",
+    corr:
+      '<h4>Étage 1 — les indemnités journalières</h4>' +
+      tableau([
+        ["Salaire des trois derniers mois : 2 300,00 € × 3", eur(SAL * 3)],
+        ["Salaire journalier de base : " + eur(SAL * 3) + " ÷ " + String(P.ij_mal_diviseur).replace(".", ","), eur(c.sjb)],
+        ["Indemnité journalière : " + eur(c.sjb) + " × " + Math.round(P.ij_mal_taux * 100) + " %", eur(c.ij)],
+        ["Jours indemnisés : 21 − " + P.ij_mal_carence + " de carence", c.jSecu + " jours"],
+        ["Total versé par la Sécurité sociale", eur(c.ijss), true],
+      ]) +
+      '<h4>Étage 2 — le complément de l\'employeur</h4>' +
+      tableau([
+        ["Salaire journalier de référence : 2 300,00 € ÷ 30", eur(c.salJour)],
+        ["Niveau garanti : " + eur(c.salJour) + " × " + Math.round(P.mens_taux1 * 100) + " %", eur(c.garanti)],
+        ["Complément par jour : " + eur(c.garanti) + " − " + eur(c.ij), eur(c.compJ)],
+        ["Jours à la charge de l'employeur : 21 − " + P.mens_carence_maladie + " de carence", c.jEmp + " jours"],
+        ["Total versé par l'employeur", eur(c.comp), true],
+      ]) +
+      '<h4>Le résultat</h4>' +
+      tableau([
+        ["Total perçu sur les 21 jours", eur(c.total), true],
+        ["Salaire habituel sur la même période : 2 300,00 € × 21 ÷ 30", eur(c.habituel)],
+        ["Perte de revenu", eur(c.perte) + "  (" + String(c.pct).replace(".", ",") + " %)", true],
+      ]) +
+      '<div class="relance"><b>À faire dire au groupe :</b> Nadia est couverte par les deux étages, elle a l\'ancienneté requise, sa convention n\'est pas défavorable — et elle perd tout de même près d\'un tiers de son revenu. Pourquoi ? Où se creuse exactement l\'écart ?</div>' +
+      '<div class="erreur"><b>Erreur fréquente :</b> retenir 21 jours pour les deux étages. Les carences sont différentes, donc le nombre de jours indemnisés aussi.</div>'
+  },
+  {
+    txt: "Chiffrez le remboursement de la consultation chez le rhumatologue, et détaillez ce qui reste à la charge de Nadia.",
+    corr:
+      '<h4>Le point de bascule</h4>' +
+      '<p>Le rhumatologue <b>ne fait pas partie des spécialités en accès direct autorisé</b>. En le consultant sans passer par son médecin traitant, Nadia sort du parcours de soins — alors même qu\'elle a bien déclaré un médecin traitant.</p>' +
+      '<p>Le médecin est en secteur 1 : le taux ne tombe donc pas à 30 %. C\'est la majoration forfaitaire qui s\'applique.</p>' +
+      tableau([
+        ["Base de remboursement, spécialiste secteur 1", eur(c.br)],
+        [eur(c.br) + " × " + tauxPct + " %", eur(c.brute)],
+        ["Majoration hors parcours", "− " + eur(P.sante_majoration_tm_hors_parcours)],
+        ["Participation forfaitaire", "− " + eur(P.sante_participation_forfaitaire)],
+        ["Remboursement de l'Assurance Maladie", eur(c.rbt), true],
+      ]) +
+      '<h4>Qui paie quoi</h4>' +
+      tableau([
+        ["Assurance Maladie", eur(c.rbt)],
+        ["Complémentaire responsable — ticket modérateur", eur(c.tm)],
+        ["Nadia, quoi qu\'il arrive : majoration + participation", eur(c.nonRb), true],
+        ["Total facturé (secteur 1, aucun dépassement)", eur(c.br)],
+      ]) +
+      '<div class="relance"><b>À faire dire au groupe :</b> qu\'aurait changé un passage préalable par le médecin traitant ? Et si le rhumatologue avait été en secteur 2 non adhérent à l\'OPTAM ?</div>' +
+      '<div class="erreur"><b>Erreur fréquente :</b> appliquer 30 % parce qu\'on est hors parcours. Le taux ne bouge pas chez un secteur 1 : c\'est une somme fixe en euros qui est retenue, et aucune complémentaire ne la remboursera.</div>'
+  },
+  {
+    txt: "« Concrètement, je perds combien ? » — répondez à Nadia en trois phrases, sans jargon.",
+    corr:
+      '<h4>Une réponse possible</h4>' +
+      '<p>« Sur vos trois semaines d\'arrêt, vous allez toucher environ ' + eur(c.total) + ' au lieu de ' + eur(c.habituel) + ' : ' +
+      'il vous manquera à peu près ' + eur(c.perte) + '. La Sécurité sociale ne verse rien les trois premiers jours et couvre ensuite ' +
+      'la moitié de votre salaire ; votre employeur complète, mais seulement à partir du huitième jour. ' +
+      'Et pour votre rendez-vous chez le rhumatologue, comme vous y êtes allée sans passer par votre médecin traitant, ' +
+      'il vous restera ' + eur(c.nonRb) + ' que même une bonne mutuelle ne remboursera pas. »</p>' +
+      '<div class="relance"><b>Ce qu\'on évalue :</b> un chiffre, une explication, un conseil. Aucun sigle, aucun numéro d\'article, aucune phrase de plus de deux lignes.</div>' +
+      '<div class="erreur"><b>Erreur fréquente :</b> réciter la mécanique au lieu de donner le montant. Le client veut d\'abord savoir combien il perd ; le comment vient après, et seulement s\'il le demande.</div>'
+  },
+  ];
+}
+
+function renderQuestions(){
+  const qs = questions();
+  el("questions").innerHTML = qs.map(function(q, i){
+    return '<div class="q">' +
+      '<div class="q-head"><div class="q-num">Question ' + (i + 1) + '</div><div class="q-txt">' + q.txt + '</div></div>' +
+      '<button class="q-btn" id="btn' + i + '" onclick="bascule(' + i + ')">Révéler la correction</button>' +
+      '<div class="corr" id="corr' + i + '"><div class="corr-in">' + q.corr + '</div></div>' +
+    '</div>';
+  }).join("");
+}
+
+function bascule(i){
+  const c = el("corr" + i), b = el("btn" + i);
+  const ouvert = c.classList.toggle("show");
+  b.classList.toggle("open", ouvert);
+  b.textContent = ouvert ? "Masquer la correction" : "Révéler la correction";
+}
+function tout(ouvrir){
+  questions().forEach(function(_, i){
+    const c = el("corr" + i), b = el("btn" + i);
+    c.classList.toggle("show", ouvrir);
+    b.classList.toggle("open", ouvrir);
+    b.textContent = ouvrir ? "Masquer la correction" : "Révéler la correction";
+  });
+}
+
+renderParams();
+renderQuestions();
+chargerParametres();
+</script>
+</body>
+</html>

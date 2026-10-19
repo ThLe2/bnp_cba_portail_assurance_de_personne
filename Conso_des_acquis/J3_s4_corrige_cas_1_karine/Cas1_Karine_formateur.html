@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cas 1 — Karine, 38 ans · Corrigé formateur</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Karla:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#16243B; --bleu:#1F4E79; --bleu-clair:#2E75B6; --or:#B08D57;
+  --creme:#F5F2EB; --card:#FFFFFF; --line:#e3ddd0; --muted:#6B6459;
+  --ok:#2F7A4F; --ko:#B23B3B; --amber:#B5852A;
+  --shadow:0 2px 10px rgba(22,36,59,.07);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Karla',system-ui,sans-serif;background:var(--creme);color:var(--navy);line-height:1.55}
+.wrap{max-width:1000px;margin:0 auto;padding:26px 18px 70px}
+.card-main{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);overflow:hidden}
+.header{padding:26px 34px 0}
+.chapter-tag{font-size:11.5px;font-weight:700;letter-spacing:1.6px;text-transform:uppercase;color:var(--or)}
+.chapter-tag span{opacity:.5}
+h1{font-family:'Fraunces',serif;font-weight:600;font-size:27px;line-height:1.2;margin:8px 0 5px}
+.header p{color:var(--muted);font-size:14.5px}
+.gold-rule{border:none;border-top:2px solid var(--or);width:64px;margin:18px 0 0}
+.body{padding:22px 34px 30px}
+
+.warn{background:#FBF1DC;border:1px solid #E6D3A8;border-left:3px solid var(--amber);border-radius:8px;padding:13px 16px;font-size:13.5px;margin-bottom:20px}
+.warn b{color:var(--navy)}
+
+.situation{background:#FBF7EE;border:1px solid var(--line);border-radius:10px;padding:15px 18px;margin-bottom:18px;font-size:14px}
+.situation h2{font-family:'Fraunces',serif;font-size:17px;margin-bottom:7px}
+.situation .don{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:6px 22px;margin-top:11px}
+.don .r{display:flex;justify-content:space-between;gap:12px;border-bottom:1px dotted var(--line);padding-bottom:3px;font-size:13px}
+.don .r b{white-space:nowrap}
+
+.params{background:#FCFAF5;border:1px dashed var(--line);border-radius:10px;padding:14px 16px;margin-bottom:22px}
+.params-title{font-size:11px;font-weight:700;letter-spacing:1.3px;text-transform:uppercase;color:var(--muted);margin-bottom:10px;display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.src{font-weight:600;letter-spacing:0;text-transform:none;font-size:11.5px;padding:2px 9px;border-radius:99px}
+.src.live{background:#E8F2EA;color:var(--ok)}
+.src.local{background:#FBF1DC;color:var(--amber)}
+.plist{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:7px 22px}
+.prow{display:flex;justify-content:space-between;gap:12px;font-size:13px;border-bottom:1px dotted var(--line);padding-bottom:3px}
+.prow span:last-child{font-weight:700;white-space:nowrap}
+
+.tools{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px}
+.btn{border:none;border-radius:9px;padding:11px 20px;font-family:inherit;font-size:14px;font-weight:700;cursor:pointer}
+.btn-primary{background:var(--bleu);color:#fff}
+.btn-secondary{background:#fff;color:var(--bleu);border:1.5px solid var(--bleu)}
+
+.q{border:1.5px solid var(--line);border-radius:12px;margin-bottom:16px;overflow:hidden;background:#fff}
+.q-head{padding:16px 20px}
+.q-num{font-size:10.5px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--or);margin-bottom:5px}
+.q-txt{font-size:15.5px;font-weight:700;line-height:1.45}
+.q-btn{margin:0 20px 16px;background:var(--navy);color:#fff;border:none;border-radius:8px;padding:10px 18px;
+  font-family:inherit;font-size:13.5px;font-weight:700;cursor:pointer}
+.q-btn.open{background:#fff;color:var(--navy);border:1.5px solid var(--line)}
+.corr{max-height:0;overflow:hidden;transition:max-height .35s ease;background:#FBF7EE;border-top:1px solid var(--line)}
+.corr.show{max-height:2600px}
+.corr-in{padding:18px 20px 20px}
+.corr h4{font-size:11px;font-weight:700;letter-spacing:1.3px;text-transform:uppercase;color:var(--bleu);margin:16px 0 7px}
+.corr h4:first-child{margin-top:0}
+.corr p{font-size:14px;margin-bottom:8px}
+.corr ul{margin:0 0 8px 18px;font-size:14px}
+.corr li{margin-bottom:5px}
+.calc{width:100%;border-collapse:collapse;font-size:13.5px;margin:4px 0 10px;background:#fff;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.calc td{padding:7px 11px;border-bottom:1px solid var(--line)}
+.calc tr:last-child td{border-bottom:none}
+.calc td:last-child{text-align:right;font-weight:700;white-space:nowrap;font-variant-numeric:tabular-nums}
+.calc tr.tot td{background:#EEF4F9;color:var(--navy);font-weight:700}
+.calc tr.tot td:first-child{font-weight:700}
+.relance{background:#EEF4F9;border-left:3px solid var(--bleu-clair);border-radius:6px;padding:11px 14px;font-size:13.5px;margin-bottom:9px}
+.erreur{background:#FBF3F3;border-left:3px solid var(--ko);border-radius:6px;padding:11px 14px;font-size:13.5px}
+.erreur b,.relance b{color:var(--navy)}
+.footer{text-align:center;font-size:11.5px;color:var(--muted);padding:16px 34px 24px;border-top:1px solid var(--line)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card-main">
+    <div class="header">
+      <div class="chapter-tag">TMK Performances · Conso des acquis 3/4 <span>/</span> Séquence 4</div>
+      <h1>Cas 1 — Karine, 38 ans</h1>
+      <p>Corrigé formateur · corrections révélables · 60 minutes</p>
+      <hr class="gold-rule">
+    </div>
+
+    <div class="body">
+      <div class="warn">
+        <b>⚠ Document formateur.</b> Ne pas projeter avant la restitution. Brief 5 min · recherche individuelle 25 min ·
+        correction collective 20 min · synthèse 10 min. Interrogez nominativement plutôt que d'attendre les volontaires,
+        et faites expliciter le raisonnement <b>avant</b> de révéler le résultat. <br><br><b>Le cas se joue sur la question 3.</b> Les deux premières seront traitées correctement par la plupart du groupe. C'est le rapprochement des deux sujets qui distingue ceux qui ont compris la journée.
+      </div>
+
+      <div class="situation">
+        <h2>La situation remise aux stagiaires</h2>
+        <p>Karine Lemoine, 38 ans, salariée, est en arrêt de travail depuis cinq semaines après une opération
+        du genou. Elle demande ce qu'elle perd exactement — puis, sans transition, si elle fait bien de laisser
+        <b>18 000 €</b> dormir sur son livret A. <b>Deux questions qu'elle croit indépendantes.</b></p>
+        <div class="don">
+          <div class="r"><span>Âge</span><b>38 ans</b></div>
+          <div class="r"><span>Ancienneté</span><b>4 ans</b></div>
+          <div class="r"><span>Salaire mensuel brut</span><b>2 900,00 €</b></div>
+          <div class="r"><span>Durée de l'arrêt</span><b>35 jours</b></div>
+          <div class="r"><span>Nature</span><b>Maladie, vie privée</b></div>
+          <div class="r"><span>Convention collective</span><b>rien de plus favorable</b></div>
+          <div class="r"><span>Livret A</span><b>18 000,00 €</b></div>
+          <div class="r"><span>LDDS</span><b>vide</b></div>
+          <div class="r"><span>Capacité d'épargne</span><b>200,00 € / mois</b></div>
+          <div class="r"><span>Base mensuelle retenue</span><b>30 jours</b></div>
+        </div>
+      </div>
+
+      <div class="params">
+        <div class="params-title">Paramètres utilisés pour le corrigé <span class="src local" id="src-badge">valeurs de secours</span></div>
+        <div class="plist" id="plist"></div>
+      </div>
+
+      <div class="tools">
+        <button class="btn btn-primary" onclick="tout(true)">Tout révéler</button>
+        <button class="btn btn-secondary" onclick="tout(false)">Tout masquer</button>
+      </div>
+
+      <div id="questions"></div>
+    </div>
+
+    <div class="footer">TMK Performances - N° Siret : 49841924100027 - Code NAF : 8559A</div>
+  </div>
+</div>
+
+<script>
+/* ─────────── Paramètres live (prévoyance + épargne), repli local ─────────── */
+const SB_URL = "https://ibkvyjlglwufxvzxnysa.supabase.co";
+const SB_KEY = "sb_publishable_xUfZHSOHf4TnBRRyzU_qJA_TcXIMSKX";
+
+const DEF_PREV = {
+  ij_mal_taux: 0.50, ij_mal_diviseur: 91.25, ij_mal_carence: 3, ij_mal_montant_max: 42.97,
+  mens_taux1: 0.90, mens_taux2: 0.6666, mens_carence_maladie: 7,
+  mens_anciennete_min: 1, mens_duree_periode1: 30,
+};
+const DEF_EP = {
+  arbitrage_taux_livret_a: 0.017,
+  livret_a_plafond: 22950,
+  ldds_plafond: 12000,
+};
+let P = Object.assign({}, DEF_PREV, DEF_EP);
+
+const AFFICHE = [
+  ["ij_mal_taux", "Taux des indemnités journalières", "%"],
+  ["ij_mal_montant_max", "Indemnité journalière maximale (1,4 SMIC)", "€"],
+  ["ij_mal_carence", "Carence Sécurité sociale", "j"],
+  ["mens_taux1", "Maintien de salaire, 1re période", "%"],
+  ["mens_taux2", "Maintien de salaire, 2e période", "%"],
+  ["mens_carence_maladie", "Carence employeur, maladie", "j"],
+  ["mens_duree_periode1", "Durée de la 1re période", "j"],
+  ["arbitrage_taux_livret_a", "Taux du livret A", "%"],
+  ["livret_a_plafond", "Plafond du livret A", "€"],
+];
+
+function el(id){ return document.getElementById(id); }
+function eur(n){ return n.toLocaleString("fr-FR",{minimumFractionDigits:2,maximumFractionDigits:2}) + " €"; }
+function eur0(n){ return n.toLocaleString("fr-FR",{minimumFractionDigits:0,maximumFractionDigits:0}) + " €"; }
+function pct(n, d){ return (Math.round(n*10000)/100).toLocaleString("fr-FR", d ? {minimumFractionDigits:d,maximumFractionDigits:d} : {}) + " %"; }
+function r2(n){ return Math.round(n*100)/100; }
+
+function renderParams(){
+  el("plist").innerHTML = AFFICHE.map(function(a){
+    const v = P[a[0]];
+    const aff = a[2] === "%" ? pct(v) : (a[2] === "j" ? v + (v > 1 ? " jours" : " jour") : (Number.isInteger(v) ? eur0(v) : eur(v)));
+    return '<div class="prow"><span>' + a[1] + '</span><span>' + aff + '</span></div>';
+  }).join("");
+}
+async function lire(table, cles){
+  const r = await fetch(SB_URL + "/rest/v1/" + table + "?select=cle,valeur&cle=in.(" + cles.join(",") + ")&apikey=" + SB_KEY);
+  if(!r.ok) throw new Error(r.status);
+  const rows = await r.json();
+  if(!rows.length) throw new Error("vide");
+  rows.forEach(function(row){ if(row.valeur !== null) P[row.cle] = Number(row.valeur); });
+}
+async function chargerParametres(){
+  let ok = 0;
+  try{ await lire("parametres_prevoyance", Object.keys(DEF_PREV)); ok++; }catch(e){}
+  try{ await lire("parametres_epargne", Object.keys(DEF_EP)); ok++; }catch(e){}
+  const b = el("src-badge");
+  if(ok === 2){ b.className = "src live"; b.textContent = "valeurs à jour"; }
+  else if(ok === 1){ b.className = "src local"; b.textContent = "valeurs partiellement à jour"; }
+  else { b.className = "src local"; b.textContent = "valeurs de secours"; }
+  renderParams(); renderQuestions();
+}
+
+/* ─────────── Le corrigé ─────────── */
+const SAL = 2900, JOURS = 35, ANC = 4, LIVRET = 18000, CAPA = 200;
+
+function calculs(){
+  const sjb = r2(SAL * 3 / P.ij_mal_diviseur);
+  const ijBrut = r2(sjb * P.ij_mal_taux);
+  const plaf = P.ij_mal_montant_max > 0 && ijBrut > P.ij_mal_montant_max;
+  const ij  = plaf ? P.ij_mal_montant_max : ijBrut;
+  const jSecu = JOURS - P.ij_mal_carence;
+  const ijss = r2(ij * jSecu);
+
+  const salJour = r2(SAL / 30);
+  const garanti = r2(salJour * P.mens_taux1);
+  const jEmp    = Math.min(JOURS - P.mens_carence_maladie, P.mens_duree_periode1);
+  const compJ   = r2(garanti - ij);
+  const comp    = r2(compJ * jEmp);
+
+  const total    = r2(ijss + comp);
+  const habituel = r2(SAL * JOURS / 30);
+  const perte    = r2(habituel - total);
+  const tauxPerte = perte / habituel;
+
+  // au-delà du maintien employeur : plus que les indemnités journalières
+  const ijMois     = r2(ij * 30);
+  const perteMois  = r2(SAL - ijMois);
+  const moisCouverts = Math.floor(LIVRET / perteMois);
+  const gainLivret = r2(LIVRET * P.arbitrage_taux_livret_a);
+  const margeLivretA = r2(Math.max(0, P.livret_a_plafond - LIVRET));
+
+  return {sjb, ijBrut, plaf, ij, jSecu, ijss, salJour, garanti, jEmp, compJ, comp,
+          total, habituel, perte, tauxPerte, ijMois, perteMois, moisCouverts,
+          gainLivret, margeLivretA};
+}
+
+function tableau(rows){
+  return '<table class="calc">' + rows.map(function(r){
+    return '<tr' + (r[2] ? ' class="tot"' : '') + '><td>' + r[0] + '</td><td>' + r[1] + '</td></tr>';
+  }).join("") + '</table>';
+}
+
+function questions(){
+  const c = calculs();
+  return [
+  {
+    txt: "Quels dispositifs interviennent pour compenser sa perte de revenu ? Chiffrez ce qu'elle percevra sur ces 35 jours, et l'écart avec son salaire habituel.",
+    corr:
+      '<h4>Première entrée de la grille : un revenu qui s\'arrête</h4>' +
+      '<p>Deux étages, comme toujours en prévoyance — et deux carences différentes.</p>' +
+      tableau([
+        ["Salaire des trois derniers mois : " + eur0(SAL) + " × 3", eur0(SAL * 3)],
+        ["Salaire journalier de base : ÷ " + String(P.ij_mal_diviseur).replace(".", ","), eur(c.sjb)],
+        ["Indemnité journalière brute : × " + pct(P.ij_mal_taux), eur(c.ijBrut)],
+      ].concat(c.plaf ? [["Indemnité retenue : plafond de 1,4 SMIC", eur(c.ij)]] : []).concat([
+        ["Jours indemnisés : " + JOURS + " − " + P.ij_mal_carence + " de carence", c.jSecu + " jours"],
+        ["Total Sécurité sociale", eur(c.ijss), true],
+      ])) +
+      tableau([
+        ["Salaire journalier de référence : " + eur0(SAL) + " ÷ 30", eur(c.salJour)],
+        ["Niveau garanti : × " + pct(P.mens_taux1), eur(c.garanti)],
+        ["Complément par jour : " + eur(c.garanti) + " − " + eur(c.ij), eur(c.compJ)],
+        ["Jours à la charge de l'employeur : " + JOURS + " − " + P.mens_carence_maladie + " de carence", c.jEmp + " jours"],
+        ["Total employeur", eur(c.comp), true],
+      ]) +
+      tableau([
+        ["Total perçu sur " + JOURS + " jours", eur(c.total), true],
+        ["Salaire habituel sur la même période", eur(c.habituel)],
+        ["Perte de revenu", eur(c.perte) + "  (" + pct(c.tauxPerte, 1) + ")", true],
+      ]) +
+      '<div class="relance"><b>À faire dire au groupe :</b> Karine a quatre ans d\'ancienneté, une convention non défavorable, et elle perd tout de même plus de sept cents euros sur cinq semaines. ' +
+      'Est-ce beaucoup ou peu ? La réponse dépend entièrement de ce qu\'elle a de côté — et c\'est déjà la deuxième question.</div>' +
+      '<div class="erreur"><b>Erreur fréquente :</b> oublier le plafond. À 2 900 € brut, Karine dépasse 1,4 SMIC : 50 % de son salaire journalier donne ' + eur(c.ijBrut) + ', mais l\'indemnité est ramenée au maximum de ' + eur(c.ij) + '.<br><b>Autre erreur fréquente :</b> retenir 35 jours pour les deux étages. Les carences diffèrent, donc le nombre de jours indemnisés aussi.</div>'
+  },
+  {
+    txt: "Sa deuxième question porte sur son épargne. Changez-vous de grille ? Laquelle appliquez-vous, et quelles questions posez-vous avant de répondre ?",
+    corr:
+      '<h4>Oui, on change d\'entrée — mais pas de grille</h4>' +
+      '<p>La grille est la même, ce sont les réponses qui changent. On passe de « un revenu qui s\'arrête » à « un capital à placer ». ' +
+      'Les questions 2 et 3 de la grille n\'ont d\'ailleurs plus le même sens : <b>personne ne verse rien</b>, c\'est son argent.</p>' +
+      '<h4>Ce qu\'il faut demander avant de répondre</h4>' +
+      '<ul>' +
+      '<li><b>À quoi cet argent est-il destiné ?</b> C\'est la question qui commande tout. Une épargne de précaution et un projet à dix ans ne se placent pas au même endroit.</li>' +
+      '<li><b>À quel horizon ?</b> Sans projet daté, on est par défaut sur de la précaution — donc sur de la disponibilité immédiate.</li>' +
+      '<li><b>Quel est son budget mensuel ?</b> Sans lui, impossible de dire si 18 000 € est trop, assez, ou pas assez.</li>' +
+      '</ul>' +
+      '<p>Tant que ces réponses manquent, <b>« faites-vous bien ? » n\'a pas de réponse</b>. Et c\'est exactement ce qu\'il faut lui dire.</p>' +
+      '<h4>Ce qu\'on peut déjà observer</h4>' +
+      tableau([
+        ["Solde du livret A", eur0(LIVRET)],
+        ["Plafond du livret A", eur0(P.livret_a_plafond)],
+        ["Marge de versement encore disponible", eur0(c.margeLivretA)],
+        ["Rendement annuel actuel : " + eur0(LIVRET) + " × " + pct(P.arbitrage_taux_livret_a), eur(c.gainLivret), true],
+        ["Son LDDS", "vide"],
+      ]) +
+      '<p>Le livret A n\'est pas au plafond : il n\'y a donc rien à arbitrer d\'urgent, et le LDDS ne présente pas d\'intérêt immédiat, ' +
+      'son taux étant identique. Aucune raison de déplacer cet argent tant qu\'on ne sait pas à quoi il sert.</p>' +
+      '<div class="relance"><b>À faire dire au groupe :</b> combien de stagiaires ont commencé par proposer un contrat ? La question de Karine appelle des questions, pas un produit.</div>' +
+      '<div class="erreur"><b>Erreur fréquente :</b> répondre « il faudrait diversifier » ou « un contrat d\'assurance vie serait plus rentable ». ' +
+      'Sur une épargne dont on ignore la destination, c\'est un conseil formulé à l\'aveugle.</div>'
+  },
+  {
+    txt: "Ces deux sujets sont-ils vraiment sans rapport ? Justifiez en chiffrant : que se passerait-il si l'arrêt se prolongeait ?",
+    corr:
+      '<h4>C\'est la question du cas</h4>' +
+      '<p>Karine a posé deux questions qu\'elle croit indépendantes. Elles ne le sont pas : <b>son épargne sert précisément à absorber ce que la prévoyance ne couvre pas</b>. ' +
+      'Pour le montrer, il faut regarder ce qui se passe après.</p>' +
+      '<h4>Au-delà du maintien de salaire</h4>' +
+      '<p>Le complément employeur ne dure pas. Passé la première période, le taux garanti diminue, puis le maintien cesse. ' +
+      'Karine ne perçoit alors plus que les indemnités journalières.</p>' +
+      tableau([
+        ["Indemnités journalières sur un mois : " + eur(c.ij) + " × 30", eur(c.ijMois)],
+        ["Salaire mensuel habituel", eur0(SAL)],
+        ["Perte mensuelle, une fois le maintien épuisé", eur(c.perteMois), true],
+      ]) +
+      '<h4>Ce que son épargne couvre</h4>' +
+      tableau([
+        ["Épargne disponible immédiatement", eur0(LIVRET)],
+        ["Perte mensuelle à couvrir", eur(c.perteMois)],
+        ["Nombre de mois d'arrêt qu'elle peut absorber", c.moisCouverts + " mois", true],
+      ]) +
+      '<p>Le rapprochement change complètement la nature du conseil. Ses ' + eur0(LIVRET) + ' ne sont pas « de l\'argent qui dort » : ' +
+      'ils constituent <b>' + c.moisCouverts + ' mois d\'autonomie</b> en cas d\'arrêt prolongé. Et son rendement annuel de ' + eur(c.gainLivret) + ' ' +
+      'ne représente même pas la moitié de ce qu\'elle vient de perdre en cinq semaines.</p>' +
+      '<div class="relance"><b>À faire dire au groupe :</b> sur une épargne de précaution, qu\'est-ce qui compte le plus — le rendement, ou le montant et la disponibilité ? ' +
+      'Et si Karine avait placé ces 18 000 € sur un support bloqué, que lui répondriez-vous aujourd\'hui ?</div>' +
+      '<div class="erreur"><b>Erreur fréquente :</b> traiter les deux questions à la suite sans jamais les relier. ' +
+      'Le stagiaire donne alors deux réponses justes et passe à côté du seul conseil qui comptait.</div>'
+  },
+  {
+    txt: "Répondez à Karine en trois phrases, en traitant ses deux questions comme une seule.",
+    corr:
+      '<h4>Une réponse possible</h4>' +
+      '<p>« Sur vos cinq semaines d\'arrêt, il vous manquera environ ' + eur(c.perte) + ' : la Sécurité sociale ne paie rien les trois premiers jours ' +
+      'et votre employeur ne complète qu\'à partir du huitième. Vos 18 000 € ne dorment pas — si votre arrêt se prolongeait au-delà du complément de votre employeur, ' +
+      'vous perdriez environ ' + eur(c.perteMois) + ' par mois, et cette somme vous donnerait ' + c.moisCouverts + ' mois de tranquillité. ' +
+      'La vraie question n\'est donc pas de savoir si elle est bien placée, mais si elle est au bon niveau : dites-moi ce que représentent vos dépenses mensuelles et nous regarderons ensemble. »</p>' +
+      '<div class="relance"><b>Ce qu\'on évalue :</b> avoir relié les deux sujets, avoir chiffré les deux, et avoir terminé par la question qui permettra de conclure. ' +
+      'Une réponse qui traite les deux points séparément, même juste, ne vaut pas la moitié des points.</div>' +
+      '<div class="erreur"><b>Erreur fréquente :</b> conclure par une recommandation de placement. Karine n\'a pas encore donné ce qu\'il faut pour en formuler une — ' +
+      'et sur ce cas, la bonne réponse se termine par une question, pas par un produit.</div>'
+  },
+  ];
+}
+
+function renderQuestions(){
+  const qs = questions();
+  el("questions").innerHTML = qs.map(function(q, i){
+    return '<div class="q">' +
+      '<div class="q-head"><div class="q-num">Question ' + (i + 1) + '</div><div class="q-txt">' + q.txt + '</div></div>' +
+      '<button class="q-btn" id="btn' + i + '" onclick="bascule(' + i + ')">Révéler la correction</button>' +
+      '<div class="corr" id="corr' + i + '"><div class="corr-in">' + q.corr + '</div></div>' +
+    '</div>';
+  }).join("");
+}
+function bascule(i){
+  const c = el("corr" + i), b = el("btn" + i);
+  const ouvert = c.classList.toggle("show");
+  b.classList.toggle("open", ouvert);
+  b.textContent = ouvert ? "Masquer la correction" : "Révéler la correction";
+}
+function tout(ouvrir){
+  questions().forEach(function(_, i){
+    const c = el("corr" + i), b = el("btn" + i);
+    c.classList.toggle("show", ouvrir);
+    b.classList.toggle("open", ouvrir);
+    b.textContent = ouvrir ? "Masquer la correction" : "Révéler la correction";
+  });
+}
+
+renderParams();
+renderQuestions();
+chargerParametres();
+
+</script>
+</body>
+</html>

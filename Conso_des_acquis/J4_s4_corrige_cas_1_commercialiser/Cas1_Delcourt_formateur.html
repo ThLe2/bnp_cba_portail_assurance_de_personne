@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cas 1 — Commercialiser : la proposition à Sophie Delcourt · Corrigé formateur</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Karla:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#16243B; --bleu:#1F4E79; --bleu-clair:#2E75B6; --or:#B08D57;
+  --creme:#F5F2EB; --card:#FFFFFF; --line:#e3ddd0; --muted:#6B6459;
+  --ok:#2F7A4F; --ko:#B23B3B; --amber:#B5852A;
+  --shadow:0 2px 10px rgba(22,36,59,.07);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Karla',system-ui,sans-serif;background:var(--creme);color:var(--navy);line-height:1.55}
+.wrap{max-width:1000px;margin:0 auto;padding:26px 18px 70px}
+.card-main{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);overflow:hidden}
+.header{padding:26px 34px 0}
+.chapter-tag{font-size:11.5px;font-weight:700;letter-spacing:1.6px;text-transform:uppercase;color:var(--or)}
+.chapter-tag span{opacity:.5}
+h1{font-family:'Fraunces',serif;font-weight:600;font-size:27px;line-height:1.2;margin:8px 0 5px}
+.header p{color:var(--muted);font-size:14.5px}
+.gold-rule{border:none;border-top:2px solid var(--or);width:64px;margin:18px 0 0}
+.body{padding:22px 34px 30px}
+
+.warn{background:#FBF1DC;border:1px solid #E6D3A8;border-left:3px solid var(--amber);border-radius:8px;padding:13px 16px;font-size:13.5px;margin-bottom:20px}
+.warn b{color:var(--navy)}
+
+.situation{background:#FBF7EE;border:1px solid var(--line);border-radius:10px;padding:15px 18px;margin-bottom:18px;font-size:14px}
+.situation h2{font-family:'Fraunces',serif;font-size:17px;margin-bottom:7px}
+.situation .don{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:6px 22px;margin-top:11px}
+.don .r{display:flex;justify-content:space-between;gap:12px;border-bottom:1px dotted var(--line);padding-bottom:3px;font-size:13px}
+.don .r b{white-space:nowrap}
+
+.params{background:#FCFAF5;border:1px dashed var(--line);border-radius:10px;padding:14px 16px;margin-bottom:22px}
+.params-title{font-size:11px;font-weight:700;letter-spacing:1.3px;text-transform:uppercase;color:var(--muted);margin-bottom:10px;display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.src{font-weight:600;letter-spacing:0;text-transform:none;font-size:11.5px;padding:2px 9px;border-radius:99px}
+.src.live{background:#E8F2EA;color:var(--ok)}
+.src.local{background:#FBF1DC;color:var(--amber)}
+.plist{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:7px 22px}
+.prow{display:flex;justify-content:space-between;gap:12px;font-size:13px;border-bottom:1px dotted var(--line);padding-bottom:3px}
+.prow span:last-child{font-weight:700;white-space:nowrap}
+
+.tools{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px}
+.btn{border:none;border-radius:9px;padding:11px 20px;font-family:inherit;font-size:14px;font-weight:700;cursor:pointer}
+.btn-primary{background:var(--bleu);color:#fff}
+.btn-secondary{background:#fff;color:var(--bleu);border:1.5px solid var(--bleu)}
+
+.q{border:1.5px solid var(--line);border-radius:12px;margin-bottom:16px;overflow:hidden;background:#fff}
+.q-head{padding:16px 20px}
+.q-num{font-size:10.5px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--or);margin-bottom:5px}
+.q-txt{font-size:15.5px;font-weight:700;line-height:1.45}
+.q-btn{margin:0 20px 16px;background:var(--navy);color:#fff;border:none;border-radius:8px;padding:10px 18px;
+  font-family:inherit;font-size:13.5px;font-weight:700;cursor:pointer}
+.q-btn.open{background:#fff;color:var(--navy);border:1.5px solid var(--line)}
+.corr{max-height:0;overflow:hidden;transition:max-height .35s ease;background:#FBF7EE;border-top:1px solid var(--line)}
+.corr.show{max-height:9000px}
+.corr-in{padding:18px 20px 20px}
+.corr h4{font-size:11px;font-weight:700;letter-spacing:1.3px;text-transform:uppercase;color:var(--bleu);margin:16px 0 7px}
+.corr h4:first-child{margin-top:0}
+.corr p{font-size:14px;margin-bottom:8px}
+.corr ul{margin:0 0 8px 18px;font-size:14px}
+.corr li{margin-bottom:5px}
+.calc{width:100%;border-collapse:collapse;font-size:13.5px;margin:4px 0 10px;background:#fff;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.calc td{padding:7px 11px;border-bottom:1px solid var(--line)}
+.calc tr:last-child td{border-bottom:none}
+.calc td:last-child{text-align:right;font-weight:700;white-space:nowrap;font-variant-numeric:tabular-nums}
+.calc tr.tot td{background:#EEF4F9;color:var(--navy);font-weight:700}
+.calc tr.tot td:first-child{font-weight:700}
+.relance{background:#EEF4F9;border-left:3px solid var(--bleu-clair);border-radius:6px;padding:11px 14px;font-size:13.5px;margin-bottom:9px}
+.erreur{background:#FBF3F3;border-left:3px solid var(--ko);border-radius:6px;padding:11px 14px;font-size:13.5px}
+.erreur b,.relance b{color:var(--navy)}
+.footer{text-align:center;font-size:11.5px;color:var(--muted);padding:16px 34px 24px;border-top:1px solid var(--line)}
+.pieces{font-size:13px;margin-top:10px}.pieces b{color:var(--navy)}
+.modele{background:#fff;border:1px solid var(--line);border-radius:8px;padding:12px 15px;font-size:13.5px;margin:6px 0 10px}
+.modele p{margin-bottom:6px}
+.g4{width:100%;border-collapse:collapse;font-size:13px;margin:4px 0 12px;background:#fff}
+.g4 th{background:#EEF4F9;text-align:left;padding:7px 9px;border:1px solid var(--line);font-size:12px}
+.g4 td{padding:7px 9px;border:1px solid var(--line);vertical-align:top}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card-main">
+    <div class="header">
+      <div class="chapter-tag">TMK Performances · Conso des acquis 4/4 <span>/</span> Séquence 4</div>
+      <h1>Cas 1 — Commercialiser : la proposition à Sophie Delcourt</h1>
+      <p>Corrigé formateur · corrections révélables · 60 minutes</p>
+      <hr class="gold-rule">
+    </div>
+    <div class="body">
+      <div class="warn"><b>⚠ Document formateur.</b> Ne pas projeter avant la restitution. Brief 5 min · recherche individuelle 25 min · correction collective 20 min · synthèse 10 min. Interrogez nominativement et faites expliciter le raisonnement <b>avant</b> de révéler la correction.<br><br><b>Le cas se joue sur la question 2.</b> La plupart des stagiaires calculeront le capital juste. Peu liront la clause : Marc n'est pas le bénéficiaire. C'est ce qui fait de la journée une journée de dossier, et pas de calcul.</div>
+      <div class="situation">
+        <h2>La situation remise aux stagiaires</h2>
+        <p>Sophie Delcourt, 36 ans, a reçu <b>30 000 €</b> d'une succession. Elle veut « mettre de côté pour la petite, et que la famille soit protégée s'il lui arrive quelque chose ». Le dossier contient la fiche de découverte, la notice de prévoyance de son employeur et le tableau de son prêt.</p>
+        <div class="don"><div class="r"><span>Sophie</span><b>36 ans · 2 900 € brut / mois</b></div><div class="r"><span>Marc Ferrand</span><b>38 ans · 2 400 € net / mois</b></div><div class="r"><span>Situation</span><b>union libre</b></div><div class="r"><span>Léa</span><b>8 mois</b></div><div class="r"><span>Charges fixes</span><b>2 700 € / mois</b></div><div class="r"><span>Réserve</span><b>3 500 € + 2 000 €</b></div><div class="r"><span>Prêt</span><b>168 000 € · 920 € / mois · 50 % par tête</b></div><div class="r"><span>Décès employeur</span><b>150 % + 25 % par enfant</b></div><div class="r"><span>Tranche marginale</span><b>11 %</b></div><div class="r"><span>Capacité d'épargne</span><b>150 € / mois</b></div></div>
+        
+      </div>
+      <div class="tools">
+        <button class="btn btn-primary" onclick="tout(true)">Tout révéler</button>
+        <button class="btn btn-secondary" onclick="tout(false)">Tout masquer</button>
+      </div>
+      <div id="questions"></div>
+    </div>
+    <div class="footer">TMK Performances - N° Siret : 49841924100027 - Code NAF : 8559A</div>
+  </div>
+</div>
+<script>
+const QS = [{"txt": "Reformulez les exigences et les besoins de Sophie. Séparez ce qu'elle a dit de ce que les pièces révèlent.", "corr": "<h4>Ce qu'elle a dit</h4><ul><li><b>Un capital pour Léa</b>, à ses 18 ans : horizon d'environ 17 ans.</li><li><b>Pouvoir « piocher si la voiture lâche »</b> : un besoin de disponibilité, qu'elle ne relie pas aux 30 000 €.</li><li><b>« Que la famille soit protégée s'il m'arrive quelque chose »</b> : une inquiétude, pas une demande de produit.</li></ul><h4>Ce que les pièces révèlent</h4><ul><li>La réserve du foyer est faible : 5 500 € pour 2 700 € de charges mensuelles, soit <b>deux mois</b>.</li><li>Sophie est déjà couverte en cas de décès par son employeur — mais <b>Marc n'est ni son conjoint ni son partenaire de PACS</b> : la clause par défaut ne le vise pas.</li><li>Le prêt n'est assuré qu'à 50 % sur chaque tête.</li></ul><h4>Le profil</h4><p>Aucune expérience des placements, inquiète à l'idée d'une baisse, mais prête à attendre sur un horizon long. Tranche marginale de 11 %. Capacité d'épargne de 150 € par mois.</p><div class=\"relance\"><b>À faire dire au groupe :</b> trois besoins, et aucun n'est formulé en nom de produit. Celui qu'elle n'a pas formulé — la réserve — passera en premier.</div><div class=\"erreur\"><b>Erreur fréquente :</b> s'arrêter à « elle veut placer pour sa fille » et ne pas lire les pièces 2 et 3. Le cas est construit pour que la moitié du besoin soit dans les pièces.</div>"}, {"txt": "Si Sophie décédait demain, que se passerait-il pour Marc et pour Léa ? Chiffrez, et dites qui recevrait le capital décès.", "corr": "<h4>Le capital décès de l'employeur</h4><table class=\"calc\"><tr><td>Salaire annuel brut : 2 900 € × 12</td><td>34 800 €</td></tr><tr><td>Capital de base : 150 %</td><td>52 200 €</td></tr><tr><td>Majoration pour Léa : 25 %</td><td>8 700 €</td></tr><tr class=\"tot\"><td>Capital décès</td><td>60 900 €</td></tr></table><p><b>Qui le reçoit ?</b> À défaut de désignation particulière : le conjoint ou le partenaire de PACS, à défaut les enfants. Marc n'est ni l'un ni l'autre. <b>Le capital irait à Léa.</b> Marc l'administrerait jusqu'à ses 18 ans, pour le compte de Léa — pas pour faire face aux charges du foyer.</p><h4>Le prêt immobilier</h4><table class=\"calc\"><tr><td>Capital remboursé par l'assurance : 50 % de 168 000 €</td><td>84 000 €</td></tr><tr><td>Mensualité restant à Marc, environ</td><td>460 €</td></tr><tr><td>Charges du foyer après le décès : 2 700 € − 460 €</td><td>2 240 €</td></tr><tr><td>Revenu de Marc</td><td>2 400 €</td></tr><tr class=\"tot\"><td>Marge mensuelle</td><td>160 €</td></tr></table><p>Marc garderait la maison et ses charges avec une marge d'environ 160 € par mois, sans réserve, et sans le capital, qui appartient à Léa.</p><div class=\"relance\"><b>À faire dire au groupe :</b> le montant est correct. Le problème est le <b>destinataire</b>. La solution ne coûte rien : une désignation particulière auprès de l'assureur de l'employeur (par exemple « Marc Ferrand, à défaut mes enfants nés ou à naître, vivants ou représentés, par parts égales, à défaut mes héritiers »).</div><div class=\"relance\"><b>À signaler sans le traiter :</b> en union libre, Marc n'hérite pas de Sophie. Sa part de la maison irait à Léa. C'est une question pour le notaire (testament, PACS) : le conseiller oriente, il ne tranche pas.</div><div class=\"erreur\"><b>Erreur fréquente :</b> conclure « elle est bien couverte, 60 900 € » sans lire la clause. Deuxième erreur : vendre une prévoyance décès individuelle pour combler un trou qui se règle par un courrier.</div>"}, {"txt": "Classez ses besoins par ordre de priorité et répartissez les 30 000 €. Justifiez chaque montant.", "corr": "<h4>Une répartition défendable</h4><table class=\"calc\"><tr><td>1. Réserve de précaution : sur le livret A de Sophie (3 500 € → 8 500 €)</td><td>5 000 €</td></tr><tr><td>2. Protection du foyer : désignation particulière sur le contrat collectif</td><td>0 €</td></tr><tr><td>3. Projet de Léa : assurance vie au nom de Sophie</td><td>25 000 €</td></tr><tr class=\"tot\"><td>Total</td><td>30 000 €</td></tr></table><h4>Pourquoi cet ordre</h4><ul><li><b>La réserve d'abord</b> : avec 10 500 € de côté, le foyer tient environ <b>3,9 mois</b> de charges au lieu de deux. Sans elle, la première panne de voiture se paierait par un rachat sur le contrat de Léa. Une fourchette de 3 à 6 mois de charges est acceptable : ce qui compte, c'est que le montant soit justifié.</li><li><b>La protection ensuite</b> : elle ne mobilise pas d'argent, mais elle est plus urgente que le placement — un décès n'attend pas.</li><li><b>Le projet de Léa</b> : 17 ans d'horizon, au-delà de 8 ans, donc fiscalité favorable au moment des études. Allocation majoritairement en fonds en euros (par exemple 70 %), le reste en unités de compte en gestion profilée prudente : elle accepte d'attendre sur un horizon long, mais n'a jamais investi.</li></ul><p>Option : des versements programmés de 50 € par mois sur le contrat, pris sur les 150 € de capacité d'épargne — à proposer, pas à imposer.</p><div class=\"relance\"><b>Variantes acceptables :</b> une réserve un peu plus haute (jusqu'à 6 mois de charges), une part d'unités de compte entre 20 et 40 %. Au-delà de 50 % d'unités de compte pour une cliente sans expérience, le conseil n'est plus défendable.</div><div class=\"erreur\"><b>Erreur fréquente :</b> placer les 30 000 € en assurance vie « parce que c'est pour Léa ». La réserve reste à deux mois, et le contrat servira de caisse de secours.</div>"}, {"txt": "Rédigez la proposition écrite en quatre rubriques : ce que la cliente a dit, ce que vous recommandez, pourquoi, et ce que vous ne lui proposez pas.", "corr": "<h4>Un exemple de proposition</h4><div class=\"modele\"><p><b>Ce que vous m'avez dit</b> — Vous souhaitez constituer un capital pour Léa d'ici ses 18 ans, pouvoir faire face à une dépense imprévue, et que Marc et Léa soient protégés s'il vous arrivait quelque chose. Vous n'avez jamais investi ; une baisse vous inquiéterait, mais vous accepteriez d'attendre sur un horizon long.</p><p><b>Ce que je vous recommande</b> — 1) Verser 5 000 € sur votre livret A. 2) Adresser dès cette semaine à l'assureur de votre employeur une désignation particulière au profit de Marc, à défaut de vos enfants. 3) Ouvrir une assurance vie de 25 000 €, investie à 70 % sur le fonds en euros et à 30 % en gestion profilée prudente, avec une clause bénéficiaire qui inclut les enfants nés ou à naître.</p><p><b>Pourquoi</b> — Votre réserve couvre aujourd'hui deux mois de charges ; elle en couvrira près de quatre. Marc n'étant ni votre conjoint ni votre partenaire de PACS, le capital décès de votre employeur irait aujourd'hui à Léa seule. L'assurance vie correspond à un horizon de 17 ans ; la part en unités de compte reste minoritaire, comme vous le souhaitez.</p><p><b>Ce que je ne vous propose pas</b> — Un PER : l'argent serait bloqué jusqu'à votre retraite et votre tranche de 11 % en limite l'intérêt. Une prévoyance décès individuelle : votre employeur vous couvre déjà, à condition de corriger le bénéficiaire ; nous la reverrons si vous changez d'emploi ou si la famille s'agrandit. Un placement majoritairement en unités de compte : il ne correspond pas à ce que vous m'avez dit de votre rapport au risque.</p></div><h4>Ce qu'on vérifie dans les copies</h4><ul><li>Chaque « pourquoi » renvoie à une phrase de la cliente ou à une pièce.</li><li>La rubrique « ce que je ne propose pas » contient au moins le PER et la prévoyance individuelle, avec la raison.</li><li>La suite est datée : la désignation particulière se fait cette semaine, la clause du contrat se rédige à la souscription — c'est le cas 2.</li></ul><div class=\"relance\"><b>Transition vers le cas 2 :</b> Sophie a accepté. Un collègue a monté le dossier pendant vos congés. Vous allez le contrôler.</div><div class=\"erreur\"><b>Erreur fréquente :</b> une rubrique « ce que je ne propose pas » vide, ou réduite à « rien d'autre ». C'est pourtant elle qui protège le conseiller le jour où la cliente demande pourquoi on ne lui a pas vendu autre chose.</div>"}];
+function el(id){ return document.getElementById(id); }
+el("questions").innerHTML = QS.map(function(q, i){
+  return '<div class="q"><div class="q-head"><div class="q-num">Question ' + (i + 1) + '</div><div class="q-txt">' + q.txt + '</div></div>' +
+    '<button class="q-btn" id="btn' + i + '" onclick="bascule(' + i + ')">Révéler la correction</button>' +
+    '<div class="corr" id="corr' + i + '"><div class="corr-in">' + q.corr + '</div></div></div>';
+}).join("");
+function regle(i, ouvrir){
+  const c = el("corr" + i), b = el("btn" + i);
+  c.classList.toggle("show", ouvrir); b.classList.toggle("open", ouvrir);
+  b.textContent = ouvrir ? "Masquer la correction" : "Révéler la correction";
+}
+function bascule(i){ regle(i, !el("corr" + i).classList.contains("show")); }
+function tout(ouvrir){ QS.forEach(function(_, i){ regle(i, ouvrir); }); }
+</script>
+</body>
+</html>

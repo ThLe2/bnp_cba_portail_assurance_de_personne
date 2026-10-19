@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cas 2 — Souscrire : le dossier de Sophie Delcourt · Corrigé formateur</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Karla:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#16243B; --bleu:#1F4E79; --bleu-clair:#2E75B6; --or:#B08D57;
+  --creme:#F5F2EB; --card:#FFFFFF; --line:#e3ddd0; --muted:#6B6459;
+  --ok:#2F7A4F; --ko:#B23B3B; --amber:#B5852A;
+  --shadow:0 2px 10px rgba(22,36,59,.07);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Karla',system-ui,sans-serif;background:var(--creme);color:var(--navy);line-height:1.55}
+.wrap{max-width:1000px;margin:0 auto;padding:26px 18px 70px}
+.card-main{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);overflow:hidden}
+.header{padding:26px 34px 0}
+.chapter-tag{font-size:11.5px;font-weight:700;letter-spacing:1.6px;text-transform:uppercase;color:var(--or)}
+.chapter-tag span{opacity:.5}
+h1{font-family:'Fraunces',serif;font-weight:600;font-size:27px;line-height:1.2;margin:8px 0 5px}
+.header p{color:var(--muted);font-size:14.5px}
+.gold-rule{border:none;border-top:2px solid var(--or);width:64px;margin:18px 0 0}
+.body{padding:22px 34px 30px}
+
+.warn{background:#FBF1DC;border:1px solid #E6D3A8;border-left:3px solid var(--amber);border-radius:8px;padding:13px 16px;font-size:13.5px;margin-bottom:20px}
+.warn b{color:var(--navy)}
+
+.situation{background:#FBF7EE;border:1px solid var(--line);border-radius:10px;padding:15px 18px;margin-bottom:18px;font-size:14px}
+.situation h2{font-family:'Fraunces',serif;font-size:17px;margin-bottom:7px}
+.situation .don{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:6px 22px;margin-top:11px}
+.don .r{display:flex;justify-content:space-between;gap:12px;border-bottom:1px dotted var(--line);padding-bottom:3px;font-size:13px}
+.don .r b{white-space:nowrap}
+
+.params{background:#FCFAF5;border:1px dashed var(--line);border-radius:10px;padding:14px 16px;margin-bottom:22px}
+.params-title{font-size:11px;font-weight:700;letter-spacing:1.3px;text-transform:uppercase;color:var(--muted);margin-bottom:10px;display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.src{font-weight:600;letter-spacing:0;text-transform:none;font-size:11.5px;padding:2px 9px;border-radius:99px}
+.src.live{background:#E8F2EA;color:var(--ok)}
+.src.local{background:#FBF1DC;color:var(--amber)}
+.plist{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:7px 22px}
+.prow{display:flex;justify-content:space-between;gap:12px;font-size:13px;border-bottom:1px dotted var(--line);padding-bottom:3px}
+.prow span:last-child{font-weight:700;white-space:nowrap}
+
+.tools{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px}
+.btn{border:none;border-radius:9px;padding:11px 20px;font-family:inherit;font-size:14px;font-weight:700;cursor:pointer}
+.btn-primary{background:var(--bleu);color:#fff}
+.btn-secondary{background:#fff;color:var(--bleu);border:1.5px solid var(--bleu)}
+
+.q{border:1.5px solid var(--line);border-radius:12px;margin-bottom:16px;overflow:hidden;background:#fff}
+.q-head{padding:16px 20px}
+.q-num{font-size:10.5px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--or);margin-bottom:5px}
+.q-txt{font-size:15.5px;font-weight:700;line-height:1.45}
+.q-btn{margin:0 20px 16px;background:var(--navy);color:#fff;border:none;border-radius:8px;padding:10px 18px;
+  font-family:inherit;font-size:13.5px;font-weight:700;cursor:pointer}
+.q-btn.open{background:#fff;color:var(--navy);border:1.5px solid var(--line)}
+.corr{max-height:0;overflow:hidden;transition:max-height .35s ease;background:#FBF7EE;border-top:1px solid var(--line)}
+.corr.show{max-height:9000px}
+.corr-in{padding:18px 20px 20px}
+.corr h4{font-size:11px;font-weight:700;letter-spacing:1.3px;text-transform:uppercase;color:var(--bleu);margin:16px 0 7px}
+.corr h4:first-child{margin-top:0}
+.corr p{font-size:14px;margin-bottom:8px}
+.corr ul{margin:0 0 8px 18px;font-size:14px}
+.corr li{margin-bottom:5px}
+.calc{width:100%;border-collapse:collapse;font-size:13.5px;margin:4px 0 10px;background:#fff;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.calc td{padding:7px 11px;border-bottom:1px solid var(--line)}
+.calc tr:last-child td{border-bottom:none}
+.calc td:last-child{text-align:right;font-weight:700;white-space:nowrap;font-variant-numeric:tabular-nums}
+.calc tr.tot td{background:#EEF4F9;color:var(--navy);font-weight:700}
+.calc tr.tot td:first-child{font-weight:700}
+.relance{background:#EEF4F9;border-left:3px solid var(--bleu-clair);border-radius:6px;padding:11px 14px;font-size:13.5px;margin-bottom:9px}
+.erreur{background:#FBF3F3;border-left:3px solid var(--ko);border-radius:6px;padding:11px 14px;font-size:13.5px}
+.erreur b,.relance b{color:var(--navy)}
+.footer{text-align:center;font-size:11.5px;color:var(--muted);padding:16px 34px 24px;border-top:1px solid var(--line)}
+.pieces{font-size:13px;margin-top:10px}.pieces b{color:var(--navy)}
+.modele{background:#fff;border:1px solid var(--line);border-radius:8px;padding:12px 15px;font-size:13.5px;margin:6px 0 10px}
+.modele p{margin-bottom:6px}
+.g4{width:100%;border-collapse:collapse;font-size:13px;margin:4px 0 12px;background:#fff}
+.g4 th{background:#EEF4F9;text-align:left;padding:7px 9px;border:1px solid var(--line);font-size:12px}
+.g4 td{padding:7px 9px;border:1px solid var(--line);vertical-align:top}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card-main">
+    <div class="header">
+      <div class="chapter-tag">TMK Performances · Conso des acquis 4/4 <span>/</span> Séquence 5</div>
+      <h1>Cas 2 — Souscrire : le dossier de Sophie Delcourt</h1>
+      <p>Corrigé formateur · corrections révélables · 75 minutes</p>
+      <hr class="gold-rule">
+    </div>
+    <div class="body">
+      <div class="warn"><b>⚠ Document formateur.</b> Ne pas projeter avant la restitution. Brief 10 min · recherche individuelle 30 min · correction collective 25 min · synthèse 10 min. Faites lister les anomalies pièce par pièce, un stagiaire par pièce, avant de révéler le tableau.<br><br><b>Le cas se joue sur ce qui est présent mais faux.</b> Ce qui manque se voit (origine des fonds, notice). L'allocation inversée, la clause nominative et la date du courrier demandent de comparer le dossier à la proposition du cas 1.</div>
+      <div class="situation">
+        <h2>La situation remise aux stagiaires</h2>
+        <p>Le dossier de souscription de l'assurance vie de Sophie Delcourt a été monté par un collègue, Julien Vasseur, pendant les congés du conseiller. Bulletin signé le 1er février 2027 ; dossier non envoyé, fonds non prélevés. Six pièces : bulletin, profil, récépissé de remise des documents, déclaration de santé, pièces LCB-FT, fiche de suivi et courrier préparé.</p>
+        <div class="don"><div class="r"><span>Proposition du cas 1</span><b>25 000 € · 70 % € / 30 % UC prudente</b></div><div class="r"><span>Bulletin</span><b>30 % € / 70 % « Dynamique »</b></div><div class="r"><span>Profil signé</span><b>PRUDENT</b></div><div class="r"><span>Clause du bulletin</span><b>« Léa Ferrand »</b></div><div class="r"><span>Option plancher</span><b>cochée, non proposée</b></div><div class="r"><span>Notice</span><b>non remise</b></div><div class="r"><span>Origine des fonds</span><b>déclarative</b></div><div class="r"><span>Délai annoncé</span><b>jusqu'au 3 mars 2027</b></div></div>
+        
+      </div>
+      <div class="tools">
+        <button class="btn btn-primary" onclick="tout(true)">Tout révéler</button>
+        <button class="btn btn-secondary" onclick="tout(false)">Tout masquer</button>
+      </div>
+      <div id="questions"></div>
+    </div>
+    <div class="footer">TMK Performances - N° Siret : 49841924100027 - Code NAF : 8559A</div>
+  </div>
+</div>
+<script>
+const QS = [{"txt": "Contrôlez le dossier pièce par pièce. Pour chacune des six anomalies : la pièce, l'anomalie, ce qui se passe si personne ne la corrige, et la correction.", "corr": "<h4>Les six anomalies</h4><table class=\"g4\"><tr><th>Pièce</th><th>Anomalie</th><th>Si personne ne la corrige</th><th>Correction</th></tr><tr><td>1 · Bulletin</td><td><b>Allocation 70 % en gestion « Dynamique »</b> pour un profil prudent, à l'inverse de la proposition (70 % fonds en euros).</td><td>Conseil non défendable : en cas de baisse, réclamation fondée sur le profil signé par la cliente elle-même. Manquement au devoir de conseil.</td><td>Nouveau bulletin conforme à la proposition, signé par Sophie. Si elle voulait autre chose : mise en garde écrite au dossier.</td></tr><tr><td>1 · Bulletin</td><td><b>Clause « Léa Ferrand »</b> : nominative, sans « à défaut ».</td><td>Un deuxième enfant serait exclu. Si Léa décédait avant Sophie, le capital retomberait dans la succession.</td><td>Clause réécrite avec Sophie (question 3).</td></tr><tr><td>1 et 4 · Option et déclaration de santé</td><td><b>Option garantie plancher cochée</b>, absente de la proposition ; <b>déclaration de santé remplie par le conseiller</b>, d'après un appel, <b>non signée</b>.</td><td>Une option payante que la cliente n'a pas choisie ; une déclaration qui n'engage pas l'assurée et que l'assureur pourra contester au décès.</td><td>Demander à Sophie si elle veut l'option. Si oui : déclaration remplie et signée par elle. Sinon : retirer l'option.</td></tr><tr><td>3 · Récépissé</td><td><b>Notice non remise avant la signature</b> (« sera envoyée par courrier »).</td><td>Le délai de renonciation est prorogé jusqu'au 30e jour suivant la remise effective, dans la limite de huit ans : la cliente pourrait renoncer des années plus tard et récupérer ses versements.</td><td>Remettre la notice, faire signer un nouveau récépissé, puis le nouveau bulletin.</td></tr><tr><td>5 · Lutte contre le blanchiment</td><td><b>Origine des fonds non justifiée</b> : simple déclaration de la cliente.</td><td>Obligation de vigilance non remplie : l'opération ne doit pas être exécutée. Exposition de l'établissement à une sanction.</td><td>Attestation du notaire chargé de la succession, au dossier <b>avant</b> l'envoi.</td></tr><tr><td>6 · Courrier préparé</td><td><b>Délai de renonciation calculé à partir de la signature</b> : « jusqu'au 3 mars 2027 ».</td><td>Information fausse donnée par écrit à la cliente, qui pourrait croire son délai expiré alors qu'il court encore.</td><td>Les 30 jours calendaires révolus partent du moment où la cliente est informée que le contrat est conclu (réception des conditions particulières). Le courrier donne la règle, pas une date fixée d'avance.</td></tr></table><h4>Ce qui est correct, et doit être reconnu comme tel</h4><ul><li>Le questionnaire de profil : complet, signé, profil « prudent » cohérent avec les réponses.</li><li>Identité, domicile, mandat de prélèvement.</li><li>Les deux actes du 2 février : versement sur le livret A et courrier de désignation particulière, avec copie au dossier.</li></ul><div class=\"relance\"><b>À faire dire au groupe :</b> deux anomalies se renforcent. La notice non remise proroge le délai de renonciation ; le courrier annonce en plus une date fausse. Le jour où les marchés baissent, la cliente a les deux arguments en main.</div><div class=\"erreur\"><b>Erreur fréquente :</b> ne voir que ce qui manque (origine des fonds, notice) et passer à côté de ce qui est présent mais faux : l'allocation, la clause, la date du courrier. Deuxième erreur : signaler le profil « prudent » comme une anomalie. C'est l'allocation qui est fausse, pas le profil.</div>"}, {"txt": "Quelles anomalies interdisent d'envoyer le dossier en l'état ? Dans quel ordre les traitez-vous, et avec qui ?", "corr": "<p><b>Les six bloquent l'envoi</b>, mais elles ne se traitent pas de la même façon.</p><table class=\"g4\"><tr><th>Ordre</th><th>Ce qu'on fait</th><th>Avec qui</th></tr><tr><td>1</td><td>Demander l'attestation du notaire. Sans elle, rien ne part.</td><td>Sophie, qui la demande au notaire</td></tr><tr><td>2</td><td>Fixer un nouveau rendez-vous : remise de la notice, choix de l'option plancher, clause, allocation.</td><td>Sophie</td></tr><tr><td>3</td><td>Au rendez-vous : récépissé, déclaration de santé si l'option est retenue, nouveau bulletin avec la bonne allocation et la clause réécrite.</td><td>Sophie, signature</td></tr><tr><td>4</td><td>Détruire le courrier préparé ; le remplacer par un courrier qui donne la règle du délai de renonciation.</td><td>Le conseiller</td></tr><tr><td>5</td><td>Note au dossier, puis envoi au service souscription.</td><td>Le conseiller</td></tr></table><div class=\"relance\"><b>À faire dire au groupe :</b> les fonds n'ont pas été prélevés. C'est la seule raison pour laquelle tout se corrige encore simplement. Une fois les 25 000 € encaissés sur une allocation dynamique, corriger signifie arbitrer — et constater une éventuelle moins-value.</div><div class=\"erreur\"><b>Erreur fréquente :</b> corriger la clause ou l'allocation « au crayon » sur le bulletin existant. Toute modification se signe par la cliente.</div>"}, {"txt": "Réécrivez la clause bénéficiaire. Expliquez en deux phrases à Sophie pourquoi la clause actuelle ne convient pas.", "corr": "<h4>Une clause adaptée</h4><div class=\"modele\"><p>« Mes enfants, nés ou à naître, vivants ou représentés, par parts égales entre eux ; à défaut, Marc Ferrand, né le … à … ; à défaut, mes héritiers. »</p></div><p>L'ordre suit l'objectif du contrat : le capital est destiné aux enfants. Placer Marc en premier rang est défendable si c'est le souhait de Sophie — à condition de le lui demander et de l'écrire dans la note.</p><h4>L'explication à Sophie</h4><div class=\"modele\"><p>« Telle qu'elle est écrite, la clause ne vise que Léa : un deuxième enfant n'y figurerait que si vous pensiez à la modifier. La formule “mes enfants nés ou à naître” suit votre famille sans que vous ayez à y revenir. »</p></div><div class=\"relance\"><b>À signaler :</b> un bénéficiaire mineur ne touche pas lui-même le capital ; il est géré par son administrateur légal — ici Marc — jusqu'à sa majorité. C'est une information à donner à Sophie, pas une raison d'écarter les enfants.</div><div class=\"erreur\"><b>Erreurs fréquentes :</b> écrire « Léa Ferrand et ses frères et sœurs » (imprécis) ; oublier le dernier rang « à défaut, mes héritiers » ; identifier Marc sans date ni lieu de naissance.</div>"}, {"txt": "Rédigez la note au dossier pour Julien Vasseur : ce qui a été corrigé, ce qui reste à faire, par qui et quand.", "corr": "<h4>Un exemple de note</h4><div class=\"modele\"><p><b>Dossier Opale Vie — Sophie Delcourt — contrôle avant envoi du [date]</b></p><p><b>Constaté :</b> allocation 30/70 dynamique non conforme au profil prudent ni à la proposition ; clause nominative « Léa Ferrand » ; option garantie plancher non proposée, déclaration de santé non remplie ni signée par l'assurée ; notice non remise avant signature ; origine des fonds non justifiée ; courrier de renonciation avec une date calculée depuis la signature.</p><p><b>Fait :</b> courrier de renonciation retiré. Dossier conservé, non envoyé. Fonds non prélevés.</p><p><b>À faire :</b> Sophie Delcourt demande l'attestation au notaire (relance le [date]). Rendez-vous le [date] avec [conseiller] : remise de la notice, choix sur l'option, clause réécrite, nouveau bulletin 70 % fonds en euros / 30 % gestion prudente. Envoi au service souscription après réception de l'attestation.</p><p><b>Déjà fait le 02/02 et conforme :</b> versement livret A ; désignation particulière sur le contrat collectif.</p></div><ul><li>Factuelle : ce qui a été constaté, pas qui s'est trompé.</li><li>Datée, avec un nom en face de chaque action.</li><li>Lisible par un collègue qui ne connaît pas Sophie.</li></ul><div class=\"relance\"><b>Transition vers le cas 3 :</b> le contrat est en place. Trois ans passent. Cinq événements arrivent la même semaine.</div><div class=\"erreur\"><b>Erreur fréquente :</b> une note qui juge (« dossier bâclé ») ou qui ne dit pas qui fait quoi. La note s'adresse au dossier, pas au collègue.</div>"}];
+function el(id){ return document.getElementById(id); }
+el("questions").innerHTML = QS.map(function(q, i){
+  return '<div class="q"><div class="q-head"><div class="q-num">Question ' + (i + 1) + '</div><div class="q-txt">' + q.txt + '</div></div>' +
+    '<button class="q-btn" id="btn' + i + '" onclick="bascule(' + i + ')">Révéler la correction</button>' +
+    '<div class="corr" id="corr' + i + '"><div class="corr-in">' + q.corr + '</div></div></div>';
+}).join("");
+function regle(i, ouvrir){
+  const c = el("corr" + i), b = el("btn" + i);
+  c.classList.toggle("show", ouvrir); b.classList.toggle("open", ouvrir);
+  b.textContent = ouvrir ? "Masquer la correction" : "Révéler la correction";
+}
+function bascule(i){ regle(i, !el("corr" + i).classList.contains("show")); }
+function tout(ouvrir){ QS.forEach(function(_, i){ regle(i, ouvrir); }); }
+</script>
+</body>
+</html>
